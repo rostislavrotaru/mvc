@@ -7,7 +7,7 @@
 	 * @package Public
 	 * @author Rostislav Rotaru 
 	 * 
-	 * test
+	 * 
 	 */
 	//Require the main file
 	require_once('spherus'.DIRECTORY_SEPARATOR.'main.php');
