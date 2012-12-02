@@ -6,6 +6,7 @@
 	 * @version 3.0
 	 * @package Public
 	 * @author Rostislav Rotaru 
+	 * @license See license file
 	 * 
 	 * 
 	 */
