@@ -1,14 +1,13 @@
 <?php
 
 	/**
-	 * Main entry point to the application
+	 * Main entry point 
 	 * 
 	 * @version 3.0
 	 * @package Public
 	 * @author Rostislav Rotaru 
 	 * @link http://spherus.net
 	 * @license See license file
-	 * 
 	 * 
 	 */
 	//Require the main file
