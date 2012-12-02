@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Main entry point
+	 * Main entry point to the application
 	 * 
 	 * @version 3.0
 	 * @package Public
