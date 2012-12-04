@@ -12,11 +12,7 @@
 			
 		}
 
-		/**
-		 * Gets module name
-		 * @return string
-		 */
-	 	public function GetNamespaceName() 
+	 	public function GetNamespaceName()
 	 	{
 			return 'Spherus\Modules\Install';
 		}

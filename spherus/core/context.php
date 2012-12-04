@@ -232,7 +232,7 @@
 				
 				if(!in_array($action, Context::getCurrentController()->noViewControllers))
 				{
-					$fileName = MODULES.HttpContext::getParsedUrl()->getModule().DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$action.'.php';
+					$fileName = MODULES.HttpContext::getParsedUrl()->getModule().DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.HttpContext::getParsedUrl()->getController().DIRECTORY_SEPARATOR.$action.'.php';
 						
 					Context::getCurrentController()->BeforeAction();
 					Check::FileIsReadable($fileName);
