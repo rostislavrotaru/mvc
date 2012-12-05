@@ -90,7 +90,7 @@
 			 */
 			public static function getCurrentModule()
 			{
-				return self::GetModuleByName(HttpContext::getParsedUrl()->getModule());
+				return self::GetModuleByName(HttpContext::getParsedUrl()->getModuleName());
 			}
 			
 			
@@ -228,17 +228,17 @@
 			public static function LoadController()
 			{
 				$parsedUrl = HttpContext::getParsedUrl();
-				$moduleObject = self::GetModuleByName($parsedUrl->getModule());
+				$moduleObject = self::GetModuleByName($parsedUrl->getModuleName());
 				
 				if(isset($moduleObject))
 				{
-					$fileName = MODULES.$parsedUrl->getModule().DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$parsedUrl->getController().'.php';
+					$fileName = MODULES.$parsedUrl->getModuleName().DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$parsedUrl->getControllerName().'.php';
 					if(file_exists($fileName))
 					{
 						if(is_readable($fileName))
 						{
 							require($fileName);
-							$controllerName = $moduleObject->GetNamespaceName().'\\'.$parsedUrl->getController().'Controller';
+							$controllerName = $moduleObject->GetNamespaceName().'\\'.$parsedUrl->getControllerName().'Controller';
 							
 							unset($parsedUrl);
 							unset($moduleObject);
@@ -265,7 +265,7 @@
 				else
 				{
 					unset($moduleObject);
-					throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModule()));
+					throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
 				}
 			}
 		
@@ -274,7 +274,7 @@
 			 */
 			public static function LoadView()
 			{
-				$action = HttpContext::getParsedUrl()->getAction();
+				$action = HttpContext::getParsedUrl()->getActionName();
 				
 				//Call action in current controller
 				if (method_exists(Context::getCurrentController(), $action))
@@ -284,12 +284,12 @@
 				}
 				else
 				{
-					throw new SpherusException(sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getController(), HttpContext::getParsedUrl()->getModule()));
+					throw new SpherusException(sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getController(), HttpContext::getParsedUrl()->getModuleName()));
 				}
 				
 				if(!in_array($action, Context::getCurrentController()->noViewControllers))
 				{
-					$fileName = MODULES.HttpContext::getParsedUrl()->getModule().DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.HttpContext::getParsedUrl()->getController().DIRECTORY_SEPARATOR.$action.'.php';
+					$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.HttpContext::getParsedUrl()->getControllerName().DIRECTORY_SEPARATOR.$action.'.php';
 						
 					Context::getCurrentController()->BeforeAction();
 					Check::FileIsReadable($fileName);
@@ -311,7 +311,7 @@
 						}
 						else
 						{
-							$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModule().DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.self::getCurrentTheme()->getName().DIRECTORY_SEPARATOR.'theme.php';
+							$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.self::getCurrentTheme()->getName().DIRECTORY_SEPARATOR.'theme.php';
 							Check::FileIsReadable($moduleThemeFile);
 							require($moduleThemeFile);
 							$moduleThemeName = self::getCurrentModule()->GetNamespaceName().'\\Themes\\'.self::getCurrentTheme()->getName().'Theme';

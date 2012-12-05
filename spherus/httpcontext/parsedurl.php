@@ -22,29 +22,29 @@
 			/**
 			 * Initializes a new instance of ParsedUrl class
 			 * 
-			 * @param string $module The ParsedUrl module
-			 * @param string $controller The ParsedUrl controller
-			 * @param string $action The ParsedUrl action
+			 * @param string $moduleName The ParsedUrl module name
+			 * @param string $controllerName The ParsedUrl controller name
+			 * @param string $actionName The ParsedUrl action name
 			 * @param array $parameters The ParsedUrl parameters array
 			 * @param Spherus\Core\Route $route The ParsedUrl Route
 			 * 
-			 * @throws SpherusException When $module parameter is null or empty
-			 * @throws SpherusException When $controller parameter is null or empty
-			 * @throws SpherusException When $action parameter is null or empty
+			 * @throws SpherusException When $moduleName parameter is null or empty
+			 * @throws SpherusException When $controllerName parameter is null or empty
+			 * @throws SpherusException When $actionName parameter is null or empty
 			 * @throws SpherusException When $parameters parameter is null
 			 * @throws SpherusException When $route parameter is null or empty
 			 */
-			public function __construct($module, $controller, $action, $parameters, $route)
+			public function __construct($moduleName, $controllerName, $actionName, $parameters, $route)
 			{
-				Check::IsNullOrEmpty($module);
-				Check::IsNullOrEmpty($controller);
-				Check::IsNullOrEmpty($action);
+				Check::IsNullOrEmpty($moduleName);
+				Check::IsNullOrEmpty($controllerName);
+				Check::IsNullOrEmpty($actionName);
 				Check::IsNull($parameters);
 				Check::IsNullOrEmpty($route);
 				
-				$this->module = $module;
-				$this->controller = $controller;
-				$this->action = $action;
+				$this->moduleName = $moduleName;
+				$this->controllerName = $controllerName;
+				$this->actionName = $actionName;
 				$this->parameters = $parameters;
 				$this->route = $route;
 			}
@@ -53,22 +53,22 @@
 			/* FIELDS */
 			
 			/**
-			 * Defines the ParsedUrl object module
+			 * Defines the ParsedUrl object module name
 			 * @var string
 			 */
-			private $module = null;
+			private $moduleName = null;
 			
 			/**
-			 * Defines the ParsedUrl object controller
+			 * Defines the ParsedUrl object controller name
 			 * @var string
 			 */
-			private $controller = null;
+			private $controllerName = null;
 			
 			/**
-			 * Defines the ParsedUrl object action
+			 * Defines the ParsedUrl object action name
 			 * @var string
 			 */
-			private $action = null;
+			private $actionName = null;
 			
 			/**
 			 * Defines the ParsedUrl object parameters array
@@ -90,9 +90,9 @@
 			 * 
 			 * @return string
 			 */
-			public function getModule() 
+			public function getModuleName() 
 			{
-				return $this->module;
+				return $this->moduleName;
 			}
 
 			/**
@@ -100,9 +100,9 @@
 			 *
 			 * @return string
 			 */
-			public function getController() 
+			public function getControllerName() 
 			{
-				return $this->controller;
+				return $this->controllerName;
 			}
 
 			/**
@@ -110,9 +110,9 @@
 			 *
 			 * @return string
 			 */
-			public function getAction() 
+			public function getActionName() 
 			{
-				return $this->action;
+				return $this->actionName;
 			}
 
 			/**

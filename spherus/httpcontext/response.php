@@ -98,11 +98,11 @@
 				{
 					if(!isset($module))
 					{
-						$module = HttpContext::getParsedUrl()->getModule();
+						$module = HttpContext::getParsedUrl()->getModuleName();
 					}
 					if(!isset($controller))
 					{
-						$controller = HttpContext::getParsedUrl()->getController();
+						$controller = HttpContext::getParsedUrl()->getControllerName();
 					}
 					$url = '/'.$module.'/'.$controller.'/'.$action;
 					if(isset($parameters))
