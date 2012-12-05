@@ -103,9 +103,9 @@
 			{
 			    self::SetIPFilter();
 			    self::LoadModules();
-			    Context::setCurrentController(Context::LoadController());
-			    Context::LoadTheme();
-			    Context::LoadView();
+			    self::LoadController();
+			    self::LoadTheme();
+			    self::LoadView();
 			}
 			
 			/**
@@ -223,7 +223,6 @@
 			/**
 			 * Loads controller according to the given ParsedUrl
 			 *
-			 * @return Spherus\Core\ControllerBase
 			 * @throws SpherusException When controller is not found
 			 */
 			public static function LoadController()
@@ -248,7 +247,7 @@
 							self::LoadControllerAttributes($controllerObject);
 							$controllerObject->BeforeLoad();
 							
-							return $controllerObject;
+							self::setCurrentController($controllerObject);
 						}
 						else
 						{
