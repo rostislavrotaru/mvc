@@ -5,6 +5,8 @@
 
 		use Spherus\HttpContext\HttpContext;
 		use Spherus\HttpContext\Session;
+		use Spherus\Parsers\IpFilterParser;
+		use Spherus\Interfaces\IModule;
 
 		/**
 		 * Class that represents the framework context
@@ -91,7 +93,63 @@
 				return self::GetModuleByName(HttpContext::getParsedUrl()->getModule());
 			}
 			
+			
 			/* METHODS */
+			
+			/**
+			 * Initialize context
+			 */
+			public static function Initialize()
+			{
+			    self::SetIPFilter();
+			    self::LoadModules();
+			    Context::setCurrentController(Context::LoadController());
+			    Context::LoadTheme();
+			    Context::LoadView();
+			}
+			
+			/**
+			 * Loads all found modules
+			 */
+			public static function LoadModules()
+			{
+			    //Find all module directories
+			    $moduleDirectories = Context::ListDirectoryFolders(MODULES);
+			    if(isset($moduleDirectories))
+			    {
+			        foreach ($moduleDirectories as $directory)
+			        {
+			            //Check if exists the module file
+			            Check::FileIsReadable(MODULES.$directory.DIRECTORY_SEPARATOR.'module.php');
+			
+			            require(MODULES.$directory.DIRECTORY_SEPARATOR.'module.php');
+			            $moduleName = $directory.'Module';
+			            $module = new $moduleName;
+			
+			            //Check if created object implements IModule interface
+			            if ($module instanceof IModule)
+			            {
+			                Context::AddModule($module);
+			                $module->Run();
+			            }
+			        }
+			    }
+			}
+			
+			/**
+			 * Sets Ip filters
+			 */
+			public static function SetIPFilter()
+			{
+			    if (file_exists(APP_COMMON.'ipfilter.php'))
+			    {
+			        require(APP_COMMON.'ipfilter.php');
+			        require(PARSERS.'ipfilterparser.php');
+			        	
+			        //Check IP Filter rules
+			        IpFilterParser::Parse();
+			    }
+			}
 			
 			/**
 			 * Add an module to the modules collection

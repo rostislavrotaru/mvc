@@ -31,6 +31,6 @@
 	HttpContext::Initialize();
 	
 	//Initialize bootstrapper
-	BootStrapper::Initialize();
+	Context::Initialize();
 
 ?>
