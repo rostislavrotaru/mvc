@@ -12,7 +12,6 @@
 	 * @since			SPHERUS v 3.0.0
 	 * @license			OSD License (http://www.spherus.net/license)
 	 */
-	//Require the main file
 	require_once('spherus'.DIRECTORY_SEPARATOR.'main.php');
 
 ?>
