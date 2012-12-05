@@ -18,9 +18,6 @@
 	//Require enums file
 	require(CORE.'spherusexception.php');
 	
-	//File with boot process utilies
-	require(CORE.'bootstrapper.php');
-	
 	//Base controller file
 	require(CORE.'controllerbase.php');
 	
