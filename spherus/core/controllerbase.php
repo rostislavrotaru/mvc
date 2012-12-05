@@ -10,7 +10,7 @@
 		 * @version 3.0
 		 * 
 		 */
-		class ControllerBase
+		abstract class ControllerBase
 		{
 			/* FIELDS */
 			
@@ -25,7 +25,7 @@
 			 * @var string
 			 */
 			public $layout = null; 
-			
+		 
 
 			/* EVENT TEMPLATES */
 
@@ -63,6 +63,12 @@
 			public function AfterAction()
 			{
 	
+			}
+
+			
+			public function GetName()
+			{
+				return get_class($this);
 			}
 			
 		}

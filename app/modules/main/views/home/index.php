@@ -3,6 +3,7 @@
 
 	echo('index view<br />');
 	echo('Current theme: '.Context::getCurrentTheme()->getName().'<br />');
+	echo('Current controller: '.Context::getCurrentController()->GetName().'<br />');
 ?>
 <a href="/main/home/redirect">redirect</a><br />
 <a href="/main/home/about">about</a><br />

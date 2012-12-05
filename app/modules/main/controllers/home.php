@@ -27,10 +27,10 @@
 			
 			public function redirect()
 			{
-				Response::Redirect('index', null, 'test', array(3,3,3));
+				Response::Redirect('index', null, null, array(3,3,3));
 			}
 		
-			public function UnsetSession()
+			public function unsetsession()
 			{
 				Session::Clear();
 				Response::Redirect('index');
