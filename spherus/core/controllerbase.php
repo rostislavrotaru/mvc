@@ -1,17 +1,26 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
 	namespace Spherus\Core
 	{
+		
 		/**
-		 * Class that represents the base for all application controllers
-		 *
-		 * @author Rostislav Rotaru
-		 * @package spherus.core
-		 * @version 3.0
-		 * 
-		 */
+		* Class that represents the base for all application controllers
+		*
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.core
+		*/
 		abstract class ControllerBase
 		{
+			
 			/* FIELDS */
 			
 			/**
@@ -63,12 +72,6 @@
 			public function AfterAction()
 			{
 	
-			}
-
-			
-			public function GetName()
-			{
-				return get_class($this);
 			}
 			
 		}

@@ -1,5 +1,14 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
 	namespace Spherus\HttpContext
 	{
 	
@@ -10,13 +19,11 @@
 		use Spherus\Core\ResponseStatusType;
 
 		/**
-		 * Class that represents the http response object
-		 *
-		 * @author Rostislav Rotaru
-		 * @package spherus.httpcontext
-		 * @version 3.0
-		 *
-		 */
+		* Class that represents the http response object
+		*
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.httpcontext
+		*/
 		class Response
 		{
 

@@ -1,23 +1,29 @@
 <?php
 
 	/**
-	 * Serves as the base for the framework booting process
-	 *
-	 * @author Rostislav Rotaru
-	 * @package spherus
-	 * @version 3.0
-	 * 
-	 */	
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+	
+	/**
+	* Serves as the base for the booting process
+	* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+	* @package spherus
+	*/
 
-	use Spherus\HttpContext\HttpContext;
-	use Spherus\Core\Bootstrapper;
-	use Spherus\Routing\RouteHandler;
 	use Spherus\Core\Context;
+	use Spherus\HttpContext\HttpContext;
 	use Spherus\HttpContext\Session;
+	use Spherus\Routing\RouteHandler;
 
 	//Base require files
 	require('requires.php');
 	
+	//Starts session
 	Session::Start();
 	
 	//Load application configuration file

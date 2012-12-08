@@ -1,5 +1,14 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
 	namespace Spherus\HttpContext
 	{
 	
@@ -7,13 +16,11 @@
 		use Spherus\Core\Check;
 
 		/**
-		 * Class that represents http context parsed url
-		 *
-		 * @author Rostislav Rotaru
-		 * @package spherus.httpcontext
-		 * @version 3.0
-		 *
-		 */
+		* Class that represents http context parsed url
+		* 
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.httpcontext
+		*/
 		class ParsedUrl
 		{
 			

@@ -1,15 +1,21 @@
 <?php
 
 	/**
-	 * Defines framework paths
-	 * 
-	 * @author Rostislav.Rotaru
-	 * @package spherus
-	 * @version 3.0
-	 * 
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+	
+	/**
+	* Defines paths
+	* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+	* @package spherus
 	*/
 
-	/* FRAMEWORK CONSTANTS */
+	/* CONSTANTS */
 
 	//Root path
 	define('ROOT', '.');

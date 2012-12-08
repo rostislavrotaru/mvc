@@ -1,5 +1,21 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
+	/**
+	* Class that represents the enum implementations
+	*
+	* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+	* @package spherus.core
+	*/
+
 	namespace Spherus\Core
 	{
 		

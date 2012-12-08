@@ -1,13 +1,19 @@
 <?php
-
+	
 	/**
-	 * Base framework requires
-	 * 
-	 * @author Rostislav Rotaru
-	 * @package spherus
-	 * @version 3.0
-	 * 
-	 */
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+	
+	/**
+	* Base requires
+	* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+	* @package spherus
+	*/
 
 	//File with all configured paths
 	require('paths.php');

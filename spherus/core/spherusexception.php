@@ -1,16 +1,40 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
 	namespace Spherus\Core
 	{
 
+		/**
+		* Class that represents the base for all exceptions
+		*
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.core
+		*/
 		class SpherusException extends \Exception
 		{
+			/**
+			 * Initializes a new instance of SpherusException class
+			 * 
+			 * @param string $message The exception message
+			 * @param strinf $code The exception code
+			 * @param Exception $internalException The internal exception
+			 */
 			function __construct($message, $code = null, $internalException = null)
 			{
 				parent::__construct($message, $code, $internalException);
 			}			
 		}
 		
+		
+		//Exception constants
 		define('EXCEPTION_NULL', 'Null value reference');
 		define('EXCEPTION_NULL_OR_EMPTY', 'Null or empty value provided');
 		define('EXCEPTION_INVALID_ARRAY', 'Given value is not an array value');
