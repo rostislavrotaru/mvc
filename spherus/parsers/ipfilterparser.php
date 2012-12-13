@@ -1,5 +1,14 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
 	namespace Spherus\Parsers
 	{
 
@@ -8,13 +17,11 @@
 		use Spherus\HttpContext\HttpContext;
 		
 		/**
-		 * Represents the framework IP filtratioin functionality
-		 * 
-		 * @author Rostislav Rotaru
-		 * @package spherus.parsers
-		 * @version 3.0
-		 * 
-		 */
+		* Represents the framework IP filtratioin functionality
+		*
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.parsers
+		*/
 		class IpFilterParser
 		{
 			

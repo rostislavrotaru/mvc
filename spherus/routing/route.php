@@ -1,17 +1,25 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
 	namespace Spherus\Routing
 	{
 		use Spherus\Core\Check;
 
 		/**
-		 * Defines a Route object class
-		 *
-		 * @author Rostislav Rotaru
-		 * @package spherus.routing
-		 * @version 3.0
-		 *
-		 */
+		* Defines a Route object class
+		*
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.routing
+		*
+		*/
 		class Route
 		{
 			

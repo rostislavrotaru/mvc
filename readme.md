@@ -2,4 +2,7 @@ SPHERUS suite
 ======================
 
 website:
-http://www.spherus.net
+http://spherus.net
+
+license:
+http://license.spherus.net

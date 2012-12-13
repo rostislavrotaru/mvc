@@ -13,13 +13,11 @@
 	{
 	    
 		/**
-		 * Defines interface that all modules should implement
-		 *
-		 * @author Rostislav Rotaru
-		 * @package spherus.interfaces
-		 * @version 3.0
-		 *
-		 */
+		* Defines interface that all modules should implement
+		*
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.interfaces
+		*/
 		interface IModule
 		{
 			

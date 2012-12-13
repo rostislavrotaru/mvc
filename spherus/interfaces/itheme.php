@@ -11,14 +11,13 @@
 
 	namespace Spherus\Interfaces
 	{
+		
 		/**
-		 * Defines interface for application themes
-		 *
-		 * @author Rostislav Rotaru
-		 * @package spherus.interfaces
-		 * @version 3.0
-		 *
-		 */
+		* Defines interface for application themes
+		*
+		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		* @package spherus.interfaces
+		*/
 		interface ITheme
 		{
 			

@@ -1,17 +1,31 @@
 <?php
 
+	/**
+	* Redistributions of files must retain the above copyright notice.
+	*
+	* @copyright SPHERUS (http://spherus.net)
+	* @license http://license.spherus.net
+	* @link http://spherus.net
+	* @since 3.0
+	*/
+
 	namespace Spherus\Helpers
 	{
 	
+		use Spherus\Core\SpherusException;
+
+		use Spherus\Core\Check;
+
 		/**
 		 * HTML helper class. Used for xHTML/HTML5 compatible tags generation
 		 * 
-		 * @author Rostislav.Rotaru 
-		 * @package Spherus.Helpers
-		 * @version 3.0
+		 * @author Anton Perkin (anton.perkin@gmail.com)
+		 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+		 * @package spherus.helpers
 		 */ 
 		class HtmlHelper
 		{
+		    
 		    /* VARIABLES */
 		    
 			/**
@@ -25,59 +39,7 @@
 			 * @var array
 			 */
 			private static $jsTagBuffer = array();
-			
-			
-			/* SETTINGS */
-			
-			/**
-			 * Images base path that will be prepended to the image path provided
-			 *
-			 * @var string
-			 */
-			private static $imageBasePath = IMAGES;
-			
-			/**
-			 * Localized images base path that will be prepended to the image path provided
-			 *
-			 * @var string
-			 */
-			private static $imageLocalizedBasePath = MODULE_IMAGES_LOCALIZED;
-			
-			
-			/* PROPERTIES */
-	
-			/**
-			 * @return the $imageBasePath
-			 */
-			public function getImageBasePath ()
-			{
-				return $this->imageBasePath;
-			}
-		
-			/**
-			 * @param string $imageBasePath
-			 */
-			public function setImageBasePath ($imageBasePath)
-			{
-				$this->imageBasePath = $imageBasePath;
-			}
-		
-			/**
-			 * @return the $imageLocalizedBasePath
-			 */
-			public function getImageLocalizedBasePath ()
-			{
-				return $this->imageLocalizedBasePath;
-			}
-		
-			/**
-			 * @param string $imageLocalizedBasePath
-			 */
-			public function setImageLocalizedBasePath ($imageLocalizedBasePath)
-			{
-				$this->imageLocalizedBasePath = $imageLocalizedBasePath;
-			}		
-			
+					
 			
 			/* COMMON PRIVATE METHODS */
 	
@@ -86,13 +48,18 @@
 			 * 
 			 * @param string $name attribute name
 			 * @param string $value attribute value
+			 * 
+			 * @throws SpherusException When the $name attribute is null or empty
+			 * @throws SpherusException When the $value attribute is null or empty
+			 * 
 			 * @return string
 			 */
 			protected static function GetAttributeString($name, $value)
 			{
-				$attributesString = ' '.$name.'="'.$value.'"';
-	
-			    return $attributesString;
+			    Check::IsNullOrEmpty($name);
+			    Check::IsNullOrEmpty($value);
+			    
+				return ' '.$name.'="'.$value.'"';
 			}    	
 	    	
 			/**
@@ -106,7 +73,7 @@
 				//checks whether the array was passed
 				if (is_array($attributes)) 
 				{
-					$attributesString = '';
+					$attributesString = null;
 					foreach ($attributes as $name => $value)
 					{
 						$attributesString .= self::GetAttributeString($name, $value);
