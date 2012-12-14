@@ -7,6 +7,8 @@
 	* @license http://license.spherus.net
 	* @link http://spherus.net
 	* @since 3.0
+	* 
+	* test comment
 	*/
 
 	namespace Spherus\Helpers
