@@ -17,7 +17,7 @@
 		use Spherus\Core\Check;
 
 		/**
-		 * HTML helper class. Used for xHTML/HTML5 compatible tags generation
+		 * HTML helper class. Used for HTML tags generation
 		 * 
 		 * @author Anton Perkin (anton.perkin@gmail.com)
 		 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
@@ -29,54 +29,53 @@
 		    /* VARIABLES */
 		    
 			/**
-			 * CSS tag buffer
+			 * CSS tags list. Stores all css files links till the moment that will be used.
 			 * @var array
 			 */
-			private static $cssTagBuffer = array();
+			private static $cssTagList = array();
 			
 			/**
-			 * JS tag buffer
+			 * Javascript tags list. Stores all javascript files links till the moment that will be used.
 			 * @var array
 			 */
-			private static $jsTagBuffer = array();
+			private static $jsTagList = array();
 					
 			
 			/* COMMON PRIVATE METHODS */
 	
 			/**
-			 * Gets attribute string 
+			 * Converts html tag attribute to string 
 			 * 
-			 * @param string $name attribute name
-			 * @param string $value attribute value
+			 * @param string $name The html tag attribute name.
+			 * @param string $value The html tag attribute value.
 			 * 
-			 * @throws SpherusException When the $name attribute is null or empty
-			 * @throws SpherusException When the $value attribute is null or empty
+			 * @throws SpherusException When the $name parameter is null or empty.
+			 * @throws SpherusException When the $value parameter is null or empty.
 			 * 
 			 * @return string
 			 */
-			protected static function GetAttributeString($name, $value)
+			protected static function HtmlTagAttributeToString($name, $value)
 			{
-			    Check::IsNullOrEmpty($name);
+				Check::IsNullOrEmpty($name);
 			    Check::IsNullOrEmpty($value);
 			    
 				return ' '.$name.'="'.$value.'"';
 			}    	
 	    	
 			/**
-			 * Gets attributes string 
+			 * Converts array of html attributes to string.
 			 * 
-			 * @param string|array $attributes tag attributes in string or $name=>$value format
+			 * @param string|array $attributes tag attributes in string or $name=>$value format.
 			 * @return string
 			 */
-			protected static function GetAttributesString($attributes)
+			protected static function HtmlTagAttributesToString($attributes)
 			{
-				//checks whether the array was passed
 				if (is_array($attributes)) 
 				{
 					$attributesString = null;
-					foreach ($attributes as $name => $value)
+					foreach ($attributes as $name=>$value)
 					{
-						$attributesString .= self::GetAttributeString($name, $value);
+						$attributesString .= self::HtmlTagAttributeToString($name, $value);
 					}
 					
 					return $attributesString;
@@ -88,32 +87,6 @@
 			}
 			
 			/**
-			 * Generates HTML tag without attributes parsing
-			 * 
-			 * @param string $tag tag name
-			 * @param string $attributes tag attributes
-			 * @param $value tag value
-			 */
-			private static function TagRaw($tag, $attributes, $value = '')
-			{
-				echo "<$tag $attributes>$value</$tag>";
-			}
-	
-			/**
-			 * Gets HTML tag without attributes parsing
-			 * 
-			 * @param string $tag tag name
-			 * @param string $attributes tag attributes
-			 * @param string $value tag value
-			 * 
-			 * @return string
-			 */
-			protected static function GetTagRaw($tag, $attributes, $value = '')
-			{
-				return "<$tag $attributes>$value</$tag>";
-			}
-			
-			/**
 			 * Gets CSS include string if it was not included already
 			 * 
 			 * @param string $filePath path to file
@@ -121,7 +94,7 @@
 			private static function CssProcess($filePath)
 			{
 			    $cssString = self::GetLink(array('type' => 'text/css', 'rel' => 'stylesheet', 'href' => $filePath.'.css'));
-	        	if (!in_array($cssString, self::$cssTagBuffer))
+	        	if (!in_array($cssString, self::$cssTagList))
 				{
 					self::$cssTagBuffer[] = $cssString;
 					return $cssString;
@@ -147,33 +120,19 @@
 			/* COMMON PUBLIC METHODS */
 			
 			/**
-			 * Generates HTML tag
+			 * Returns a HTML tag with attributes(if any)
 			 * 
 			 * @param string $tag tag name
 			 * @param string|array $attributes tag attributes
-			 * @param mixed $value tag value
-			 */
-			public static function Tag($tag, $attributes, $value = '')
-			{
-				$attributes = self::GetAttributesString($attributes);
-				
-				self::TagRaw($tag, $attributes, $value);
-			}
-			
-			/**
-			 * Gets HTML tag
+			 * @param string $value tag value
 			 * 
-			 * @param string $tag tag name
-			 * @param string|array $attributes tag attributes
-			 * @param mixed $value tag value
-			 * 
+			 * @throws SpherusException When $tag parameter is null or empty.
 			 * @return string
 			 */
-			public static function GetTag($tag, $attributes, $value = '')
+			public static function HtmlTag($tag, $attributes = null, $value = null)
 			{
-				$attributes = self::GetAttributesString($attributes);
-				
-				return self::GetTagRaw($tag, $attributes, $value);
+			    Check::IsNullOrEmpty($tag);
+			    return '<'.$tag.self::HtmlTagAttributesToString($attributes).'>'.$value.'</'.$tag.'>';
 			}
 			
 			
@@ -187,11 +146,10 @@
 			 * @param string $content the content of the meta information
 			 * @param string|array $attributes tag attributes
 			 */
-			public static function Meta($name, $value, $content, $attributes = '')
+			public static function MetaTag($name, $value, $content, $attributes = null)
 			{
-				$attributes = self::GetAttributeString('content', $content).self::GetAttributeString($name, $value).self::GetAttributesString($attributes);
-				
-				self::TagRaw('meta', $attributes);
+				$attributes = self::GetAttributeString('content', $content).self::HtmlTagAttributeToString($name, $value).self::HtmlTagAttributesToString($attributes);
+				return self::HtmlTag('meta', $attributes);
 			}
 			
 			/**
@@ -200,9 +158,9 @@
 			 * @param string $value text to be displayed
 			 * @param string|array $attributes tag attributes
 			 */
-			public static function Title($value, $attributes = '')
+			public static function Title($value, $attributes = null)
 			{
-				self::Tag('title', $attributes, $value);	
+				return self::HtmlTag('title', $attributes, $value);	
 			}
 			
 			/**
@@ -212,27 +170,41 @@
 			 */
 			public static function Link($attributes)
 			{
-				echo self::GetLink($attributes);
-			}
-			
-			/**
-			 * Gets 'link' tag
-			 * 
-			 * @param string|array $attributes tag attributes
-			 */
-			private static function GetLink($attributes)
-			{
-				return self::GetTag('link', $attributes);
+			    return self::HtmlTag('link', $attributes);
 			}
 	
 			/**
-			 * Generates favicon
+			 * Generates png favicon
 			 * 
-			 * @param string $pathToFile path to the favicon image
+			 * @param string $fileName path to the favicon png image
 			 */
-			public static function Favicon($pathToFile)
+			public static function FaviconPng($fileName)
 			{
-			    self::Link(array('rel' => 'shortcut icon', 'href' => $pathToFile, 'type' => 'image/png'));
+			    return self::Favicon($fileName, 'image/png');
+			}
+			
+			/**
+			 * Generates ico favicon
+			 *
+			 * @param string $fileName path to the favicon ico image
+			 */
+			public static function FaviconIco($fileName)
+			{
+			    return self::Favicon($fileName, 'image/x-icon');
+			}
+			
+			/**
+			 * Generates and returns favicon tag
+			 *
+			 * @param string $fileName path to the favicon image
+			 * @param string $iconType The type of icon
+			 */
+			public static function Favicon($fileName, $iconType)
+			{
+			    Check::FileIsReadable($fileName);
+			    Check::IsNullOrEmpty($iconType);
+			    
+			    return self::Link(array('rel' => 'shortcut icon', 'href' => $fileName, 'type' => $iconType));
 			}
 			
 			/**
@@ -242,7 +214,7 @@
 			 */
 			public static function Style($value, $attributes = '')
 			{
-				self::Tag('style', $attributes, $value);
+				self::HtmlTag('style', $attributes, $value);
 			}
 			
 			/**
