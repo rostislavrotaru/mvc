@@ -39,6 +39,11 @@
 			 * @return string
 			 */
 			function GetNamespaceName();
+			
+			/**
+			 * Gets module helpers path
+			 */
+			function GetHelpersPath();
 		}
 	}
 

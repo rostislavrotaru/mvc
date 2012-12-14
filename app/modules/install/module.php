@@ -26,6 +26,14 @@
 			return 'install';
 		}
 		
+		/* (non-PHPdoc)
+		 * @see \Spherus\Interfaces\IModule::GetHelpersPath()
+		 */
+		public function GetHelpersPath()
+		{
+		    return __DIR__.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'helpers';
+		}
+	
 	}
 
 ?>
