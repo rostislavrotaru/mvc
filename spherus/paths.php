@@ -38,6 +38,9 @@
 	//Interfaces path
 	define('INTERFACES', SPHERUS.'interfaces'.DIRECTORY_SEPARATOR);
 	
+	//Helpers path
+	defined('HELPERS') or define('HELPERS', SPHERUS.'helpers'.DIRECTORY_SEPARATOR);
+	
 	
 	/* APPLICATION CONSTANTS */
 	
@@ -47,10 +50,16 @@
 	//Application common folder path
 	define('APP_COMMON', APP.'common'.DIRECTORY_SEPARATOR);
 	
+	//Application includes folder path
+	define('APP_INCLUDES', APP.'includes'.DIRECTORY_SEPARATOR);
+	
 	//Application modules path
 	define('MODULES', APP.'modules'.DIRECTORY_SEPARATOR);
 	
 	//Application themes path
 	define('THEMES', APP.'themes'.DIRECTORY_SEPARATOR);
+	
+	//Helpers path
+	defined('APP_HELPERS') or define('APP_HELPERS', APP_INCLUDES.'helpers'.DIRECTORY_SEPARATOR);
 
 ?>
