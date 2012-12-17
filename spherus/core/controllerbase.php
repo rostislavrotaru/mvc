@@ -12,6 +12,9 @@
 	namespace Spherus\Core
 	{
 		
+		use Spherus\HttpContext\HttpContext;
+		use Spherus\Core\SpherusException;
+
 		/**
 		* Class that represents the base for all application controllers
 		*
@@ -34,6 +37,12 @@
 			 * @var string
 			 */
 			public $layout = null; 
+			
+			/**
+			 * Defines the list of controller helpers
+			 * @var array
+			 */
+			protected $helpers = array(); 
 		 
 
 			/* EVENT TEMPLATES */
@@ -72,6 +81,88 @@
 			public function AfterAction()
 			{
 	
+			}
+			
+			
+			/* PUBLIC METHODS */
+			
+			/**
+			 * Include current controller helpers
+			 */
+			public function IncludeHelpers()
+			{
+			    $controllerHelpers = $this->helpers;
+			
+			    foreach ($controllerHelpers as $value)
+			    {	
+			        $filename = $this->GetIncludeFilename($value);
+			        
+			        if($filename)
+			        {
+			            //Include global helper file just once
+			            require_once(CORE.'helperbase.php');
+			
+			            //Load helper in following search order: system path, app helpers path, modules helpers path
+			            //Framework helpers path
+			            if (file_exists(strtolower(HELPERS.$filename.'.php')))
+			            {
+			                require_once(strtolower(HELPERS.$filename.'.php'));
+							return;
+			            }
+			            //App helpers path
+			            elseif (file_exists(strtolower(APP_HELPERS.$filename.'.php')))
+			            {
+			                require_once(strtolower(APP_HELPERS.$filename.'.php'));
+			                return;
+			            }
+			            //Module helpers path
+			            else
+			            {
+			                $filePath = Context::getCurrentModule()->GetHelpersPath().DIRECTORY_SEPARATOR.$filename.'.php';
+			                if (file_exists($filePath))
+			                {
+			                    require_once($filePath);
+			                    return;
+			                }
+			            }
+			            throw new SpherusException(sprintf(EXCEPTION_HELPER_NOT_FOUND, $filename));
+			        }
+			    }
+			}
+					
+			/**
+			 * Returns filename to include or false if it should not be included in this page
+			 *
+			 * @param string $fileString filename with optional modifiers
+			 * @return string|boolean
+			 */
+			public function GetIncludeFilename($fileString)
+			{
+			    //divides the rule string into file name and use limitations
+			    $explodedArray = explode('|', $fileString);
+			    $fileName = $explodedArray[0];
+			    	
+			    if (empty($explodedArray[1]))
+			    {
+			        //if no use limitations found
+			        return $fileName;
+			    }
+			    else
+			    {
+			        //gets use limitations (actions where it should or should not be used)
+			        $actions = explode(',', $explodedArray[1]);
+			
+			        if (substr($explodedArray[1], 0, 1) != '^')
+			        {
+			            //if it is the list with allowed actions
+			            return (in_array(HttpContext::getParsedUrl()->getActionName(), $actions)) ? $fileName : false;
+			        }
+			        else
+			        {
+			            //if it is the list with NOT allowed actions
+			            return (in_array(HttpContext::getParsedUrl()->getActionName(), $actions)) ? false : $fileName;
+			        }
+			    }
 			}
 			
 		}
