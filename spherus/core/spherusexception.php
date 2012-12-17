@@ -43,6 +43,7 @@
 		define('EXCEPTION_CONTROLLER_NOT_FOUND', 'The "%s" controller not found');
 		define('EXCEPTION_MODULE_NOT_FOUND', 'The "%s" module not found');
 		define('EXCEPTION_LAYOUT_NOT_FOUND', 'The "%s" layout not found');
+		define('EXCEPTION_HELPER_NOT_FOUND', 'The "%s" helper not found');
 		define('EXCEPTION_FILE_NOT_READABLE', 'The "%s" file is not readable. Please check file system permissions');
 		define('EXCEPTION_FILE_NOT_EXISTS', 'The given file does not exists: "%s"');
 		define('EXCEPTION_NO_ROUTE_TO_REDIRECT', 'No Route to redirect found');
