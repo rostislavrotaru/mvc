@@ -12,6 +12,8 @@
 	namespace Spherus\Core
 	{
 
+		use Spherus\Helpers\HtmlHelper;
+
 		use Spherus\HttpContext\HttpContext;
 		use Spherus\HttpContext\Session;
 		use Spherus\Parsers\IpFilterParser;
@@ -48,6 +50,7 @@
 			 * @var string
 			 */
 			private static $currentTheme = null;
+			
 
 			/* PROPERTIES */
 			
@@ -99,6 +102,16 @@
 			public static function getCurrentModule()
 			{
 				return self::GetModuleByName(HttpContext::getParsedUrl()->getModuleName());
+			}
+			
+			/**
+			 * Determine if context shoul process css files
+			 * 
+			 * @param boolean $needToProcessCss true if need to process css files
+			 */
+			public static function setNeedToProcessCss ($needToProcessCss)
+			{
+			   // Context::$needToProcessCss = $needToProcessCss;
 			}
 			
 			
@@ -302,6 +315,8 @@
 					Context::getCurrentController()->BeforeAction();
 					Check::FileIsReadable($fileName);
 					
+					Context::getCurrentController()->IncludeHelpers();
+					
 					if(isset(self::getCurrentController()->layout))
 					{
 						ob_start();
@@ -315,7 +330,11 @@
 						if (file_exists($layoutFile))
 						{
 							Check::FileIsReadable($layoutFile);
+							ob_start();
 							require($layoutFile);
+							HttpContext::setPageContent(ob_get_contents());
+							ob_end_clean();
+							self::ProcessPageContent();
 						}
 						else
 						{
@@ -332,7 +351,11 @@
 							if(file_exists($layoutFile))
 							{
 								Check::FileIsReadable($layoutFile);
+								ob_start();
 								require($layoutFile);
+								HttpContext::setPageContent(ob_get_contents());
+								ob_end_clean();
+								self::ProcessPageContent();
 							}
 							else
 							{
@@ -343,13 +366,16 @@
 					}
 					else
 					{
+						ob_start();
 						require($fileName);
+						HttpContext::setPageContent(ob_get_contents());
+						ob_end_clean();
+						self::ProcessPageContent();
 					}
-
+					
+					self::getCurrentController()->AfterAction();
 					unset($fileName);
-					Context::getCurrentController()->AfterAction();
 				}
-				
 				unset($action);
 			} 
 			
@@ -385,9 +411,11 @@
 				}
 				
 				//Define theme paths
-				define('CSS', THEMES.$currentThemeName.DIRECTORY_SEPARATOR.'css');
-				define('SCRIPTS', THEMES.$currentThemeName.DIRECTORY_SEPARATOR.'scripts');
-				define('IMAGES', THEMES.$currentThemeName.DIRECTORY_SEPARATOR.'images');
+				$themePath = substr(THEMES.$currentThemeName.DIRECTORY_SEPARATOR, 1);
+				define('CSS', $themePath.'css'.DIRECTORY_SEPARATOR);
+				define('SCRIPTS', $themePath.'scripts'.DIRECTORY_SEPARATOR);
+				define('IMAGES', $themePath.'images'.DIRECTORY_SEPARATOR);
+				unset($themePath);
 				
 				$currentThemeFilePath = THEMES.$currentThemeName.DIRECTORY_SEPARATOR.'theme.php';
 				Check::FileIsReadable($currentThemeFilePath);
@@ -398,7 +426,7 @@
 				unset($currentThemeName);
 				unset($currentThemeFilePath);
 			}
-			
+						
 			/**
 			 * Loads controller attributes (layouts, helpers etc).
 			 * 
@@ -417,6 +445,14 @@
 				}
 			}
 			
+			/**
+			 * Processes page content
+			 */
+			private static function ProcessPageContent()
+			{
+				PageProcessor::ProcessPage();
+			}
+				
 		}
 	}
 ?>

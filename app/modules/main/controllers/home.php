@@ -13,6 +13,7 @@
 			public function BeforeLoad()
 			{
 				$this->noViewControllers = array('redirect');
+				$this->helpers = array('html');
 			}
 			
 			public function index()
