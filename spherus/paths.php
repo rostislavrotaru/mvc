@@ -18,7 +18,7 @@
 	/* CONSTANTS */
 
 	//Root path
-	define('ROOT', '.');
+	defined(ROOT) or define('ROOT', '.');	
 	
 	//Spherus path
 	define('SPHERUS', ROOT.DIRECTORY_SEPARATOR.'spherus'.DIRECTORY_SEPARATOR);

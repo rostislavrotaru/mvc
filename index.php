@@ -14,6 +14,6 @@
 	* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	* @package spherus
 	*/
-	require_once('spherus'.DIRECTORY_SEPARATOR.'main.php');
+	require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'spherus'.DIRECTORY_SEPARATOR.'main.php');
 
 ?>
