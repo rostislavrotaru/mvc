@@ -450,7 +450,7 @@
 			 */
 			private static function ProcessPageContent()
 			{
-				PageProcessor::ProcessPage();
+				echo HttpContext::getPageContent();
 			}
 				
 		}

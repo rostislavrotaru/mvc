@@ -1,14 +1,12 @@
 <?php
 	use Spherus\HttpContext\HttpContext;
 	use Spherus\Helpers\HtmlHelper;
-	HtmlHelper::Css(CSS.'cssser.css');
 ?>
-
+<!DOCTYPE html>
 <html>
 	<head>
-		{css}
+		<?php echo HtmlHelper::Css(CSS.'cssser.css');?>
 	</head>
 	<body>
-		<?php echo HttpContext::getPageContent();?>
 	</body>
 </html>
