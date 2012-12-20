@@ -31,11 +31,17 @@
 		    /* VARIABLES */
 			
 			/**
-			 * Javascript tags list. Stores all javascript files links till the moment that will be used.
+			 * Javascript files list. Stores all javascript files links till the moment that will be used.
 			 * @var array
 			 */
-			private static $jsTagList = array();
-					
+			private static $jsFilesList = array();
+			
+			/**
+			 * CSS files list. Stores all css files links till the moment that will be used.
+			 * @var array
+			 */
+			private static $cssFilesList = array();
+			
 			
 			/* COMMON PRIVATE METHODS */
 	
@@ -81,22 +87,22 @@
 					return $attributes;
 				}
 			}
-			
+
 			/**
-			 * Gets JS include string if it was not included already
-			 * 
-			 * @param string $filePath path to file
+			 * Includes CSS file by generating appropriate link tag
+			 *
+			 * @param string $fileName path to the CSS file
+			 * @throws SpherusException When $fileName is null or empty.
 			 */
-			private static function JavaScriptProcess($filePath)
-			{	    
-			    $jsString = self::GetTag('script', array('type' => 'text/javascript', 'src' => $filePath.'.js'));
-	        	if (!in_array($jsString, self::$jsTagBuffer))
-				{
-					self::$jsTagBuffer[] = $jsString;
-					return $jsString;
-				}		    
+			private static function CssProcess($fileName)
+			{
+			    Check::IsNullOrEmpty($fileName);
+			    if (!in_array($fileName, self::$cssFilesList))
+			    {
+			        self::$cssFilesList[] = $fileName;
+			        return self::Link(array('type' => 'text/css', 'rel' => 'stylesheet', 'href' => $fileName));
+			    }
 			}
-					
 			
 			/* COMMON PUBLIC METHODS */
 			
@@ -127,20 +133,33 @@
 			}
 			
 			/**
-			 * Includes CSS file by generating appropriate link tag
+			 * Includes a single CSS file or an array of CSS files.
+			 *
+			 * @param string|array $fileName Path to a single CSS file or an array of CSS files.
 			 * 
-			 * @param string $fileName path to the CSS file
+			 * @example 
+			 * HtmlHelper::Css(file_path_and_name);
+			 * HtmlHelper::Css(array(file_path_and_name_1, file_path_and_name_2));
 			 */
 			public static function Css($fileName)
-			{			    
-			    require_once(CORE.'pageprocessor.php');
-			    PageProcessor::AddCssLink($fileName);
+			{
+			    if (is_array($fileName))
+			    {
+			        foreach ($fileName as $file)
+			        {
+			            echo self::CssProcess($file);
+			        }
+			    }
+			    else
+			    {
+			        echo self::CssProcess($file);
+			    }
 			}
 			
 			/**
 			 * Includes JavaScript file by generating appropriate script tag
 			 * 
-			 * @param string|array $pathToFile path to the JavaScript file
+			 * @param string $pathToFile path to the JavaScript file
 			 */
 			public static function JavaScript($pathToFile)
 			{
