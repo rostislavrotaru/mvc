@@ -100,9 +100,26 @@
 			    if (!in_array($fileName, self::$cssFilesList))
 			    {
 			        self::$cssFilesList[] = $fileName;
-			        return self::Link(array('type' => 'text/css', 'rel' => 'stylesheet', 'href' => $fileName));
+			        return self::Link(array('type' => 'text/css', 'rel' => 'stylesheet', 'href' => $fileName.'.css'));
 			    }
 			}
+			
+			/**
+			 * Includes javascript file by generating appropriate link tag
+			 *
+			 * @param string $fileName path to the javascript file
+			 * @throws SpherusException When $fileName is null or empty.
+			 */
+			private static function JavascriptProcess($fileName)
+			{
+			    Check::IsNullOrEmpty($fileName);
+			    if (!in_array($fileName, self::$jsFilesList))
+			    {
+			        self::$jsFilesList[] = $fileName;
+			        return self::Script(array('type' => 'text/javascript', 'src' => $fileName.'.js'));
+			    }
+			}
+			
 			
 			/* COMMON PUBLIC METHODS */
 			
@@ -133,6 +150,16 @@
 			}
 			
 			/**
+			 * Generates 'script' tag
+			 *
+			 * @param string|array $attributes tag attributes
+			 */
+			public static function Script($attributes)
+			{
+			    return self::HtmlTag('script', $attributes);
+			}
+			
+			/**
 			 * Includes a single CSS file or an array of CSS files.
 			 *
 			 * @param string|array $fileName Path to a single CSS file or an array of CSS files.
@@ -147,35 +174,34 @@
 			    {
 			        foreach ($fileName as $file)
 			        {
-			            echo self::CssProcess($file);
+			            return self::CssProcess($file);
 			        }
 			    }
 			    else
 			    {
-			        echo self::CssProcess($fileName);
+			        return self::CssProcess($fileName);
 			    }
 			}
 			
 			/**
-			 * Includes JavaScript file by generating appropriate script tag
+			 * Includes a single javascript file or an array of javascript files.
 			 * 
-			 * @param string $pathToFile path to the JavaScript file
+			 * @param string $fileName path to the JavaScript file
 			 */
-			public static function JavaScript($pathToFile)
+			public static function JavaScript($fileName)
 			{
-			    if (is_array($pathToFile))
+			    if (is_array($fileName))
 			    {
-			        foreach ($pathToFile as $filePath)
+			        foreach ($fileName as $file)
 			        {
-			            self::Script('text/javascript', '', array('src' => $filePath.'.js'));
+			            return self::JavascriptProcess($file);
 			        }
 			    }
 			    else
 			    {
-	    			self::Script('text/javascript', '', array('src' => $pathToFile.'.js'));
+			        return self::JavascriptProcess($fileName);
 			    }		    
 			}
-			
 		}
 	
 	}

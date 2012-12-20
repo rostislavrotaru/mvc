@@ -1,0 +1,3 @@
+- Change entire routing mechanism
+- Change constant for theme css, scripts and image, add constants for common css, scripts and images
+- Add upload folder

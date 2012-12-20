@@ -37,9 +37,7 @@
 			 * @throws SpherusException When $url parameter is null or empty
 			 */
 			public function __construct($url, $module = null, $controller = null, $action = null, $parameters = null)
-			{
-				//Check::IsNullOrEmpty($url);
-				
+			{				
 				$this->url = $url;
 				$this->module = $module;
 				$this->controller = $controller;
