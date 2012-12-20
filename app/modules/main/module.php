@@ -35,7 +35,7 @@
 		 */
 		public function GetHelpersPath()
 		{
-		    return __DIR__.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'helpers';
+		    return __DIR__.SEPARATOR.'includes'.SEPARATOR.'helpers';
 		}
 		
 	}

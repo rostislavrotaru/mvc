@@ -10,7 +10,7 @@
 	
 			public function getLayoutsPath()
 			{
-				return __DIR__.DIRECTORY_SEPARATOR.'layouts';
+				return __DIR__.SEPARATOR.'layouts';
 			}
 			
 	

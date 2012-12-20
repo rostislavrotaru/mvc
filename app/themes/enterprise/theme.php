@@ -32,7 +32,7 @@
 			 */
 			public function getCssPath() 
 			{
-				return THEMES.$this->name.DIRECTORY_SEPARATOR.'css';
+				return THEMES.$this->name.SEPARATOR.'css';
 			}
 		
 			
@@ -41,7 +41,7 @@
 			 */
 			public function getImagesPath() 
 			{
-				return THEMES.$this->name.DIRECTORY_SEPARATOR.'images';
+				return THEMES.$this->name.SEPARATOR.'images';
 			}
 		
 			
@@ -50,7 +50,7 @@
 			*/
 			public function getLayoutsPath() 
 			{
-				return THEMES.$this->name.DIRECTORY_SEPARATOR.'layouts';
+				return THEMES.$this->name.SEPARATOR.'layouts';
 			}
 		
 			
@@ -59,7 +59,7 @@
 			*/
 			public function getScriptsPath()
 			{
-				return THEMES.$this->name.DIRECTORY_SEPARATOR.'scripts';
+				return THEMES.$this->name.SEPARATOR.'scripts';
 			}
 
 		}

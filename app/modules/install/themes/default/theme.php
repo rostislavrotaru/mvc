@@ -10,7 +10,7 @@
 	
 			public function getLayoutsPath()
 			{
-				return __DIR__.DIRECTORY_SEPARATOR.'layouts';
+				return __DIR__.SEPARATOR.'layouts';
 			}
 			
 	
@@ -22,19 +22,19 @@
 	
 			public function getCssPath() 
 			{	
-			    return __DIR__.DIRECTORY_SEPARATOR.'css';
+			    return __DIR__.SEPARATOR.'css';
 			}
 	
 	
 			public function getImagesPath() 
 			{
-			    return __DIR__.DIRECTORY_SEPARATOR.'images';
+			    return __DIR__.SEPARATOR.'images';
 			}
 	
 	
 			public function getScriptsPath() 
 			{
-			    return __DIR__.DIRECTORY_SEPARATOR.'scripts';
+			    return __DIR__.SEPARATOR.'scripts';
 			}
 		
 		}

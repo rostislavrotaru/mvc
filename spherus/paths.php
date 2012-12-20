@@ -18,48 +18,51 @@
 	/* CONSTANTS */
 
 	//Root path
-	defined(ROOT) or define('ROOT', '.');	
+	define('ROOT', '.');	
+	
+	//Directory separator
+	define('SEPARATOR', '/');
 	
 	//Spherus path
-	define('SPHERUS', ROOT.DIRECTORY_SEPARATOR.'spherus'.DIRECTORY_SEPARATOR);
+	define('SPHERUS', ROOT.SEPARATOR.'spherus'.SEPARATOR);
 	
 	//Core path
-	define('CORE', SPHERUS.'core'.DIRECTORY_SEPARATOR);
+	define('CORE', SPHERUS.'core'.SEPARATOR);
 	
 	//Parsers path
-	define('PARSERS', SPHERUS.'parsers'.DIRECTORY_SEPARATOR);
+	define('PARSERS', SPHERUS.'parsers'.SEPARATOR);
 	
 	//Routing path
-	define('ROUTING', SPHERUS.'routing'.DIRECTORY_SEPARATOR);
+	define('ROUTING', SPHERUS.'routing'.SEPARATOR);
 	
 	//HttpContext path
-	define('HTTP_CONTEXT', SPHERUS.'httpcontext'.DIRECTORY_SEPARATOR);
+	define('HTTP_CONTEXT', SPHERUS.'httpcontext'.SEPARATOR);
 	
 	//Interfaces path
-	define('INTERFACES', SPHERUS.'interfaces'.DIRECTORY_SEPARATOR);
+	define('INTERFACES', SPHERUS.'interfaces'.SEPARATOR);
 	
 	//Helpers path
-	defined('HELPERS') or define('HELPERS', SPHERUS.'helpers'.DIRECTORY_SEPARATOR);
+	defined('HELPERS') or define('HELPERS', SPHERUS.'helpers'.SEPARATOR);
 	
 	
 	/* APPLICATION CONSTANTS */
 	
 	//Public application path
-	define('APP', ROOT.DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR);
+	define('APP', ROOT.SEPARATOR.'app'.SEPARATOR);
 	
 	//Application common folder path
-	define('APP_COMMON', APP.'common'.DIRECTORY_SEPARATOR);
+	define('APP_COMMON', APP.'common'.SEPARATOR);
 	
 	//Application includes folder path
-	define('APP_INCLUDES', APP.'includes'.DIRECTORY_SEPARATOR);
+	define('APP_INCLUDES', APP.'includes'.SEPARATOR);
 	
 	//Application modules path
-	define('MODULES', APP.'modules'.DIRECTORY_SEPARATOR);
+	define('MODULES', APP.'modules'.SEPARATOR);
 	
 	//Application themes path
-	define('THEMES', APP.'themes'.DIRECTORY_SEPARATOR);
+	define('THEMES', APP.'themes'.SEPARATOR);
 	
 	//Helpers path
-	defined('APP_HELPERS') or define('APP_HELPERS', APP_INCLUDES.'helpers'.DIRECTORY_SEPARATOR);
+	define('APP_HELPERS', APP_INCLUDES.'helpers'.SEPARATOR);
 
 ?>

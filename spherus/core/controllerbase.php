@@ -112,7 +112,7 @@
 		            //Module helpers path
 		            else
 		            {
-		                $filePath = Context::getCurrentModule()->GetHelpersPath().DIRECTORY_SEPARATOR.$filename.'.php';
+		                $filePath = Context::getCurrentModule()->GetHelpersPath().SEPARATOR.$filename.'.php';
 		                if (file_exists($filePath))
 		                {
 		                    require_once($filePath);

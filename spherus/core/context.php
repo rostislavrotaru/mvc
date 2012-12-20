@@ -141,9 +141,9 @@
 			        foreach ($moduleDirectories as $directory)
 			        {
 			            //Check if exists the module file
-			            Check::FileIsReadable(MODULES.$directory.DIRECTORY_SEPARATOR.'module.php');
+			            Check::FileIsReadable(MODULES.$directory.SEPARATOR.'module.php');
 			
-			            require(MODULES.$directory.DIRECTORY_SEPARATOR.'module.php');
+			            require(MODULES.$directory.SEPARATOR.'module.php');
 			            $moduleName = $directory.'Module';
 			            $module = new $moduleName;
 			
@@ -232,7 +232,7 @@
 					
 				foreach ($files as $file)
 				{
-					if(is_dir(MODULES.DIRECTORY_SEPARATOR.$file))
+					if(is_dir(MODULES.SEPARATOR.$file))
 					{
 						$result[] = $file;
 					}
@@ -253,7 +253,7 @@
 				
 				if(isset($moduleObject))
 				{
-					$fileName = MODULES.$parsedUrl->getModuleName().DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$parsedUrl->getControllerName().'.php';
+					$fileName = MODULES.$parsedUrl->getModuleName().SEPARATOR.'controllers'.SEPARATOR.$parsedUrl->getControllerName().'.php';
 					if(file_exists($fileName))
 					{
 						if(is_readable($fileName))
@@ -310,7 +310,7 @@
 				
 				if(!in_array($action, Context::getCurrentController()->noViewControllers))
 				{
-					$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.HttpContext::getParsedUrl()->getControllerName().DIRECTORY_SEPARATOR.$action.'.php';
+					$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
 						
 					Context::getCurrentController()->BeforeAction();
 					Check::FileIsReadable($fileName);
@@ -325,7 +325,7 @@
 						ob_end_clean();
 						
 						//Search layout in app first, then in current controller module
-						$layoutFile = self::getCurrentTheme()->getLayoutsPath().DIRECTORY_SEPARATOR.self::getCurrentController()->layout.'.php';
+						$layoutFile = self::getCurrentTheme()->getLayoutsPath().SEPARATOR.self::getCurrentController()->layout.'.php';
 						
 						if (file_exists($layoutFile))
 						{
@@ -338,7 +338,7 @@
 						}
 						else
 						{
-							$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.self::getCurrentTheme()->getName().DIRECTORY_SEPARATOR.'theme.php';
+							$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'themes'.SEPARATOR.self::getCurrentTheme()->getName().SEPARATOR.'theme.php';
 							Check::FileIsReadable($moduleThemeFile);
 							require($moduleThemeFile);
 							$moduleThemeName = self::getCurrentModule()->GetNamespaceName().'\\Themes\\'.self::getCurrentTheme()->getName().'Theme';
@@ -347,7 +347,7 @@
 							unset($moduleThemeFile);
 							unset($moduleThemeName);
 							
-							$layoutFile = $moduleThemeObject->getLayoutsPath().DIRECTORY_SEPARATOR.self::getCurrentController()->layout.'.php';
+							$layoutFile = $moduleThemeObject->getLayoutsPath().SEPARATOR.self::getCurrentController()->layout.'.php';
 							if(file_exists($layoutFile))
 							{
 								Check::FileIsReadable($layoutFile);
@@ -411,13 +411,13 @@
 				}
 				
 				//Define theme paths
-				$themePath = substr(THEMES.$currentThemeName.DIRECTORY_SEPARATOR, 1);
-				define('CSS', $themePath.'css'.DIRECTORY_SEPARATOR);
-				define('SCRIPTS', $themePath.'scripts'.DIRECTORY_SEPARATOR);
-				define('IMAGES', $themePath.'images'.DIRECTORY_SEPARATOR);
+				$themePath = substr(THEMES.$currentThemeName.SEPARATOR, 1);
+				define('CSS', $themePath.'css'.SEPARATOR);
+				define('SCRIPTS', $themePath.'scripts'.SEPARATOR);
+				define('IMAGES', $themePath.'images'.SEPARATOR);
 				unset($themePath);
 				
-				$currentThemeFilePath = THEMES.$currentThemeName.DIRECTORY_SEPARATOR.'theme.php';
+				$currentThemeFilePath = THEMES.$currentThemeName.SEPARATOR.'theme.php';
 				Check::FileIsReadable($currentThemeFilePath);
 				require($currentThemeFilePath);
 				$currentThemeName = 'Spherus\\Themes\\'.$currentThemeName.'Theme';

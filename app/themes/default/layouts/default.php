@@ -5,8 +5,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php echo HtmlHelper::Css(CSS.'cssser.css');?>
+		<?php echo HtmlHelper::Css(CSS.'cssser.css')?>
 	</head>
 	<body>
+		<?php echo HttpContext::getPageContent()?>
 	</body>
 </html>
