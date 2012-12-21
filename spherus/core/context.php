@@ -308,16 +308,15 @@
 					throw new SpherusException(sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getController(), HttpContext::getParsedUrl()->getModuleName()));
 				}
 				
-				if(!in_array($action, Context::getCurrentController()->noViewControllers))
+				if(!in_array($action, self::$currentController->noViewControllers))
 				{
 					$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
-						
-					Context::getCurrentController()->BeforeAction();
 					Check::FileIsReadable($fileName);
 					
-					Context::getCurrentController()->IncludeHelpers();
+					self::$currentController->BeforeAction();
+					self::$currentController->IncludeHelpers();
 					
-					if(isset(self::getCurrentController()->layout))
+					if(isset(self::$currentController->layout))
 					{
 						ob_start();
 						require($fileName);
@@ -325,7 +324,7 @@
 						ob_end_clean();
 						
 						//Search layout in app first, then in current controller module
-						$layoutFile = self::getCurrentTheme()->getLayoutsPath().SEPARATOR.self::getCurrentController()->layout.'.php';
+						$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
 						
 						if (file_exists($layoutFile))
 						{
@@ -338,16 +337,16 @@
 						}
 						else
 						{
-							$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'themes'.SEPARATOR.self::getCurrentTheme()->getName().SEPARATOR.'theme.php';
+							$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'themes'.SEPARATOR.self::$currentTheme->getName().SEPARATOR.'theme.php';
 							Check::FileIsReadable($moduleThemeFile);
 							require($moduleThemeFile);
-							$moduleThemeName = self::getCurrentModule()->GetNamespaceName().'\\Themes\\'.self::getCurrentTheme()->getName().'Theme';
+							$moduleThemeName = self::getCurrentModule()->GetNamespaceName().'\\Themes\\'.self::$currentTheme->getName().'Theme';
 							$moduleThemeObject = new $moduleThemeName;
 							
 							unset($moduleThemeFile);
 							unset($moduleThemeName);
 							
-							$layoutFile = $moduleThemeObject->getLayoutsPath().SEPARATOR.self::getCurrentController()->layout.'.php';
+							$layoutFile = $moduleThemeObject->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
 							if(file_exists($layoutFile))
 							{
 								Check::FileIsReadable($layoutFile);
@@ -359,8 +358,9 @@
 							}
 							else
 							{
-								throw new SpherusException(sprintf(EXCEPTION_LAYOUT_NOT_FOUND, self::getCurrentController()->layout));
+								throw new SpherusException(sprintf(EXCEPTION_LAYOUT_NOT_FOUND, self::$currentController->layout));
 							}
+							
 							unset($moduleThemeObject);
 						}
 					}
@@ -375,6 +375,7 @@
 					
 					self::getCurrentController()->AfterAction();
 					unset($fileName);
+					unset($layoutFile);
 				}
 				unset($action);
 			} 
@@ -430,18 +431,18 @@
 			/**
 			 * Loads controller attributes (layouts, helpers etc).
 			 * 
-			 * @param ControllerBase $controllerObject The controller object to parse.
+			 * @param ControllerBase $controller The controller object to parse.
 			 * 
 			 * @throws SpherusException When $controllerObject parameter is null or empty.
 			 */
-			private static function LoadControllerAttributes($controllerObject)
+			private static function LoadControllerAttributes($controller)
 			{
-				Check::IsNullOrEmpty($controllerObject);
+				Check::IsNullOrEmpty($controller);
 				
 				//Load layout
-				if(!isset($controllerObject->layout))
+				if(!isset($controller->layout))
 				{
-					$controllerObject->layout = \Config::getDefaultLayout();
+					$controller->layout = \Config::getDefaultLayout();
 				}
 			}
 			
