@@ -410,21 +410,21 @@
 					Session::SetValue('theme', $currentThemeName);
 				}
 				
+				$currentThemeFilePath = THEMES.$currentThemeName.SEPARATOR.'theme.php';
+				Check::FileIsReadable($currentThemeFilePath);
+				require($currentThemeFilePath);
+				$currentThemeName = 'Spherus\\Themes\\'.$currentThemeName.'Theme';
+				self::$currentTheme = new $currentThemeName;
+				
 				//Define theme paths
 				$themePath = substr(THEMES.$currentThemeName.SEPARATOR, 1);
 				define('THEME_CSS', $themePath.'css'.SEPARATOR);
 				define('THEME_SCRIPTS', $themePath.'scripts'.SEPARATOR);
 				define('THEME_IMAGES', $themePath.'images'.SEPARATOR);
-				unset($themePath);
 				
-				$currentThemeFilePath = THEMES.$currentThemeName.SEPARATOR.'theme.php';
-				Check::FileIsReadable($currentThemeFilePath);
-				require($currentThemeFilePath);
-				$currentThemeName = 'Spherus\\Themes\\'.$currentThemeName.'Theme';
-				
-				self::$currentTheme = new $currentThemeName;
 				unset($currentThemeName);
 				unset($currentThemeFilePath);
+				unset($themePath);
 			}
 						
 			/**
