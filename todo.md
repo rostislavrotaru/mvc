@@ -2,3 +2,4 @@
 - Change constants for theme css, scripts and image, add constants for common css, scripts and images: done
 - Add uploads folder: done
 - Think about renaming Context class to avoid confusing with HttpContext class
+- Make unit tests
