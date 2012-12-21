@@ -5,9 +5,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php echo HtmlHelper::Css(THEME_CSS.'cssser')?>
+		<?php 
+			echo HtmlHelper::Css(THEME_CSS.'cssser');
+			echo HtmlHelper::Css(THEME_CSS.'style');
+		?>
 	</head>
 <body>
-	<?php echo HttpContext::getPageContent()?>
+	<?php echo HttpContext::getPageContent();?>
 </body>
 </html>
