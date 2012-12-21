@@ -12,10 +12,8 @@
 
 	namespace Spherus\Helpers
 	{
-	
-		use Spherus\Core\PageProcessor;
+
 		use Spherus\Core\SpherusException;
-		use Spherus\Core\Context;
 		use Spherus\Core\Check;
 
 		/**
@@ -87,38 +85,6 @@
 					return $attributes;
 				}
 			}
-
-			/**
-			 * Includes CSS file by generating appropriate link tag
-			 *
-			 * @param string $fileName path to the CSS file
-			 * @throws SpherusException When $fileName is null or empty.
-			 */
-			private static function CssProcess($fileName)
-			{
-			    Check::IsNullOrEmpty($fileName);
-			    if (!in_array($fileName, self::$cssFilesList))
-			    {
-			        self::$cssFilesList[] = $fileName;
-			        return self::Link(array('type' => 'text/css', 'rel' => 'stylesheet', 'href' => $fileName.'.css'));
-			    }
-			}
-			
-			/**
-			 * Includes javascript file by generating appropriate link tag
-			 *
-			 * @param string $fileName path to the javascript file
-			 * @throws SpherusException When $fileName is null or empty.
-			 */
-			private static function JavascriptProcess($fileName)
-			{
-			    Check::IsNullOrEmpty($fileName);
-			    if (!in_array($fileName, self::$jsFilesList))
-			    {
-			        self::$jsFilesList[] = $fileName;
-			        return self::Script(array('type' => 'text/javascript', 'src' => $fileName.'.js'));
-			    }
-			}
 			
 			
 			/* COMMON PUBLIC METHODS */
@@ -160,47 +126,35 @@
 			}
 			
 			/**
-			 * Includes a single CSS file or an array of CSS files.
+			 * Includes a CSS file by generating appropriate link tag.
 			 *
-			 * @param string|array $fileName Path to a single CSS file or an array of CSS files.
-			 * 
-			 * @example 
-			 * HtmlHelper::Css(file_path_and_name);
-			 * HtmlHelper::Css(array(file_path_and_name_1, file_path_and_name_2));
+			 * @param string $fileName Path to CSS file.
+			 * @throws SpherusException Wnen $fileName parameter is null or empty.
 			 */
 			public static function Css($fileName)
 			{
-			    if (is_array($fileName))
+				Check::IsNullOrEmpty($fileName);
+			    if (!in_array($fileName, self::$cssFilesList))
 			    {
-			        foreach ($fileName as $file)
-			        {
-			            return self::CssProcess($file);
-			        }
-			    }
-			    else
-			    {
-			        return self::CssProcess($fileName);
+			        self::$cssFilesList[] = $fileName;
+			        return self::Link(array('type' => 'text/css', 'rel' => 'stylesheet', 'href' => $fileName.'.css'));
 			    }
 			}
 			
 			/**
-			 * Includes a single javascript file or an array of javascript files.
+			 * Includes a javascript file by generating appropriate link tag.
 			 * 
 			 * @param string $fileName path to the JavaScript file
+			 * @throws SpherusException Wnen $fileName parameter is null or empty.
 			 */
 			public static function JavaScript($fileName)
 			{
-			    if (is_array($fileName))
+				Check::IsNullOrEmpty($fileName);
+			    if (!in_array($fileName, self::$jsFilesList))
 			    {
-			        foreach ($fileName as $file)
-			        {
-			            return self::JavascriptProcess($file);
-			        }
-			    }
-			    else
-			    {
-			        return self::JavascriptProcess($fileName);
-			    }		    
+			        self::$jsFilesList[] = $fileName;
+			        return self::Script(array('type' => 'text/javascript', 'src' => $fileName.'.js'));
+			    }	    
 			}
 		}
 	
