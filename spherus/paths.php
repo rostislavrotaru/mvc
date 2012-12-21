@@ -53,16 +53,22 @@
 	//Application common folder path
 	define('APP_COMMON', APP.'common'.SEPARATOR);
 	
-	//Application includes folder path
-	define('APP_INCLUDES', APP.'includes'.SEPARATOR);
-	
 	//Application modules path
 	define('MODULES', APP.'modules'.SEPARATOR);
 	
 	//Application themes path
 	define('THEMES', APP.'themes'.SEPARATOR);
 	
-	//Helpers path
-	define('APP_HELPERS', APP_INCLUDES.'helpers'.SEPARATOR);
+	//Common helpers path
+	define('APP_HELPERS', APP_COMMON.'helpers'.SEPARATOR);
 
+	//Common css path
+	define('COMMON_CSS', APP_COMMON.'css'.SEPARATOR);
+	
+	//Common images path
+	define('COMMON_IMAGES', APP_COMMON.'images'.SEPARATOR);
+	
+	//Common images path
+	define('COMMON_SCRIPTS', APP_COMMON.'scripts'.SEPARATOR);
+	
 ?>
