@@ -11,14 +11,12 @@
 
 	namespace Spherus\Routing
 	{
-		use Spherus\Core\Check;
 
 		/**
 		* Defines a Route object class
 		*
 		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 		* @package spherus.routing
-		*
 		*/
 		class Route
 		{
