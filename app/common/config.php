@@ -1,8 +1,6 @@
 <?php
 
-	use Spherus\HttpContext\Session;
-
-use Spherus\Core\SpherusConfig;
+	use Spherus\Core\SpherusConfig;
 
 	/**
 	 * Application configuration
