@@ -12,12 +12,10 @@
 	namespace Spherus\Core
 	{
 
-		use Spherus\Helpers\HtmlHelper;
-
-		use Spherus\HttpContext\HttpContext;
-		use Spherus\HttpContext\Session;
-		use Spherus\Parsers\IpFilterParser;
-		use Spherus\Interfaces\IModule;
+		use Spherus\HttpContext\HttpContext,
+			Spherus\HttpContext\Session,
+			Spherus\Parsers\IpFilterParser,
+			Spherus\Interfaces\IModule;
 
 		/**
 		* Class that represents the framework context
@@ -102,16 +100,6 @@
 			public static function getCurrentModule()
 			{
 				return self::GetModuleByName(HttpContext::getParsedUrl()->getModuleName());
-			}
-			
-			/**
-			 * Determine if context shoul process css files
-			 * 
-			 * @param boolean $needToProcessCss true if need to process css files
-			 */
-			public static function setNeedToProcessCss ($needToProcessCss)
-			{
-			   // Context::$needToProcessCss = $needToProcessCss;
 			}
 			
 			
