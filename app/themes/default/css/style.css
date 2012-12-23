@@ -1,5 +1,10 @@
-body
+a, a:visited
 {
-	background-color:#f5f5f5;
-	font: normal 13px arial,sans-serif;
+	color: #4183C4;
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
 }
