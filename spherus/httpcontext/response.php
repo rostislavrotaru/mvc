@@ -14,7 +14,7 @@
 	
 		use Spherus\Core\SpherusException;
 		use Spherus\Core\Check;
-		use Spherus\Routing\RouteHandler;
+		use Spherus\Routing\RouteManager;
 		use Spherus\Routing\Route;
 		use Spherus\Core\ResponseStatusType;
 
@@ -100,7 +100,7 @@
 				Check::IsNullOrEmpty($action);
 				
 				$url = null;
-				$route = RouteHandler::GetRoute(new Route(null, $module, $controller, $action, $parameters));
+				$route = RouteManager::GetRoute(new Route(null, $module, $controller, $action, $parameters));
 				if(!isset($route))
 				{
 					if(!isset($module))

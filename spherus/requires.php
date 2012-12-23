@@ -28,7 +28,7 @@
 	require(BASE.'controllerbase.php');
 	
 	//Require routes handler file
-	require(ROUTING.'routehandler.php');
+	require(ROUTING.'routemanager.php');
 	
 	//Require route file
 	require(ROUTING.'route.php');

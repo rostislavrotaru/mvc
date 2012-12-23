@@ -13,7 +13,7 @@
 	{
 	
 		use Spherus\Core\SpherusException;
-		use Spherus\Routing\RouteHandler;
+		use Spherus\Routing\RouteManager;
 
 		/**
 		* Class that represents the http context object
@@ -34,7 +34,7 @@
 				Request::Initialize();
 				self::$serverProtocol = $_SERVER["SERVER_PROTOCOL"];
 				self::$isSecured = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off' ? false : true;
-				self::$parsedUrl = RouteHandler::Parse();
+				self::$parsedUrl = RouteManager::Parse();
 			}
 			
 			

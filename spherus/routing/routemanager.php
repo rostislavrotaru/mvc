@@ -24,7 +24,7 @@
 		* @package spherus.routing
 		*
 		*/
-		class RouteHandler
+		class RouteManager
 		{
 			
 			/* FIELDS */
@@ -87,7 +87,7 @@
 				Check::IsNullOrEmpty($currentUrl);
 		
 				$urlPath = parse_url($currentUrl, PHP_URL_PATH);
-				$foundRoute = RouteHandler::GetRouteByUrl($urlPath);
+				$foundRoute = RouteManager::GetRouteByUrl($urlPath);
 				
 				if(!isset($foundRoute))
 				{

@@ -18,7 +18,7 @@
 	use Spherus\Core\Workbench;
 	use Spherus\HttpContext\HttpContext;
 	use Spherus\HttpContext\Session;
-	use Spherus\Routing\RouteHandler;
+	use Spherus\Routing\RouteManager;
 
 	//Base require files
 	require('requires.php');
@@ -31,7 +31,7 @@
 	Workbench::LoadApplicationConfig();
 	
 	//Initialize route handler
-	RouteHandler::Initialize();
+	RouteManager::Initialize();
 	
 	//Initialize http context
 	HttpContext::Initialize();
