@@ -16,7 +16,6 @@
 		use Spherus\HttpContext\ParsedUrl;
 		use Spherus\Core\SpherusException;
 		use Spherus\Core\Check;
-		use Spherus\HttpContext\HttpContext;
 		
 		/**
 		* Defines a Route Handler class
@@ -72,15 +71,11 @@
 			 */
 			public static function RegiterDefaultRoute()
 			{
-				$route = new Route('/');
-				self::RegisterRoute($route);
-				
-				//Unset all unnecessary variables
-				unset($route);
+				self::RegisterRoute(new Route('/'));
 			}
 			
 			/**
-			* Parses url from HttpContext into module, controller, action and parameters
+			* Parses url into module, controller, action and parameters
 			*
 			* @return array Array of parsed url(module, controller, action and parameters)
 			* @throws SpherusException When $currentUrl parameter is null or empty
