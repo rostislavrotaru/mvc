@@ -24,7 +24,7 @@
 		* @package spherus.core
 		*
 		*/
-		class Context
+		class Workbench
 		{
 			
 			/* FIELDS */
@@ -123,7 +123,7 @@
 			public static function LoadModules()
 			{
 			    //Find all module directories
-			    $moduleDirectories = Context::ListDirectoryFolders(MODULES);
+			    $moduleDirectories = Workbench::ListDirectoryFolders(MODULES);
 			    if(isset($moduleDirectories))
 			    {
 			        foreach ($moduleDirectories as $directory)
@@ -138,7 +138,7 @@
 			            //Check if created object implements IModule interface
 			            if ($module instanceof IModule)
 			            {
-			                Context::AddModule($module);
+			                Workbench::AddModule($module);
 			                $module->Run();
 			            }
 			        }
@@ -192,7 +192,7 @@
 			 */
 			public static function GetModuleByName($moduleName)
 			{
-				$modules = Context::$modules;
+				$modules = Workbench::$modules;
 				foreach ($modules as $key=>$value)
 				{
 					if($moduleName === $key)
@@ -286,10 +286,10 @@
 				$action = HttpContext::getParsedUrl()->getActionName();
 				
 				//Call action in current controller
-				if (method_exists(Context::getCurrentController(), $action))
+				if (method_exists(Workbench::getCurrentController(), $action))
 				{
-					call_user_func_array(array(Context::getCurrentController(), $action), HttpContext::getParsedUrl()->getParameters());
-					Context::getCurrentController()->AfterLoad();
+					call_user_func_array(array(Workbench::getCurrentController(), $action), HttpContext::getParsedUrl()->getParameters());
+					Workbench::getCurrentController()->AfterLoad();
 				}
 				else
 				{

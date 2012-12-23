@@ -15,7 +15,7 @@
 	* @package spherus
 	*/
 
-	use Spherus\Core\Context;
+	use Spherus\Core\Workbench;
 	use Spherus\HttpContext\HttpContext;
 	use Spherus\HttpContext\Session;
 	use Spherus\Routing\RouteHandler;
@@ -28,7 +28,7 @@
 	
 	//Load application configuration file
 	//Throws exception if not found
-	Context::LoadApplicationConfig();
+	Workbench::LoadApplicationConfig();
 	
 	//Initialize route handler
 	RouteHandler::Initialize();
@@ -37,6 +37,6 @@
 	HttpContext::Initialize();
 	
 	//Initialize context
-	Context::Initialize();
+	Workbench::Initialize();
 
 ?>

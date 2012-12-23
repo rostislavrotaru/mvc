@@ -14,7 +14,7 @@
 	
 		use Spherus\Core\SpherusException;
 		use Spherus\Core\ControllerBase;
-		use Spherus\Core\Context;
+		use Spherus\Core\Workbench;
 		use Spherus\Routing\RouteHandler;
 
 		/**

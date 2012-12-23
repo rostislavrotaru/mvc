@@ -36,8 +36,8 @@
 	//File with internal configurations (extended in application)
 	require(CORE.'spherusconfig.php');
 	
-	//Application context file
-	require(CORE.'context.php');
+	//Application workbench file
+	require(CORE.'workbench.php');
 	
 	//Checks file
 	require(CORE.'check.php');
