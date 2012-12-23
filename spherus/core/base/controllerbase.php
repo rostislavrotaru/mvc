@@ -94,7 +94,7 @@
 			    foreach ($this->helpers as $filename)
 			    {	
 		            //Include global helper file just once
-		            require_once(CORE.'helperbase.php');
+		            require_once(BASE.'helperbase.php');
 		
 		            //Load helper in following search order: system path, app helpers path, modules helpers path
 		            //Framework helpers path

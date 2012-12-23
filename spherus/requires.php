@@ -25,7 +25,7 @@
 	require(CORE.'spherusexception.php');
 	
 	//Base controller file
-	require(CORE.'controllerbase.php');
+	require(BASE.'controllerbase.php');
 	
 	//Require routes handler file
 	require(ROUTING.'routehandler.php');

@@ -29,6 +29,9 @@
 	//Core path
 	define('CORE', SPHERUS.'core'.SEPARATOR);
 	
+	//Core base path
+	define('BASE', CORE.'base'.SEPARATOR);
+	
 	//Parsers path
 	define('PARSERS', SPHERUS.'parsers'.SEPARATOR);
 	
