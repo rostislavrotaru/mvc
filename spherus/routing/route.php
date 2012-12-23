@@ -47,31 +47,31 @@
 			/* FIELDS */
 			
 			/**
-			 * @return Route url
+			 * Defines the route url
 			 * @var string
 			 */
 			var $url;
 			
 			/**
-			 * @return Route module name
+			 * Defines the route module name
 			 * @var string 
 			 */
 			var $module;
 			
 			/**
-			 * @return Route controller name
+			 * Defines the route controller name
 			 * @var string
 			 */
 			var $controller;
 			
 			/**
-			 * @return Route action name
+			 * Defines the route action name
 			 * @var string
 			 */
 			var $action;
 			
 			/**
-			 * @return Route parameters
+			 * Defines the route parameters
 			 * @var mixed, array|null 
 			 */
 			var $parameters = null;
