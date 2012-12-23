@@ -18,7 +18,7 @@
 			Spherus\Interfaces\IModule;
 
 		/**
-		* Class that represents the framework context
+		* Class that represents the framework workbench
 		*
 		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 		* @package spherus.core
