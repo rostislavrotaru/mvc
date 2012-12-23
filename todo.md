@@ -1,5 +1,6 @@
 - Change entire routing mechanism
 - Change constants for theme css, scripts and image, add constants for common css, scripts and images: done
 - Add uploads folder: done
-- Think about renaming Context class to avoid confusing with HttpContext class
+- Think about renaming Context class to avoid confusing with HttpContext class: done
 - Make unit tests
+- Refactor and split Workbench class methods into smaller methods
