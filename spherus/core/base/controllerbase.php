@@ -9,17 +9,18 @@
 	* @since 3.0
 	*/
 
-	namespace Spherus\Core
+	namespace Spherus\Core\Base
 	{
 		
 		use Spherus\HttpContext\HttpContext;
 		use Spherus\Core\SpherusException;
+		use Spherus\Core\Workbench;
 
 		/**
 		* Class that represents the base for all application controllers
 		*
 		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-		* @package spherus.core
+		* @package spherus.core.base
 		*/
 		abstract class ControllerBase
 		{
@@ -93,9 +94,6 @@
 			{
 			    foreach ($this->helpers as $filename)
 			    {	
-		            //Include global helper file just once
-		            require_once(BASE.'helperbase.php');
-		
 		            //Load helper in following search order: system path, app helpers path, modules helpers path
 		            //Framework helpers path
 		            if (file_exists(strtolower(HELPERS.$filename.'.php')))
