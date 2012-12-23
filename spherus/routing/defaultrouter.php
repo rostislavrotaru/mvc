@@ -9,23 +9,33 @@
 	* @since 3.0
 	*/
 
-	namespace Spherus\Interfaces
+	namespace Spherus\Routing
 	{
-	    
+
+		use Spherus\Interfaces\IRouter;
+
 		/**
-		* Defines interface that all routers should implement
+		* Defines a default router class. Used for standard routing.
 		*
 		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-		* @package spherus.interfaces
+		* @package spherus.routing
 		*/
-		interface IRouter
+		class DefaultRouter implements IRouter
 		{
+			
+		    /* PUBLIC METHODS */
+		    
 			/**
 			 * Parses given url into route (module, controller, action and parameters).
 			 * @param string $url. Given url to parse.
 			 */
-			function Parse($url);			
+		    public function Parse($url)
+    		{
+        		
+        	}
+
 		}
+	
 	}
 
 ?>
