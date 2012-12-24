@@ -39,6 +39,7 @@
 		define('EXCEPTION_NULL_OR_EMPTY', 'Null or empty value provided');
 		define('EXCEPTION_INVALID_ARRAY', 'Given value is not an array value');
 		define('EXCEPTION_DEFAULT_ROUTE_NOT_FOUND', 'Default route not found');
+		define('EXCEPTION_INVALID_ROUTER_CONFIG', 'Invalid configuration for router definition');
 		define('EXCEPTION_ACCESS_DENIED', 'Access to this resource is denied');
 		define('EXCEPTION_CONTROLLER_NOT_FOUND', 'The "%s" controller not found');
 		define('EXCEPTION_MODULE_NOT_FOUND', 'The "%s" module not found');

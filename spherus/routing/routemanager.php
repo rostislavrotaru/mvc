@@ -30,9 +30,16 @@
 			/* FIELDS */
 			
 			/**
-			 * @var array Contains array of registered routes 
+			 * Contains array of registered routes.
+			 * @var array
 			 */
 			private static $registeredRoutes = array();
+			
+			/**
+			 * Contains the current router object
+			 * @var IRouter
+			 */
+			private static $router = null;
 		
 			
 			/* PUBLIC FUNCTIONS */
@@ -42,6 +49,7 @@
 			 */
 			public static function Initialize()
 			{
+			    self::InitializeRouter();
 				self::RegiterDefaultRoute();
 			}
 			
@@ -173,6 +181,36 @@
 				return null;
 			}
 			
+			
+			/* PRIVATE METHODS*/
+			
+			/**
+			 * Initializes router object indicated in configuration file.
+			 * 
+			 * @throws SpherusException When router configuration is invalid.
+			 * @throws SpherusException When router not implemets IRouter interface.
+			 */
+			private static function InitializeRouter()
+			{
+			    $router = \Config::getRoutingDefaults()['router'];
+			    if(isset($router))
+			    {
+			        //Check if default router should be used
+			        if($router == 'Spherus\Routing\DefaultRouter')
+			        {
+			            require(ROUTING.'defaultrouter.php');
+			        }
+			        self::$router = new $router;
+			        
+			        //Check if router implements IRouter interface
+			        Check::IsInstanceOf(self::$router, 'Spherus\\Interfaces\\IRouter');
+			    }
+			    else
+			    {
+			        throw new SpherusException(EXCEPTION_INVALID_ROUTER_CONFIG);
+			    }
+			}
+		
 		}
 	
 	}

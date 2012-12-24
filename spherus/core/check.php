@@ -151,7 +151,6 @@
 						throw new SpherusException(sprintf(EXCEPTION_OBJECT_INVALID_INSTANCE, get_class($object), $instance));
 				}
 			}
-			
 		}
 	}
 

@@ -48,6 +48,9 @@
 	//Require ITheme interface
 	require(INTERFACES.'itheme.php');
 	
+	//Require IRouter interface
+	require(INTERFACES.'irouter.php');
+	
 	//Require http context file
 	require(HTTP_CONTEXT.'httpcontext.php');
 	

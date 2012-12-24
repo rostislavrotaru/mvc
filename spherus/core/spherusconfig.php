@@ -19,7 +19,7 @@
 		* @package spherus.core
 		*/
 		abstract class SpherusConfig
-		{		
+		{
 		
 			/* FIELDS */
 			
@@ -43,7 +43,8 @@
 			(
 				'module'=>'main',
 				'controller'=>'home',
-				'action' => 'index'	
+				'action'=>'index',
+				'router'=>'Spherus\Routing\DefaultRouter'
 			);
 			
 			
@@ -76,7 +77,7 @@
 			 */
 			public static function getDefaultLayout()
 			{
-				return SpherusConfig::$defaultLayout;
+				return self::$defaultLayout;
 			}
 			
 			/**
@@ -90,17 +91,40 @@
 				self::$defaultLayout = $defaultLayout;
 			}
 			
+			/**
+			 * Gets routing defaults.
+			 * @return array
+			 */
+			public static function getRoutingDefaults()
+			{
+			    return self::$routingDefaults;
+			}
 			
-			/* METHODS */
+			
+			/* PUBLIC METHODS */
 			
 			/**
-			 * Initializes base functionality of Application configuration. Should be overwritten in Application Configuration file.
+			 * Initializes base functionality of Application configuration. Can be overwritten in Application Configuration file.
 			 */
 			public static function Initialize()
 			{
 				//Overwrite in Application config file
 			}
 
+			/**
+			 * Sets default routing value for a specified key.
+			 * 
+			 * @param string $key The routing default key.
+			 * @param mixed $value The routing default value.
+			 * 
+			 * @throws SpherusException When $key parameter is null or empty.
+			 */
+			public static function SetRoutingDefaults($key, $value)
+			{
+			    Check::IsNullOrEmpty($key);
+				self::$routingDefaults[$key] = $value;
+			}
+			
 		}
 	}
 ?>
