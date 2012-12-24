@@ -49,7 +49,7 @@
 			 */
 			public static function Initialize()
 			{
-			    self::InitializeRouter();
+				self::InitializeRouter();
 				self::RegiterDefaultRoute();
 			}
 			
