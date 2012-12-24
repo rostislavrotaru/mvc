@@ -21,10 +21,14 @@
 		interface IRouter
 		{
 			/**
-			 * Parses given url into route (module, controller, action and parameters).
-			 * @param string $url. Given url to parse.
+			 * Parses url from Request::getCurrentUrl() into route (module, controller, action and parameters).
 			 */
-			function Parse($url);			
+			function Parse();	
+
+			/**
+			 * This function is called after router object is created.
+			 */
+			function Initialize();
 		}
 	}
 

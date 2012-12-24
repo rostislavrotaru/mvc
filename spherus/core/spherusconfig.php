@@ -118,10 +118,13 @@
 			 * @param mixed $value The routing default value.
 			 * 
 			 * @throws SpherusException When $key parameter is null or empty.
+			 * @throws SpherusException When self::$routingDefaults is null.
 			 */
 			public static function SetRoutingDefaults($key, $value)
 			{
 			    Check::IsNullOrEmpty($key);
+			    Check::IsNull(self::$routingDefaults);
+			    
 				self::$routingDefaults[$key] = $value;
 			}
 			

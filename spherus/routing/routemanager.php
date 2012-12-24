@@ -11,9 +11,7 @@
 
 	namespace Spherus\Routing
 	{
-
-		use Spherus\HttpContext\Request;
-		use Spherus\HttpContext\ParsedUrl;
+	    
 		use Spherus\Core\SpherusException;
 		use Spherus\Core\Check;
 		
@@ -42,6 +40,17 @@
 			private static $router = null;
 		
 			
+			/* PROPERTIES */
+			
+			/**
+			 * Gets the current router object
+		     * @return Spherus\Interfaces\IRouter
+		     */
+		    public static function getRouter()
+		    {
+		        return self::$router;
+		    }
+
 			/* PUBLIC FUNCTIONS */
 			
 			/**
@@ -49,8 +58,26 @@
 			 */
 			public static function Initialize()
 			{
-				self::InitializeRouter();
-				self::RegiterDefaultRoute();
+				$router = \Config::getRoutingDefaults()['router'];
+			    if(isset($router))
+			    {
+			        //Check if default router should be used
+			        if($router == 'Spherus\Routing\DefaultRouter')
+			        {
+			            require(ROUTING.'defaultrouter.php');
+			        }
+			        self::$router = new $router;
+			        self::$router->Initialize();
+			        
+			        //Check if router implements IRouter interface
+			        Check::IsInstanceOf(self::$router, 'Spherus\\Interfaces\\IRouter');
+			        
+			        unset($router);
+			    }
+			    else
+			    {
+			        throw new SpherusException(EXCEPTION_INVALID_ROUTER_CONFIG);
+			    }
 			}
 			
 			/**
@@ -73,70 +100,7 @@
 				unset($route);
 				unset($foundRoute);
 			}
-		
-			/**
-			 * Registers default framework route
-			 */
-			public static function RegiterDefaultRoute()
-			{
-				self::RegisterRoute(new Route('/'));
-			}
 			
-			/**
-			* Parses url into module, controller, action and parameters
-			*
-			* @return array Array of parsed url(module, controller, action and parameters)
-			* @throws SpherusException When $currentUrl parameter is null or empty
-			* @throws SpherusException When default route is not found
-			*/
-			public static function Parse()
-			{
-				$currentUrl = Request::getCurrentUrl();
-				Check::IsNullOrEmpty($currentUrl);
-		
-				$urlPath = parse_url($currentUrl, PHP_URL_PATH);
-				$foundRoute = RouteManager::GetRouteByUrl($urlPath);
-				
-				if(!isset($foundRoute))
-				{
-					$foundRoute = self::GetRouteByUrl('/');
-				}
-				
-				if(!isset($foundRoute))
-				{
-					throw new SpherusException(EXCEPTION_DEFAULT_ROUTE_NOT_FOUND);
-				}
-				
-				$pathPortions = preg_split('/\//', $urlPath, null, PREG_SPLIT_NO_EMPTY);
-				
-				$parameters = array();
-				for($i = 3; $i < count($pathPortions); $i++)
-				{
-					$parameters[] = $pathPortions[$i];
-				}
-				
-				$result = new ParsedUrl(
-					isset($pathPortions[0]) ? $pathPortions[0] : \Config::$routingDefaults['module'],
-					isset($pathPortions[1]) ? $pathPortions[1] : \Config::$routingDefaults['controller'],
-					isset($pathPortions[2]) ? $pathPortions[2] : \Config::$routingDefaults['action'],
-					$parameters,
-					$foundRoute);
-
-					
-				
-				
-				//Unset all unnecessary variables
-				unset($pathPortions);
-				unset($parameters);
-				unset($foundRoute);
-				unset($currentUrl);
-				unset($urlPath);
-				unset($i);
-				unset($pathPortions);
-				
-				return $result;
-			}
-
 			/**
 			 * Gets Route object by its url
 			 * 
@@ -181,36 +145,6 @@
 				return null;
 			}
 			
-			
-			/* PRIVATE METHODS*/
-			
-			/**
-			 * Initializes router object indicated in configuration file.
-			 * 
-			 * @throws SpherusException When router configuration is invalid.
-			 * @throws SpherusException When router not implemets IRouter interface.
-			 */
-			private static function InitializeRouter()
-			{
-			    $router = \Config::getRoutingDefaults()['router'];
-			    if(isset($router))
-			    {
-			        //Check if default router should be used
-			        if($router == 'Spherus\Routing\DefaultRouter')
-			        {
-			            require(ROUTING.'defaultrouter.php');
-			        }
-			        self::$router = new $router;
-			        
-			        //Check if router implements IRouter interface
-			        Check::IsInstanceOf(self::$router, 'Spherus\\Interfaces\\IRouter');
-			    }
-			    else
-			    {
-			        throw new SpherusException(EXCEPTION_INVALID_ROUTER_CONFIG);
-			    }
-			}
-		
 		}
 	
 	}
