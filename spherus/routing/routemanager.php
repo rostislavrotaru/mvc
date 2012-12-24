@@ -44,12 +44,12 @@
 			
 			/**
 			 * Gets the current router object
-		     * @return Spherus\Interfaces\IRouter
-		     */
-		    public static function getRouter()
-		    {
-		        return self::$router;
-		    }
+			 * @return Spherus\Interfaces\IRouter
+			 */
+			public static function getRouter()
+			{
+				return self::$router;
+			}
 
 			/* PUBLIC FUNCTIONS */
 			
