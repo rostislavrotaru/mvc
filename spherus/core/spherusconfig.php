@@ -39,12 +39,13 @@
 			 * Defines defaults for routing if not specified. Can be overwritten in Application Configuration file.
 			 * @var array 
 			 */
-			public static $routingDefaults = array
+			private static $routingDefaults = array
 			(
 				'module'=>'main',
 				'controller'=>'home',
 				'action'=>'index',
-				'router'=>'Spherus\Routing\DefaultRouter'
+				'router'=>'Spherus\Routing\DefaultRouter',
+				'default_route_name'=>'default'
 			);
 			
 			
