@@ -46,7 +46,7 @@
 				
 				if(!isset($foundRoute))
 				{
-					$foundRoute = RouteManager::GetRouteByUrl('/');
+					$foundRoute = RouteManager::GetDefaultRoute();
 				}
 				
 				if(!isset($foundRoute))
@@ -63,9 +63,9 @@
 				}
 				
 				$result = new ParsedUrl(
-					isset($pathPortions[0]) ? $pathPortions[0] : \Config::$routingDefaults['module'],
-					isset($pathPortions[1]) ? $pathPortions[1] : \Config::$routingDefaults['controller'],
-					isset($pathPortions[2]) ? $pathPortions[2] : \Config::$routingDefaults['action'],
+					isset($pathPortions[0]) ? $pathPortions[0] : \Config::getRoutingDefaults()['module'],
+					isset($pathPortions[1]) ? $pathPortions[1] : \Config::getRoutingDefaults()['controller'],
+					isset($pathPortions[2]) ? $pathPortions[2] : \Config::getRoutingDefaults()['action'],
 					$parameters,
 					$foundRoute);
 
@@ -89,7 +89,7 @@
 			*/
 			public function Initialize()
 			{
-			    self::RegiterDefaultRoute();
+			    self::RegisterDefaultRoute();
 			}
 			
 			
@@ -98,9 +98,13 @@
 			/**
 			 * Registers default route
 			 */
-			private function RegiterDefaultRoute()
+			private function RegisterDefaultRoute()
 			{
-				RouteManager::RegisterRoute(new Route('/'));
+			    $defaultRoute = new Route('/');
+			    $defaultRoute->setName(\Config::getRoutingDefaults()['default_route_name']);
+				RouteManager::RegisterRoute($defaultRoute);
+				
+				unset($defaultRoute);
 			}
 		
 		}

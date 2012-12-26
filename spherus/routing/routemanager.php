@@ -145,6 +145,33 @@
 				return null;
 			}
 			
+			/**
+			 * Gets default route (route witn name indicated in configuration file).
+			 * 
+			 * @return Spherus\Routing\IRoute|NULL
+			 * @throws SpherusException When \Config::getRoutingDefaults() is null or empty.
+			 * @throws SpherusException When $defaultRouteName is null or empty.
+			 */
+			public static function GetDefaultRoute()
+			{
+			    Check::IsNullOrEmpty(\Config::getRoutingDefaults());
+			    
+			    $defaultRouteName = \Config::getRoutingDefaults()['default_route_name'];
+			    Check::IsNullOrEmpty($defaultRouteName);
+			    
+			    foreach (self::$registeredRoutes as $registeredRoute)
+			    {
+			        if($registeredRoute->getName() == $defaultRouteName)
+			        {
+			            unset($defaultRouteName);
+			            return $registeredRoute;
+			        }
+			    }
+				
+			    unset($defaultRouteName);
+			    return null;
+			}
+			
 		}
 	
 	}
