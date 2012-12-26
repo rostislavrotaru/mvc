@@ -33,7 +33,7 @@
 			* Parses url into module, controller, action and parameters
 			*
 			* @return array Array of parsed url(module, controller, action and parameters)
-			* @throws SpherusException When $currentUrl parameter is null or empty
+			* @throws SpherusException When $currentUrl is null or empty
 			* @throws SpherusException When default route is not found
 			*/
 			public function Parse()
@@ -102,6 +102,7 @@
 			{
 				RouteManager::RegisterRoute(new Route('/'));
 			}
+		
 		}
 	}
 ?>
