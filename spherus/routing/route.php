@@ -12,6 +12,8 @@
 	namespace Spherus\Routing
 	{
 
+		use Spherus\Core\SpherusException;
+
 		/**
 		* Defines a Route object class
 		*
@@ -75,9 +77,36 @@
 			 * @var mixed, array|null 
 			 */
 			var $parameters = null;
+			
+			/**
+			 * Defines the route name
+			 * @var string
+			 */
+			var $name = null;
 
 			
+
 			/* PROPERTIES */
+			
+			/**
+			 * Gets the route name
+			 * @return string
+			 */
+			public function getName()
+			{
+			    return $this->name;
+			}
+			
+			/**
+			 * Sets the route name.
+			 * 
+			 * @param string $name The name of route to set.
+			 * @throws SpherusException When the $name parameter is null or empty
+			 */
+			public function setName ($name)
+			{
+			    $this->name = $name;
+			}
 			
 			/**
 			 * @return Route url
