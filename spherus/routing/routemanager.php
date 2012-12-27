@@ -90,7 +90,7 @@
 			{
 				Check::IsNullOrEmpty($route);
 				
-				$foundRoute = self::GetRouteByUrl($route->getUrl());
+				$foundRoute = self::GetRouteByName($route->getName());
 				if(!isset($foundRoute))
 				{
 					self::$registeredRoutes[] = $route;
@@ -100,51 +100,7 @@
 				unset($route);
 				unset($foundRoute);
 			}
-			
-			/**
-			 * Gets Route object by its url
-			 * 
-			 * @param string $routeUrl The route url
-			 * @return Route|null
-			 * @throws SpherusException When $route url parameter is null or empty
-			 */
-			public static function GetRouteByUrl($routeUrl)
-			{
-				Check::IsNullOrEmpty($routeUrl);
-				
-				foreach (self::$registeredRoutes as $registeredRoute)
-				{
-					if($registeredRoute->getUrl() == $routeUrl)
-					{
-						return $registeredRoute;
-					}
-				}
-			
-				return null;
-			}
-		
-			/**
-			 * Gets Route object from registered routes collection
-			 * 
-			 * @param Route $route The Route object to search
-			 * @return Route|null
-			 * @throws SpherusException When $route parameter is null or empty
-			 */
-			public static function GetRoute($route)
-			{
-				Check::IsNullOrEmpty($route);
-				
-				foreach (self::$registeredRoutes as $registeredRoute)
-				{
-					if($registeredRoute->module == $route->module && $registeredRoute->controller == $route->controller && $registeredRoute->action == $route->action)
-					{
-						return $registeredRoute;
-					}
-				}
-				
-				return null;
-			}
-			
+						
 			/**
 			 * Gets route by name
 			 * 
