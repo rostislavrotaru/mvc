@@ -25,7 +25,7 @@
 		class RouteManager
 		{
 			
-			/* FIELDS */
+			 /* FIELDS */
 			
 			/**
 			 * Contains array of registered routes.
@@ -146,29 +146,21 @@
 			}
 			
 			/**
-			 * Gets default route (route witn name indicated in configuration file).
+			 * Gets route by name
 			 * 
+			 * @param string $routeName The name of route to find. 
 			 * @return Spherus\Routing\IRoute|NULL
-			 * @throws SpherusException When \Config::getRoutingDefaults() is null or empty.
-			 * @throws SpherusException When $defaultRouteName is null or empty.
 			 */
-			public static function GetDefaultRoute()
+			public static function GetRouteByName($routeName)
 			{
-			    Check::IsNullOrEmpty(\Config::getRoutingDefaults());
-			    
-			    $defaultRouteName = \Config::getRoutingDefaults()['default_route_name'];
-			    Check::IsNullOrEmpty($defaultRouteName);
-			    
 			    foreach (self::$registeredRoutes as $registeredRoute)
 			    {
-			        if($registeredRoute->getName() == $defaultRouteName)
+			        if($registeredRoute->getName() == $routeName)
 			        {
-			            unset($defaultRouteName);
 			            return $registeredRoute;
 			        }
 			    }
 				
-			    unset($defaultRouteName);
 			    return null;
 			}
 			
