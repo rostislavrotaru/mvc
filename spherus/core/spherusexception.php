@@ -51,7 +51,7 @@
 		define('EXCEPTION_NO_ROUTE_TO_REDIRECT', 'No Route to redirect found');
 		define('EXCEPTION_DUPLICATE_ROUTE', 'The route "%s" already exists and cannot be registsred.');
 		define('EXCEPTION_INVALID_INTEGER', 'Given value is not a valid integer value');
-		define('EXCEPTION_MODULE_WITH_THE_SAME_NAME_FOUND', 'An module with the same name already exists');
+		define('EXCEPTION_DUPLICATE_MODULE', 'An module with the same name already exists');
 		define('EXCEPTION_APP_CONFIG_NOT_FOUND', 'The application configuration file not found');
 		define('EXCEPTION_NO_CONTROLLER_ACTION_METHOD', 'The function "%s" does not exists in controller "%s" in module "%s"');
 		define('EXCEPTION_OBJECT_INVALID_INSTANCE', 'The "%s" object is not a valid instance of "%s"');
