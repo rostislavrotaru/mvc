@@ -40,6 +40,7 @@
 		define('EXCEPTION_INVALID_ARRAY', 'Given value is not an array value');
 		define('EXCEPTION_DEFAULT_ROUTE_NOT_FOUND', 'Default route not found');
 		define('EXCEPTION_INVALID_ROUTER_CONFIG', 'Invalid configuration for router definition');
+		define('EXCEPTION_EMPTY', 'Empty value provided');
 		define('EXCEPTION_ACCESS_DENIED', 'Access to this resource is denied');
 		define('EXCEPTION_CONTROLLER_NOT_FOUND', 'The "%s" controller not found');
 		define('EXCEPTION_MODULE_NOT_FOUND', 'The "%s" module not found');
@@ -48,6 +49,7 @@
 		define('EXCEPTION_FILE_NOT_READABLE', 'The "%s" file is not readable. Please check file system permissions');
 		define('EXCEPTION_FILE_NOT_EXISTS', 'The given file does not exists: "%s"');
 		define('EXCEPTION_NO_ROUTE_TO_REDIRECT', 'No Route to redirect found');
+		define('EXCEPTION_DUPLICATE_ROUTE', 'The route "%s" already exists and cannot be registsred.');
 		define('EXCEPTION_INVALID_INTEGER', 'Given value is not a valid integer value');
 		define('EXCEPTION_MODULE_WITH_THE_SAME_NAME_FOUND', 'An module with the same name already exists');
 		define('EXCEPTION_APP_CONFIG_NOT_FOUND', 'The application configuration file not found');
