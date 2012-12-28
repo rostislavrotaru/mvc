@@ -38,23 +38,10 @@
 			*/
 			public function Parse()
 			{
-				$currentUrl = Request::getCurrentUrl();
-				Check::IsNullOrEmpty($currentUrl);
-		
-				$urlPath = parse_url($currentUrl, PHP_URL_PATH);
-				$foundRoute = RouteManager::GetRouteByUrl($urlPath);
-				
-				if(!isset($foundRoute))
-				{
-					$foundRoute = RouteManager::GetDefaultRoute();
-				}
-				
-				if(!isset($foundRoute))
-				{
-					throw new SpherusException(EXCEPTION_DEFAULT_ROUTE_NOT_FOUND);
-				}
-				
-				$pathPortions = preg_split('/\//', $urlPath, null, PREG_SPLIT_NO_EMPTY);
+				Check::IsNullOrEmpty(Request::getCurrentUrl());
+
+				$foundRoute = self::GetRouteByUrl(Request::getCurrentUrl());					
+				$pathPortions = preg_split('/\//', Request::getCurrentUrl(), null, PREG_SPLIT_NO_EMPTY);
 				
 				$parameters = array();
 				for($i = 3; $i < count($pathPortions); $i++)
@@ -76,7 +63,6 @@
 				unset($pathPortions);
 				unset($parameters);
 				unset($foundRoute);
-				unset($currentUrl);
 				unset($urlPath);
 				unset($i);
 				unset($pathPortions);
@@ -100,11 +86,24 @@
 			 */
 			private function RegisterDefaultRoute()
 			{
-			    $defaultRoute = new Route('/');
-			    $defaultRoute->setName(\Config::getRoutingDefaults()['default_route_name']);
-				RouteManager::RegisterRoute($defaultRoute);
-				
-				unset($defaultRoute);
+				RouteManager::RegisterRoute(new Route(\Config::getRoutingDefaults()['default_route_name'], '{controller}/{action}/{parameters}'));
+			}
+			
+			private function GetRouteByUrl($url)
+			{
+			    $urlPath = parse_url($url, PHP_URL_PATH);
+			    
+			    if(!isset($foundRoute)) //trying to find default route
+			    {
+			        $foundRoute = RouteManager::GetRouteByName(\Config::getRoutingDefaults()['default_route_name']);
+			        if(!isset($foundRoute))
+			        {
+			            throw new SpherusException(EXCEPTION_DEFAULT_ROUTE_NOT_FOUND);
+			        }
+			        return $foundRoute;
+			    }
+			    
+				return null;
 			}
 		
 		}
