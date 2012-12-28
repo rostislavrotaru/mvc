@@ -65,7 +65,7 @@
 			/**
 			 * Gets the context current controller object
 			 *
-			 * @return ControllerBase
+			 * @return Spherus\Core\Base\ControllerBase
 			 */
 			public static function getCurrentController()
 			{
@@ -85,7 +85,7 @@
 			/**
 			 * Gets the current theme
 			 * 
-			 * @return ITheme
+			 * @return Spherus\Interfaces\ITheme
 			 */
 			public static function getCurrentTheme() 
 			{
