@@ -138,7 +138,7 @@
 			            //Check if created object implements IModule interface
 			            if ($module instanceof IModule)
 			            {
-			                Workbench::AddModule($module);
+			                self::AddModule($module);
 			                $module->Run();
 			            }
 			        }
@@ -159,31 +159,7 @@
 			        IpFilterParser::Parse();
 			    }
 			}
-			
-			/**
-			 * Add an module to the modules collection
-			 * 
-			 * @param Spherus\Interfaces\Imodule $module The module to add
-			 * @throws SpherusException When $module parameter is null or empty
-			 * @throws SpherusException When module contains a null or empty name
-			 * @throws SpherusException When module collection already contains a module with the same name
-			 */
-			public static function AddModule($module)
-			{
-				Check::IsNullOrEmpty($module);
-				$moduleName = $module->GetModuleName();
-				Check::IsNullOrEmpty($moduleName);
-				
-				if(self::GetModuleByName($moduleName) == null)
-				{
-					self::$modules[$moduleName] = $module;
-				}
-				else
-				{
-					throw new SpherusException(EXCEPTION_MODULE_WITH_THE_SAME_NAME_FOUND);
-				}
-			} 
-			
+						
 			/**
 			 * Gets module object by its name
 			 * 
@@ -442,7 +418,31 @@
 			{
 				echo HttpContext::getPageContent();
 			}
-				
+
+			/**
+			 * Add an module to the modules collection
+			 *
+			 * @param Spherus\Interfaces\Imodule $module The module to add
+			 * @throws SpherusException When $module parameter is null or empty
+			 * @throws SpherusException When module contains a null or empty name
+			 * @throws SpherusException When module collection already contains a module with the same name
+			 */
+			private static function AddModule($module)
+			{
+			    Check::IsNullOrEmpty($module);
+			    $moduleName = $module->GetModuleName();
+			    Check::IsNullOrEmpty($moduleName);
+			
+			    if(self::GetModuleByName($moduleName) == null)
+			    {
+			        self::$modules[$moduleName] = $module;
+			    }
+			    else
+			    {
+			        throw new SpherusException(EXCEPTION_DUPLICATE_MODULE);
+			    }
+			}
+			
 		}
 	}
 ?>
