@@ -100,15 +100,17 @@
 			{
 				Check::IsNullOrEmpty($route);
 				
-				if(!isset(self::GetRouteByName($route->getName())))
+				$foundRoute = self::GetRouteByName($route->getName());
+				if(isset($foundRoute))
 				{
-					self::$registeredRoutes[] = $route;
+				    throw new SpherusException(sprintf(EXCEPTION_DUPLICATE_ROUTE, $route->getName()));
 				}
 				else
 				{
-					throw new SpherusException(sprintf(EXCEPTION_DUPLICATE_ROUTE, $route->getName()));
+				    self::$registeredRoutes[] = $route;
 				}
 
+				unset($foundRoute);
 				unset($route);
 			}
 						
