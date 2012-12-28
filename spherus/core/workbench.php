@@ -268,7 +268,7 @@
 					else
 					{
 						unset($moduleObject);
-						throw new SpherusException(sprintf(EXCEPTION_CONTROLLER_NOT_FOUND, $parsedUrl->getController()));
+						throw new SpherusException(sprintf(EXCEPTION_CONTROLLER_NOT_FOUND, $parsedUrl->getControllerName()));
 					}
 				}
 				else
