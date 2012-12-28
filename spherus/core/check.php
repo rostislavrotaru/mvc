@@ -45,10 +45,24 @@
 			 */
 			public static function IsNullOrEmpty($value)
 			{
-				if(!isset($value))
+				if(!isset($value) || empty($value))
 				{
 					throw new SpherusException(EXCEPTION_NULL_OR_EMPTY);
 				}
+			}
+			
+			/**
+			 * Check if given value is empty
+			 *
+			 * @param mixed $value The value to check
+			 * @throws SpherusException When the $value parameter is empty
+			 */
+			public static function IsEmpty($value)
+			{
+			    if(empty($value))
+			    {
+			        throw new SpherusException(EXCEPTION_EMPTY);
+			    }
 			}
 		
 			/**
