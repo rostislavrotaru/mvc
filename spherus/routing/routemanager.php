@@ -39,7 +39,7 @@
 			 */
 			private static $router = null;
 		
-			
+
 			/* PROPERTIES */
 			
 			/**
@@ -51,6 +51,16 @@
 				return self::$router;
 			}
 
+			/**
+			 * Gets array of registered routes.
+			 * @return array
+			 */
+			public static function getRegisteredRoutes()
+			{
+			    return RouteManager::$registeredRoutes;
+			}
+			
+			
 			/* PUBLIC FUNCTIONS */
 			
 			/**
