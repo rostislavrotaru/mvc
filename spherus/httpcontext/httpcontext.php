@@ -34,7 +34,6 @@
 				Request::Initialize();
 				self::$serverProtocol = $_SERVER["SERVER_PROTOCOL"];
 				self::$isSecured = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off' ? false : true;
-				self::$parsedUrl = RouteManager::getRouter()->Parse();
 			}
 			
 			
@@ -54,18 +53,17 @@
 			private static $serverProtocol = null;
 			
 			/**
-			 * Defines RouteHandler url parsing result
-			 * @var Spherus\HttpContext\ParsedUrl
-			 */
-			private static $parsedUrl = null;
-			
-			/**
 			 * Contains rendered view page content
 			 * @var string
 			 */
 			private static $pageContent = null; 
 			
-
+			/**
+			 * Defines RouteHandler url parsing result
+			 * @var Spherus\HttpContext\ParsedUrl
+			 */
+			private static $parsedUrl = null;
+			
 			/* PROPERTIES */
 			
 			/**
@@ -111,6 +109,15 @@
 			public static function setPageContent($pageContent)
 			{
 				HttpContext::$pageContent = $pageContent;
+			}
+			
+			/**
+			 * Set the parsed url to http context
+			 * @param array $parsedUrl The parsed url to set
+			 */
+			public static function setParsedUrl($parsedUrl)
+			{
+			    self::$parsedUrl = $parsedUrl;
 			}
 			
 		}	

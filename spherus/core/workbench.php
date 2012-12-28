@@ -11,11 +11,11 @@
 
 	namespace Spherus\Core
 	{
-
 		use Spherus\HttpContext\HttpContext,
 			Spherus\HttpContext\Session,
 			Spherus\Parsers\IpFilterParser,
-			Spherus\Interfaces\IModule;
+			Spherus\Interfaces\IModule,
+			Spherus\Routing\RouteManager;
 
 		/**
 		* Class that represents the framework workbench
@@ -112,6 +112,7 @@
 			{
 			    self::SetIPFilter();
 			    self::LoadModules();
+			    HttpContext::setParsedUrl(RouteManager::getRouter()->Parse());
 			    self::LoadController();
 			    self::LoadTheme();
 			    self::LoadView();
