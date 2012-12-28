@@ -128,7 +128,7 @@
 			    
 				self::$routingDefaults[$key] = $value;
 			}
-			
+
 		}
 	}
 ?>
