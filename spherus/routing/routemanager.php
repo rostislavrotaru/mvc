@@ -95,10 +95,13 @@
 			 * 
 			 * @param Route $route The Route object to register
 			 * @throws SpherusException When $route parameter is null or empty
+			 * @throws SpherusException When route name is null or empty
 			 */
 			public static function RegisterRoute(Route $route)
 			{
 				Check::IsNullOrEmpty($route);
+				Check::IsNullOrEmpty($route->getName());
+				
 				
 				$foundRoute = self::GetRouteByName($route->getName());
 				if(isset($foundRoute))
