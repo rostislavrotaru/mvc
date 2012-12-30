@@ -1,5 +1,7 @@
 <?php
-	use Spherus\Interfaces\IModule;
+	use Spherus\Routing\Route,
+		Spherus\Routing\RouteManager,
+		Spherus\Interfaces\IModule;
 
 	class InstallModule implements IModule
 	{
@@ -9,7 +11,7 @@
 		 */
 		function Run()
 		{
-			
+			RouteManager::RegisterRoute(new Route('InstallRoute', '/install/{controller}/{action}/{parameters}', 'install'));
 		}
 
 	 	public function GetNamespaceName()

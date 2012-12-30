@@ -1,5 +1,7 @@
 <?php
 
+	use Spherus\Routing\RouteManager;
+	use Spherus\Routing\Route;
 	use Spherus\Core\SpherusConfig;
 
 	/**
@@ -23,6 +25,7 @@
 		public static function Initialize()
 		{
 			self::SetIniDirectives();
+			self::AddRoutes();
 		}
 		
 		
@@ -35,6 +38,16 @@
 		{
 			ini_set('display_errors', true);
 		}
+	
+		/**
+		 * Adds routes
+		 */
+		private static function AddRoutes()
+		{
+			
+		}
+
+	
 	}
 
 ?>
