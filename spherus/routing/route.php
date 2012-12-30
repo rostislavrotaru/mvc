@@ -27,7 +27,7 @@
 			/* CONSTRUCTOR */
 			
 			/**
-			 * Initializes a new instance of Route class
+			 * Initializes a new instance of Route class.
 			 * 
 			 * @param string $name The route name
 			 * @param string $url The route url
@@ -37,11 +37,9 @@
 			 * @param array $parameters The route parameters name, optional
 			 * 
 			 * @throws SpherusException When $url parameter is null or empty
-			 * @throws SpherusException When $name parameter is null or empty
 			 */
 			public function __construct($name, $url, $module = null, $controller = null, $action = null, $parameters = null)
 			{			
-			    Check::IsNullOrEmpty($name);
 			    Check::IsNullOrEmpty($url);
 
 			    $this->name = $name;
@@ -54,6 +52,12 @@
 			
 			
 			/* FIELDS */
+			
+			/**
+			 * Defines the route name
+			 * @var string
+			 */
+			var $name = null;
 			
 			/**
 			 * Defines the route url
@@ -84,14 +88,22 @@
 			 * @var mixed, array|null 
 			 */
 			var $parameters = null;
-			
+
 			/**
-			 * Defines the route name
+			 * Defines the route query parameters
 			 * @var string
 			 */
-			var $name = null;
-
+			var $query = null;
 			
+
+			/**
+			 * Gets the route quesy parameters.
+			* @return string
+			*/
+			public function getQuery()
+			{
+				return $this->query;
+			}
 
 			/* PROPERTIES */
 			
@@ -149,6 +161,22 @@
 				return $this->parameters;
 			}
 
+			
+			/* PUBLIC FUNCTIONS */
+			
+			/**
+			 * Returns an array of route query parameters.
+			 * @return array
+			 */
+			public function GetQueryParametersAsArray()
+			{
+				if(isset($this->query))
+				{
+					return spliti('?', $this->query);
+				}
+				
+				return array();
+			}
 		}
 	
 	}
