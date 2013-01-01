@@ -12,7 +12,6 @@
 	namespace Spherus\Core\Base
 	{
 		
-		use Spherus\HttpContext\HttpContext;
 		use Spherus\Core\SpherusException;
 		use Spherus\Core\Workbench;
 

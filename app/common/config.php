@@ -1,7 +1,5 @@
 <?php
 
-	use Spherus\Routing\RouteManager;
-	use Spherus\Routing\Route;
 	use Spherus\Core\SpherusConfig;
 
 	/**

@@ -14,7 +14,6 @@
 
 		use Spherus\HttpContext\Request;
 		use Spherus\Core\SpherusException;
-		use Spherus\HttpContext\HttpContext;
 		
 		/**
 		* Represents the framework IP filtratioin functionality

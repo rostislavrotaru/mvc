@@ -11,9 +11,6 @@
 
 	namespace Spherus\HttpContext
 	{
-	
-		use Spherus\Core\SpherusException;
-		use Spherus\Routing\RouteManager;
 
 		/**
 		* Class that represents the http context object
