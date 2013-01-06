@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,7 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\Interfaces
-{
+	namespace Spherus\Interfaces;
 
     /**
      * Defines interface that all modules should implement
@@ -19,9 +18,9 @@ namespace Spherus\Interfaces
      */
     interface IModule
     {
-        
+
         // Methods that should be implemeted in module.php file for each module
-        
+
         /**
          * Permits to write custom functionality when module is loaded
          */
@@ -46,6 +45,3 @@ namespace Spherus\Interfaces
          */
         function GetHelpersPath ();
     }
-}
-
-?>

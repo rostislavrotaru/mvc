@@ -1,15 +1,15 @@
 <?php
 
-/**
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright SPHERUS (http://spherus.net)
- * @license http://license.spherus.net
- * @link http://spherus.net
- * @since 3.0
- */
-namespace Spherus\HttpContext
-{
+	/**
+	 * Redistributions of files must retain the above copyright notice.
+	 *
+	 * @copyright SPHERUS (http://spherus.net)
+	 * @license http://license.spherus.net
+	 * @link http://spherus.net
+	 * @since 3.0
+	 */
+	namespace Spherus\HttpContext;
+
     use Spherus\Core\Check;
 
     /**
@@ -20,9 +20,9 @@ namespace Spherus\HttpContext
      */
     class Cookie
     {
-        
+
         /* CONSTRUCTOR */
-        
+
         /**
          * Initializes a new instance of Cookie class
          *
@@ -37,13 +37,13 @@ namespace Spherus\HttpContext
         {
             Check::IsNullOrEmpty($name);
             Check::IsNullOrEmpty($value);
-            
+
             $this->name = $name;
             $this->value = $value;
         }
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines the cookie domain
          *
@@ -96,9 +96,9 @@ namespace Spherus\HttpContext
          * @var boolean
          */
         private $httpOnly = true;
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets the Cookie domain
          *
@@ -254,5 +254,3 @@ namespace Spherus\HttpContext
             $this->httpOnly = $httpOnly;
         }
     }
-}
-?>

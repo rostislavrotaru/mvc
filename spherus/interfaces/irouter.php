@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,7 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\Interfaces
-{
+	namespace Spherus\Interfaces;
 
     /**
      * Defines interface that all routers should implement
@@ -31,6 +30,3 @@ namespace Spherus\Interfaces
          */
         function Initialize ();
     }
-}
-
-?>

@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,8 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\Parsers
-{
+	namespace Spherus\Parsers;
+
     use Spherus\HttpContext\Request;
     use Spherus\Core\SpherusException;
 
@@ -21,9 +21,9 @@ namespace Spherus\Parsers
      */
     class IpFilterParser
     {
-        
+
         /* PUBLIC FUNCTIONS */
-        
+
         /**
          * Parses ip according to ip filter
          */
@@ -33,9 +33,9 @@ namespace Spherus\Parsers
                 throw new SpherusException(EXCEPTION_ACCESS_DENIED);
             }
         }
-        
+
         /* PRIVATE FUNCTIONS */
-        
+
         /**
          * Checks if remote address allowed or denied
          *
@@ -53,7 +53,7 @@ namespace Spherus\Parsers
                     }
                 }
             }
-            
+
             // if remote address not found - check deny permissions
             $deny = \IpFilter::getDeny();
             if (isset($deny)) {
@@ -64,9 +64,7 @@ namespace Spherus\Parsers
                     }
                 }
             }
-            
+
             return true;
         }
     }
-}
-?>

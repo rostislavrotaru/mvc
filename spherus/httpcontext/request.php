@@ -1,15 +1,15 @@
 <?php
 
-/**
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright SPHERUS (http://spherus.net)
- * @license http://license.spherus.net
- * @link http://spherus.net
- * @since 3.0
- */
-namespace Spherus\HttpContext
-{
+	/**
+	 * Redistributions of files must retain the above copyright notice.
+	 *
+	 * @copyright SPHERUS (http://spherus.net)
+	 * @license http://license.spherus.net
+	 * @link http://spherus.net
+	 * @since 3.0
+	 */
+	namespace Spherus\HttpContext;
+
     use Spherus\Core\SpherusException;
     use Spherus\Core\Check;
 
@@ -21,9 +21,9 @@ namespace Spherus\HttpContext
      */
     class Request
     {
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines the method of the current HTTP request.
          *
@@ -86,9 +86,9 @@ namespace Spherus\HttpContext
          * @var array
          */
         private static $cookies = array();
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets remote client IP address.
          *
@@ -158,9 +158,9 @@ namespace Spherus\HttpContext
         {
             return self::$urlReferrer;
         }
-        
+
         /* PRIVATE METHODS */
-        
+
         /**
          * Gets url from $_SERVER variables
          *
@@ -175,7 +175,7 @@ namespace Spherus\HttpContext
             } elseif (isset($_SERVER['REQUEST_URI'])) {
                 return $_SERVER['REQUEST_URI'];
             }
-            
+
             return null;
         }
 
@@ -188,9 +188,9 @@ namespace Spherus\HttpContext
                 self::$cookies[$key] = new Cookie($key, $value);
             }
         }
-        
+
         /* PUBLIC METHODS */
-        
+
         /**
          * Initializes a the Request class.
          */
@@ -198,14 +198,14 @@ namespace Spherus\HttpContext
         {
             foreach ($_SERVER as $key => $value) {
                 if (strpos($key, 'HTTP_') === 0) {
-                    self::$headers[str_replace(' ', '-', 
+                    self::$headers[str_replace(' ', '-',
                             ucwords(
                                     strtolower(
-                                            str_replace('_', ' ', 
+                                            str_replace('_', ' ',
                                                     substr($key, 5)))))] = $value;
                 }
             }
-            
+
             self::$method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null;
             self::$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? ($_SERVER['HTTP_X_REQUESTED_WITH'] ==
                      'XMLHttpRequest') : false;
@@ -227,17 +227,17 @@ namespace Spherus\HttpContext
         public static function SetCookie (Cookie $cookie)
         {
             Check::IsNullOrEmpty($cookie);
-            
+
             self::$cookies[$cookie->getName()] = $cookie;
             $expireSeconds = $cookie->getExpires();
             if ($expireSeconds > 0) {
                 $expireSeconds = time() + $expireSeconds;
             }
-            
-            setcookie($cookie->getName(), $cookie->getValue(), $expireSeconds, 
-                    $cookie->getPath(), $cookie->getDomain(), 
+
+            setcookie($cookie->getName(), $cookie->getValue(), $expireSeconds,
+                    $cookie->getPath(), $cookie->getDomain(),
                     $cookie->getSecure(), $cookie->getHttpOnly());
-            
+
             unset($expireSeconds);
             unset($cookie);
         }
@@ -257,6 +257,3 @@ namespace Spherus\HttpContext
             }
         }
     }
-}
-
-?>

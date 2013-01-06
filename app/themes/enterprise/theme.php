@@ -1,22 +1,22 @@
 <?php
-namespace Spherus\Themes
-{
+	namespace Spherus\Themes;
+
     use Spherus\Interfaces\ITheme;
 
     class EnterpriseTheme implements ITheme
     {
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines the name of theme
          *
          * @var string
          */
         private $name = 'enterprise';
-        
+
         /* PROPERTIES */
-			
+
 			/* (non-PHPdoc)
 			 * @see \Spherus\Interfaces\ITheme::getName()
 			 */
@@ -24,7 +24,7 @@ namespace Spherus\Themes
         {
             return $this->name;
         }
-        
+
         /*
          * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getCssPath()
          */
@@ -32,7 +32,7 @@ namespace Spherus\Themes
         {
             return THEMES . $this->name . SEPARATOR . 'css';
         }
-        
+
         /*
          * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getImagesPath()
          */
@@ -40,7 +40,7 @@ namespace Spherus\Themes
         {
             return THEMES . $this->name . SEPARATOR . 'images';
         }
-        
+
         /*
          * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getLayoutsPath()
          */
@@ -48,7 +48,7 @@ namespace Spherus\Themes
         {
             return THEMES . $this->name . SEPARATOR . 'layouts';
         }
-        
+
         /*
          * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getScriptsPath()
          */
@@ -57,5 +57,3 @@ namespace Spherus\Themes
             return THEMES . $this->name . SEPARATOR . 'scripts';
         }
     }
-}
-?>

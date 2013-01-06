@@ -8,8 +8,8 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\HttpContext
-{
+	namespace Spherus\HttpContext;
+
     use Spherus\Core\SpherusException;
     use Spherus\Core\Check;
 
@@ -21,9 +21,9 @@ namespace Spherus\HttpContext
      */
     class ParsedUrl
     {
-        
+
         /* CONSTRUCTOR */
-        
+
         /**
          * Initializes a new instance of ParsedUrl class
          *
@@ -37,7 +37,7 @@ namespace Spherus\HttpContext
          *            The ParsedUrl parameters array
          * @param Spherus\Core\Route $route
          *            The ParsedUrl Route
-         *            
+         *
          * @throws SpherusException When $moduleName parameter is null or empty
          * @throws SpherusException When $controllerName parameter is null or
          *         empty
@@ -45,7 +45,7 @@ namespace Spherus\HttpContext
          * @throws SpherusException When $parameters parameter is null
          * @throws SpherusException When $route parameter is null or empty
          */
-        public function __construct ($moduleName, $controllerName, $actionName, 
+        public function __construct ($moduleName, $controllerName, $actionName,
                 $parameters, $route)
         {
             Check::IsNullOrEmpty($moduleName);
@@ -53,16 +53,16 @@ namespace Spherus\HttpContext
             Check::IsNullOrEmpty($actionName);
             Check::IsNull($parameters);
             Check::IsNullOrEmpty($route);
-            
+
             $this->moduleName = $moduleName;
             $this->controllerName = $controllerName;
             $this->actionName = $actionName;
             $this->parameters = $parameters;
             $this->route = $route;
         }
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines the ParsedUrl object module name
          *
@@ -97,9 +97,9 @@ namespace Spherus\HttpContext
          * @var Spherus\Routing\Route
          */
         private $route = null;
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets module name
          *
@@ -150,6 +150,3 @@ namespace Spherus\HttpContext
             return $this->route;
         }
     }
-}
-
-?>

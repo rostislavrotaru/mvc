@@ -1,15 +1,15 @@
 <?php
 
-/**
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright SPHERUS (http://spherus.net)
- * @license http://license.spherus.net
- * @link http://spherus.net
- * @since 3.0
- */
-namespace Spherus\Routing
-{
+	/**
+	 * Redistributions of files must retain the above copyright notice.
+	 *
+	 * @copyright SPHERUS (http://spherus.net)
+	 * @license http://license.spherus.net
+	 * @link http://spherus.net
+	 * @since 3.0
+	 */
+	namespace Spherus\Routing;
+
     use Spherus\Interfaces\IRouter;
     use Spherus\HttpContext\Request;
     use Spherus\HttpContext\ParsedUrl;
@@ -97,9 +97,9 @@ namespace Spherus\Routing
      */
     class DefaultRouter implements IRouter
     {
-        
+
         /* PUBLIC METHODS */
-        
+
         /**
          * Parses url into module, controller, action and parameters
          *
@@ -111,27 +111,27 @@ namespace Spherus\Routing
         public function Parse ()
         {
             Check::IsNullOrEmpty(Request::getCurrentUrl());
-            
-            $foundRoute = self::GetRouteByUrl(Request::getCurrentUrl(), null, 
+
+            $foundRoute = self::GetRouteByUrl(Request::getCurrentUrl(), null,
                     null, null);
-            $pathPortions = preg_split('/\//', Request::getCurrentUrl(), null, 
+            $pathPortions = preg_split('/\//', Request::getCurrentUrl(), null,
                     PREG_SPLIT_NO_EMPTY);
-            
+
             $parameters = array();
             for ($i = 3; $i < count($pathPortions); $i ++) {
                 $parameters[] = $pathPortions[$i];
             }
-            
+
             $module = $foundRoute->getModule();
             $controller = $foundRoute->getController();
             $action = $foundRoute->getAction();
-            
+
             $result = new ParsedUrl(
-                    isset($module) ? $module : (isset($pathPortions[0]) ? $pathPortions[0] : \Config::getRoutingDefaults()['module']), 
-                    isset($controller) ? $controller : (isset($pathPortions[1]) ? $pathPortions[1] : \Config::getRoutingDefaults()['controller']), 
-                    isset($action) ? $action : (isset($pathPortions[2]) ? $pathPortions[2] : \Config::getRoutingDefaults()['action']), 
+                    isset($module) ? $module : (isset($pathPortions[0]) ? $pathPortions[0] : \Config::getRoutingDefaults()['module']),
+                    isset($controller) ? $controller : (isset($pathPortions[1]) ? $pathPortions[1] : \Config::getRoutingDefaults()['controller']),
+                    isset($action) ? $action : (isset($pathPortions[2]) ? $pathPortions[2] : \Config::getRoutingDefaults()['action']),
                     $parameters, $foundRoute);
-            
+
             // Unset all unnecessary variables
             unset($pathPortions);
             unset($parameters);
@@ -139,10 +139,10 @@ namespace Spherus\Routing
             unset($urlPath);
             unset($i);
             unset($pathPortions);
-            
+
             return $result;
         }
-        
+
         /*
          * (non-PHPdoc) @see \Spherus\Interfaces\IRouter::Initialize()
          */
@@ -150,9 +150,9 @@ namespace Spherus\Routing
         {
             self::RegisterDefaultRoute();
         }
-        
+
         /* PRIVATE METHODS */
-        
+
         /**
          * Registers default route
          */
@@ -173,17 +173,17 @@ namespace Spherus\Routing
         {
             $pathPortions = preg_split('/\//', $url, null, PREG_SPLIT_NO_EMPTY);
             $registeredRoutes = RouteManager::getRegisteredRoutes();
-            
+
             foreach ($pathPortions as $pathPortion) {
                 foreach ($registeredRoutes as $route) {
-                    preg_match('/' . $pathPortion . '/', $route->getUrl(), 
+                    preg_match('/' . $pathPortion . '/', $route->getUrl(),
                             $match);
                     if ($match) {
                         return $route;
                     }
                 }
             }
-            
+
             if (! isset($foundRoute))             // trying to find default route
             {
                 $foundRoute = RouteManager::GetRouteByName(
@@ -193,9 +193,7 @@ namespace Spherus\Routing
                 }
                 throw new SpherusException(EXCEPTION_DEFAULT_ROUTE_NOT_FOUND);
             }
-            
+
             return null;
         }
     }
-}
-?>

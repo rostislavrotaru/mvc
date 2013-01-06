@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,7 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\HttpContext
-{
+	namespace Spherus\HttpContext;
 
     /**
      * Class that represents the http context object
@@ -19,9 +18,9 @@ namespace Spherus\HttpContext
      */
     class HttpContext
     {
-        
+
         /* CONSTRUCTOR */
-        
+
         /**
          * Initializes HTTPContext class with base variables
          */
@@ -32,9 +31,9 @@ namespace Spherus\HttpContext
             self::$isSecured = empty($_SERVER['HTTPS']) ||
                      $_SERVER['HTTPS'] == 'off' ? false : true;
         }
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines if server HttpContext is secured (HTTPS)
          *
@@ -62,9 +61,9 @@ namespace Spherus\HttpContext
          * @var Spherus\HttpContext\ParsedUrl
          */
         private static $parsedUrl = null;
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets the server http request is secured
          *
@@ -127,6 +126,3 @@ namespace Spherus\HttpContext
             self::$parsedUrl = $parsedUrl;
         }
     }
-}
-
-?>

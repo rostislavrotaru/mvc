@@ -16,5 +16,3 @@
  * @package spherus
  */
 require_once ('spherus/boot.php');
-
-?>

@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,8 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\HttpContext
-{
+	namespace Spherus\HttpContext;
+
     use Spherus\Core\SpherusException;
     use Spherus\Core\Check;
     use Spherus\Routing\RouteManager;
@@ -24,18 +24,18 @@ namespace Spherus\HttpContext
      */
     class Response
     {
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines the HTTP response status.
          *
          * @var Spherus\Core\ResponseStatusType
          */
         private static $status = ResponseStatusType::OK;
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets the HTTP response status.
          *
@@ -45,9 +45,9 @@ namespace Spherus\HttpContext
         {
             return self::$status;
         }
-        
+
         /* PUBLIC FUNCTIONS */
-        
+
         /**
          * Sends server header
          *
@@ -55,7 +55,7 @@ namespace Spherus\HttpContext
          *            The name of header to send
          * @param string $value
          *            The value of header to send
-         *            
+         *
          * @return boolean True if header sent, otherwise false
          * @throws SpherusException When $name parameter is null or empty
          * @throws SpherusException When $value parameter is null or empty
@@ -64,12 +64,12 @@ namespace Spherus\HttpContext
         {
             Check::IsNullOrEmpty($name);
             Check::IsNullOrEmpty($value);
-            
+
             if (headers_sent() === false) {
                 header($name . ': ' . $value);
                 return true;
             }
-            
+
             return false;
         }
 
@@ -99,11 +99,11 @@ namespace Spherus\HttpContext
          *            The redirection parameters. Optional
          * @throws SpherusException When $action parameter is null or empty
          */
-        public static function Redirect ($action, $controller = null, $module = null, 
+        public static function Redirect ($action, $controller = null, $module = null,
                 $parameters = array())
         {
             Check::IsNullOrEmpty($action);
-            
+
             $url = null;
             $route = RouteManager::GetRoute(
                     new Route(null, $module, $controller, $action, $parameters));
@@ -117,7 +117,7 @@ namespace Spherus\HttpContext
                 $url = '/' . $module . '/' . $controller . '/' . $action;
                 if (isset($parameters)) {
                     Check::IsArray($parameters);
-                    
+
                     foreach ($parameters as $key => $value) {
                         $url .= '/' . $value;
                     }
@@ -125,12 +125,12 @@ namespace Spherus\HttpContext
             } else {
                 $url = $route->getUrl();
             }
-            
+
             if (isset($url)) {
                 if (self::SendHeader('Location', $url) === true);
                 exit();
             }
-            
+
             throw new SpherusException(EXCEPTION_NO_ROUTE_TO_REDIRECT);
         }
 
@@ -144,7 +144,7 @@ namespace Spherus\HttpContext
         public static function RedirectToUrl ($url)
         {
             Check::IsNullOrEmpty($url);
-            
+
             if (self::SendHeader('Location', $url) === true);
             exit();
         }
@@ -160,14 +160,14 @@ namespace Spherus\HttpContext
         public static function SetCache ($expireSeconds)
         {
             Check::IsInteger($expireSeconds);
-            
+
             if ($expireSeconds > 0) {
-                self::SendHeader('Expires', 
+                self::SendHeader('Expires',
                         gmdate('D, d M Y H:i:s', time() + $expireSeconds) .
                                  ' GMT');
                 self::SendHeader('Pragma', 'cache');
                 self::SendHeader('Cache-Control', 'max-age=' . $expireSeconds);
-                
+
                 unset($expireSeconds);
             }
         }
@@ -182,10 +182,7 @@ namespace Spherus\HttpContext
             self::SendHeader('Last-Modified', $currentTimeStamp);
             self::SendHeader('Pragma', 'no-cache');
             self::SendHeader('Cache-Control', 'no-cache, must-revalidate');
-            
+
             unset($currentTimeStamp);
         }
     }
-}
-
-?>

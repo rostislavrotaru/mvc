@@ -1,36 +1,34 @@
 <?php
-namespace Spherus\Modules\Install\Themes
-{
-    use Spherus\Interfaces\ITheme;
 
-    class DefaultTheme implements ITheme
-    {
+	namespace Spherus\Modules\Install\Themes;
 
-        public function getLayoutsPath ()
-        {
-            return __DIR__ . SEPARATOR . 'layouts';
-        }
+	use Spherus\Interfaces\ITheme;
 
-        public function getName ()
-        {
-            return 'default';
-        }
+	class DefaultTheme implements ITheme
+	{
 
-        public function getCssPath ()
-        {
-            return __DIR__ . SEPARATOR . 'css';
-        }
+		public function getLayoutsPath()
+		{
+			return __DIR__.SEPARATOR.'layouts';
+		}
 
-        public function getImagesPath ()
-        {
-            return __DIR__ . SEPARATOR . 'images';
-        }
+		public function getName()
+		{
+			return 'default';
+		}
 
-        public function getScriptsPath ()
-        {
-            return __DIR__ . SEPARATOR . 'scripts';
-        }
-    }
-}
+		public function getCssPath()
+		{
+			return __DIR__.SEPARATOR.'css';
+		}
 
-?>
+		public function getImagesPath()
+		{
+			return __DIR__.SEPARATOR.'images';
+		}
+
+		public function getScriptsPath()
+		{
+			return __DIR__.SEPARATOR.'scripts';
+		}
+	}

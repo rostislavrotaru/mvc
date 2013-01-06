@@ -5,12 +5,12 @@ use Spherus\Helpers\HtmlHelper;
 <!DOCTYPE html>
 <html>
 <head>
-		<?php
+<?php
 echo HtmlHelper::Css(THEME_CSS . 'cssser');
 echo HtmlHelper::Css(THEME_CSS . 'style');
 ?>
-	</head>
+</head>
 <body>
-	<?php echo HttpContext::getPageContent();?>
+<?php echo HttpContext::getPageContent();?>
 </body>
 </html>

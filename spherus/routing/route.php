@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,7 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\Routing
-{
+	namespace Spherus\Routing;
     use Spherus\Core\Check;
     use Spherus\Core\SpherusException;
 
@@ -21,9 +20,9 @@ namespace Spherus\Routing
      */
     class Route
     {
-        
+
         /* CONSTRUCTOR */
-        
+
         /**
          * Initializes a new instance of Route class.
          *
@@ -39,14 +38,14 @@ namespace Spherus\Routing
          *            The route action name, optional
          * @param array $parameters
          *            The route parameters name, optional
-         *            
+         *
          * @throws SpherusException When $url parameter is null or empty
          */
-        public function __construct ($name, $url, $module = null, $controller = null, 
+        public function __construct ($name, $url, $module = null, $controller = null,
                 $action = null, $parameters = null)
         {
             Check::IsNullOrEmpty($url);
-            
+
             $this->name = $name;
             $this->url = $url;
             $this->module = $module;
@@ -54,9 +53,9 @@ namespace Spherus\Routing
             $this->action = $action;
             $this->parameters = $parameters;
         }
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines the route name
          *
@@ -115,9 +114,9 @@ namespace Spherus\Routing
         {
             return $this->query;
         }
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets the route name
          *
@@ -177,9 +176,9 @@ namespace Spherus\Routing
         {
             return $this->parameters;
         }
-        
+
         /* PUBLIC FUNCTIONS */
-        
+
         /**
          * Returns an array of route query parameters.
          *
@@ -190,10 +189,7 @@ namespace Spherus\Routing
             if (isset($this->query)) {
                 return spliti('?', $this->query);
             }
-            
+
             return array();
         }
     }
-}
-
-?>

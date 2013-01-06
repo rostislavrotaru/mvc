@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,8 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\Routing
-{
+	namespace Spherus\Routing;
+
     use Spherus\Core\SpherusException;
     use Spherus\Core\Check;
 
@@ -18,13 +18,13 @@ namespace Spherus\Routing
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.routing
-     *         
+     *
      */
     class RouteManager
     {
-        
+
         /* FIELDS */
-        
+
         /**
          * Contains array of registered routes.
          *
@@ -38,9 +38,9 @@ namespace Spherus\Routing
          * @var IRouter
          */
         private static $router = null;
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets the current router object
          *
@@ -60,9 +60,9 @@ namespace Spherus\Routing
         {
             return RouteManager::$registeredRoutes;
         }
-        
+
         /* PUBLIC FUNCTIONS */
-        
+
         /**
          * Initialize RouteHandler object functionality
          */
@@ -76,11 +76,11 @@ namespace Spherus\Routing
                 }
                 self::$router = new $router();
                 self::$router->Initialize();
-                
+
                 // Check if router implements IRouter interface
-                Check::IsInstanceOf(self::$router, 
+                Check::IsInstanceOf(self::$router,
                         'Spherus\\Interfaces\\IRouter');
-                
+
                 unset($router);
             } else {
                 throw new SpherusException(EXCEPTION_INVALID_ROUTER_CONFIG);
@@ -99,7 +99,7 @@ namespace Spherus\Routing
         {
             Check::IsNullOrEmpty($route);
             Check::IsNullOrEmpty($route->getName());
-            
+
             $foundRoute = self::GetRouteByName($route->getName());
             if (isset($foundRoute)) {
                 throw new SpherusException(
@@ -107,7 +107,7 @@ namespace Spherus\Routing
             } else {
                 self::$registeredRoutes[] = $route;
             }
-            
+
             unset($foundRoute);
             unset($route);
         }
@@ -126,10 +126,7 @@ namespace Spherus\Routing
                     return $registeredRoute;
                 }
             }
-            
+
             return null;
         }
     }
-}
-
-?>

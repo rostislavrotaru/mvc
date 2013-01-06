@@ -1,21 +1,17 @@
 <?php
-namespace Spherus\Modules\Install
-{
-    use Spherus\Core\Base\ControllerBase;
 
-    class HomeController extends ControllerBase
-    {
+	namespace Spherus\Modules\Install;
 
-        public function BeforeLoad ()
-        {
-            $this->helpers = array(
-                    'html'
-            );
-        }
+	use Spherus\Core\Base\ControllerBase;
 
-        public function index ()
-        {}
-    }
-}
+	class HomeController extends ControllerBase
+	{
+		public function BeforeLoad()
+		{
+			$this->helpers = array('html');
+		}
 
-?>
+		public function index()
+		{
+		}
+	}

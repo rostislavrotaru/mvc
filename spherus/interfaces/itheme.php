@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,7 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\Interfaces
-{
+	namespace Spherus\Interfaces;
 
     /**
      * Defines interface for application themes
@@ -19,9 +18,9 @@ namespace Spherus\Interfaces
      */
     interface ITheme
     {
-        
+
         // Should be implemeted in theme.php file for each module
-        
+
         /**
          * Gets the name of theme
          *
@@ -57,6 +56,3 @@ namespace Spherus\Interfaces
          */
         public function getScriptsPath ();
     }
-}
-
-?>

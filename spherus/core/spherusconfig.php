@@ -1,6 +1,6 @@
 <?php
 
-/**
+	/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,8 +8,7 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
-namespace Spherus\Core
-{
+	namespace Spherus\Core;
 
     /**
      * Class that represents the Application base configuration
@@ -19,9 +18,9 @@ namespace Spherus\Core
      */
     abstract class SpherusConfig
     {
-        
+
         /* FIELDS */
-        
+
         /**
          * Defines the default application theme.
          * Can be overwritten in Application Configuration file.
@@ -51,9 +50,9 @@ namespace Spherus\Core
                 'router' => 'Spherus\Routing\DefaultRouter',
                 'default_route_name' => 'default'
         );
-        
+
         /* PROPERTIES */
-        
+
         /**
          * Gets the default application theme.
          *
@@ -69,7 +68,7 @@ namespace Spherus\Core
          *
          * @param
          *            string The default theme name
-         *            
+         *
          * @throws SpherusException When $defaultTheme parameter is null or
          *         empty.
          */
@@ -94,7 +93,7 @@ namespace Spherus\Core
          *
          * @param
          *            string The default layout name
-         *            
+         *
          * @throws SpherusException When $defaultLayout parameter is null or
          *         empty.
          */
@@ -112,9 +111,9 @@ namespace Spherus\Core
         {
             return self::$routingDefaults;
         }
-        
+
         /* PUBLIC METHODS */
-        
+
         /**
          * Initializes base functionality of Application configuration.
          * Can be overwritten in Application Configuration file.
@@ -131,7 +130,7 @@ namespace Spherus\Core
          *            The routing default key.
          * @param mixed $value
          *            The routing default value.
-         *            
+         *
          * @throws SpherusException When $key parameter is null or empty.
          * @throws SpherusException When self::$routingDefaults is null.
          */
@@ -139,9 +138,7 @@ namespace Spherus\Core
         {
             Check::IsNullOrEmpty($key);
             Check::IsNull(self::$routingDefaults);
-            
+
             self::$routingDefaults[$key] = $value;
         }
     }
-}
-?>
