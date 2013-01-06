@@ -19,11 +19,13 @@
 	// File with all configured paths
 	require ('paths.php');
 
+	require ('autoloader.php');
+
 	// Require enum file
 	require (CORE.'enums.php');
 
 	// Require enums file
-	require (CORE.'spherusexception.php');
+	//require (CORE.'spherusexception.php');
 
 	// Base controller file
 	require (BASE.'controllerbase.php');
@@ -38,7 +40,7 @@
 	require (CORE.'spherusconfig.php');
 
 	// Application workbench file
-	require (CORE.'workbench.php');
+	//require (CORE.'workbench.php');
 
 	// Checks file
 	require (CORE.'check.php');

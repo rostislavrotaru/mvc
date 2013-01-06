@@ -1,318 +1,296 @@
 <?php
 
-/**
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright SPHERUS (http://spherus.net)
- * @license http://license.spherus.net
- * @link http://spherus.net
- * @since 3.0
- */
-namespace Spherus\Core;
+	/**
+	 * Redistributions of files must retain the above copyright notice.
+	 *
+	 * @copyright SPHERUS (http://spherus.net)
+	 * @license http://license.spherus.net
+	 * @link http://spherus.net
+	 * @since 3.0
+	 */
+	namespace Spherus\Core;
 
-use Spherus\HttpContext\HttpContext;
-use Spherus\HttpContext\Session;
-use Spherus\Parsers\IpFilterParser;
-use Spherus\Interfaces\IModule;
-use Spherus\Routing\RouteManager;
-
-/**
- * Class that represents the framework workbench
- *
- * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
- * @package spherus.core
- */
-class Workbench
-{
-
-	/* FIELDS */
+	use Spherus\HttpContext\HttpContext;
+	use Spherus\HttpContext\Session;
+	use Spherus\Parsers\IpFilterParser;
+	use Spherus\Interfaces\IModule;
+	use Spherus\Routing\RouteManager;
 
 	/**
-	 * Defines an array of context modules
+	 * Class that represents the framework workbench
 	 *
-	 * @var array
+	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+	 * @package spherus.core
 	 */
-	private static $modules = array();
-
-	/**
-	 * Defines the context current controller object
-	 *
-	 * @var ControllerBase
-	 */
-	private static $currentController = null;
-
-	/**
-	 * Defines the context current theme object
-	 *
-	 * @var string
-	 */
-	private static $currentTheme = null;
-
-	/* PROPERTIES */
-
-	/**
-	 * Gets array of context modules
-	 *
-	 * @return array
-	 */
-	public static function getModules()
+	class Workbench
 	{
-		return self::$modules;
-	}
 
-	/**
-	 * Gets the context current controller object
-	 *
-	 * @return Spherus\Core\Base\ControllerBase
-	 */
-	public static function getCurrentController()
-	{
-		return self::$currentController;
-	}
+		/* FIELDS */
 
-	/**
-	 * Sets the context current controller
-	 *
-	 * @param Spherus\Core\ControllerBase The controller object to set
-	 */
-	public static function setCurrentController($currentController)
-	{
-		self::$currentController = $currentController;
-	}
+		/**
+		 * Defines an array of context modules
+		 *
+		 * @var array
+		 */
+		private static $modules = array();
 
-	/**
-	 * Gets the current theme
-	 *
-	 * @return Spherus\Interfaces\ITheme
-	 */
-	public static function getCurrentTheme()
-	{
-		return self::$currentTheme;
-	}
+		/**
+		 * Defines the context current controller object
+		 *
+		 * @var ControllerBase
+		 */
+		private static $currentController = null;
 
-	/**
-	 * Gets current module object
-	 *
-	 * @return IModule
-	 */
-	public static function getCurrentModule()
-	{
-		return self::GetModuleByName(HttpContext::getParsedUrl()->getModuleName());
-	}
+		/**
+		 * Defines the context current theme object
+		 *
+		 * @var string
+		 */
+		private static $currentTheme = null;
 
-	/* METHODS */
+		/* PROPERTIES */
 
-	/**
-	 * Initialize context
-	 */
-	public static function Initialize()
-	{
-		self::SetIPFilter();
-		self::LoadModules();
-		HttpContext::setParsedUrl(RouteManager::getRouter()->Parse());
-		self::LoadController();
-		self::LoadTheme();
-		self::LoadView();
-	}
-
-	/**
-	 * Loads all found modules
-	 */
-	public static function LoadModules()
-	{
-		// Find all module directories
-		$moduleDirectories = Workbench::ListDirectoryFolders(MODULES);
-		if(isset($moduleDirectories))
+		/**
+		 * Gets array of context modules
+		 *
+		 * @return array
+		 */
+		public static function getModules()
 		{
-			foreach($moduleDirectories as $directory)
+			return self::$modules;
+		}
+
+		/**
+		 * Gets the context current controller object
+		 *
+		 * @return Spherus\Core\Base\ControllerBase
+		 */
+		public static function getCurrentController()
+		{
+			return self::$currentController;
+		}
+
+		/**
+		 * Sets the context current controller
+		 *
+		 * @param Spherus\Core\ControllerBase The controller object to set
+		 */
+		public static function setCurrentController($currentController)
+		{
+			self::$currentController = $currentController;
+		}
+
+		/**
+		 * Gets the current theme
+		 *
+		 * @return Spherus\Interfaces\ITheme
+		 */
+		public static function getCurrentTheme()
+		{
+			return self::$currentTheme;
+		}
+
+		/**
+		 * Gets current module object
+		 *
+		 * @return IModule
+		 */
+		public static function getCurrentModule()
+		{
+			return self::GetModuleByName(HttpContext::getParsedUrl()->getModuleName());
+		}
+
+		/* METHODS */
+
+		/**
+		 * Initialize context
+		 */
+		public static function Initialize()
+		{
+			self::SetIPFilter();
+			self::LoadModules();
+			HttpContext::setParsedUrl(RouteManager::getRouter()->Parse());
+			self::LoadController();
+			self::LoadTheme();
+			self::LoadView();
+		}
+
+		/**
+		 * Loads all found modules
+		 */
+		public static function LoadModules()
+		{
+			// Find all module directories
+			$moduleDirectories = Workbench::ListDirectoryFolders(MODULES);
+			if(isset($moduleDirectories))
 			{
-				// Check if exists the module file
-				Check::FileIsReadable(MODULES.$directory.SEPARATOR.'module.php');
-
-				require (MODULES.$directory.SEPARATOR.'module.php');
-				$moduleName = $directory.'Module';
-				$module = new $moduleName();
-
-				// Check if created object implements IModule interface
-				if($module instanceof IModule)
+				foreach($moduleDirectories as $directory)
 				{
-					self::AddModule($module);
-					$module->Run();
+					// Check if exists the module file
+					Check::FileIsReadable(MODULES.$directory.SEPARATOR.'module.php');
+
+					require (MODULES.$directory.SEPARATOR.'module.php');
+					$moduleName = $directory.'Module';
+					$module = new $moduleName();
+
+					// Check if created object implements IModule interface
+					if($module instanceof IModule)
+					{
+						self::AddModule($module);
+						$module->Run();
+					}
 				}
 			}
 		}
-	}
 
-	/**
-	 * Sets Ip filters
-	 */
-	public static function SetIPFilter()
-	{
-		if(file_exists(APP_COMMON.'ipfilter.php'))
+		/**
+		 * Sets Ip filters
+		 */
+		public static function SetIPFilter()
 		{
-			require (APP_COMMON.'ipfilter.php');
-			require (PARSERS.'ipfilterparser.php');
-
-			// Check IP Filter rules
-			IpFilterParser::Parse();
-		}
-	}
-
-	/**
-	 * Gets module object by its name
-	 *
-	 * @param string $moduleName The name of module to search
-	 * @return Spherus\Interfaces\IModule NULL
-	 */
-	public static function GetModuleByName($moduleName)
-	{
-		$modules = Workbench::$modules;
-		foreach($modules as $key=>$value)
-		{
-			if($moduleName===$key)
+			if(file_exists(APP_COMMON.'ipfilter.php'))
 			{
-				unset($modules);
-				return $value;
+				require (APP_COMMON.'ipfilter.php');
+				require (PARSERS.'ipfilterparser.php');
+
+				// Check IP Filter rules
+				IpFilterParser::Parse();
 			}
 		}
 
-		unset($modules);
-
-		return null;
-	}
-
-	/**
-	 * Lists directory folders
-	 *
-	 * @param string $path. The path to the directory
-	 * @return array
-	 */
-	public static function ListDirectoryFolders($path)
-	{
-		$result = null;
-		$files = preg_grep('/^([^.])/', scandir($path));
-		foreach($files as $file)
+		/**
+		 * Gets module object by its name
+		 *
+		 * @param string $moduleName The name of module to search
+		 * @return Spherus\Interfaces\IModule NULL
+		 */
+		public static function GetModuleByName($moduleName)
 		{
-			if(is_dir(MODULES.SEPARATOR.$file))
+			$modules = Workbench::$modules;
+			foreach($modules as $key=>$value)
 			{
-				$result[] = $file;
-			}
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Loads controller according to the given ParsedUrl
-	 *
-	 * @throws SpherusException When controller is not found
-	 */
-	public static function LoadController()
-	{
-		$parsedUrl = HttpContext::getParsedUrl();
-		$moduleObject = self::GetModuleByName($parsedUrl->getModuleName());
-
-		if(isset($moduleObject))
-		{
-			$fileName = MODULES.$parsedUrl->getModuleName().SEPARATOR.'controllers'.SEPARATOR.$parsedUrl->getControllerName().'.php';
-			if(file_exists($fileName))
-			{
-				if(is_readable($fileName))
+				if($moduleName===$key)
 				{
-					require ($fileName);
-					$controllerName = $moduleObject->GetNamespaceName().'\\'.$parsedUrl->getControllerName().'Controller';
+					unset($modules);
+					return $value;
+				}
+			}
 
-					unset($parsedUrl);
-					unset($moduleObject);
+			unset($modules);
 
-					$controllerObject = new $controllerName();
-					self::LoadControllerAttributes($controllerObject);
-					$controllerObject->BeforeLoad();
+			return null;
+		}
 
-					self::setCurrentController($controllerObject);
+		/**
+		 * Lists directory folders
+		 *
+		 * @param string $path. The path to the directory
+		 * @return array
+		 */
+		public static function ListDirectoryFolders($path)
+		{
+			$result = null;
+			$files = preg_grep('/^([^.])/', scandir($path));
+			foreach($files as $file)
+			{
+				if(is_dir(MODULES.SEPARATOR.$file))
+				{
+					$result[] = $file;
+				}
+			}
+
+			return $result;
+		}
+
+		/**
+		 * Loads controller according to the given ParsedUrl
+		 *
+		 * @throws SpherusException When controller is not found
+		 */
+		public static function LoadController()
+		{
+			$parsedUrl = HttpContext::getParsedUrl();
+			$moduleObject = self::GetModuleByName($parsedUrl->getModuleName());
+
+			if(isset($moduleObject))
+			{
+				$fileName = MODULES.$parsedUrl->getModuleName().SEPARATOR.'controllers'.SEPARATOR.$parsedUrl->getControllerName().'.php';
+				if(file_exists($fileName))
+				{
+					if(is_readable($fileName))
+					{
+						require ($fileName);
+						$controllerName = $moduleObject->GetNamespaceName().'\\'.$parsedUrl->getControllerName().'Controller';
+
+						unset($parsedUrl);
+						unset($moduleObject);
+
+						$controllerObject = new $controllerName();
+						self::LoadControllerAttributes($controllerObject);
+						$controllerObject->BeforeLoad();
+
+						self::setCurrentController($controllerObject);
+					}
+					else
+					{
+						unset($parsedUrl);
+						unset($moduleObject);
+						throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_READABLE, $fileName));
+					}
 				}
 				else
 				{
-					unset($parsedUrl);
 					unset($moduleObject);
-					throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_READABLE, $fileName));
+					throw new SpherusException(sprintf(EXCEPTION_CONTROLLER_NOT_FOUND, $parsedUrl->getControllerName()));
 				}
 			}
 			else
 			{
 				unset($moduleObject);
-				throw new SpherusException(sprintf(EXCEPTION_CONTROLLER_NOT_FOUND, $parsedUrl->getControllerName()));
+				throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
 			}
 		}
-		else
+
+		/**
+		 * Loads current view
+		 */
+		public static function LoadView()
 		{
-			unset($moduleObject);
-			throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
-		}
-	}
+			$action = HttpContext::getParsedUrl()->getActionName();
 
-	/**
-	 * Loads current view
-	 */
-	public static function LoadView()
-	{
-		$action = HttpContext::getParsedUrl()->getActionName();
-
-		// Call action in current controller
-		if(method_exists(Workbench::getCurrentController(), $action))
-		{
-			call_user_func_array(array(Workbench::getCurrentController(),$action), HttpContext::getParsedUrl()->getParameters());
-			Workbench::getCurrentController()->AfterLoad();
-		}
-		else
-		{
-			throw new SpherusException(
-					sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getController(),
-							HttpContext::getParsedUrl()->getModuleName()));
-		}
-
-		if(!in_array($action, self::$currentController->noViewControllers))
-		{
-			$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
-					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
-			Check::FileIsReadable($fileName);
-
-			self::$currentController->BeforeAction();
-			self::$currentController->IncludeHelpers();
-
-			if(isset(self::$currentController->layout))
+			// Call action in current controller
+			if(method_exists(Workbench::getCurrentController(), $action))
 			{
-				ob_start();
-				require ($fileName);
-				HttpContext::setPageContent(ob_get_contents());
-				ob_end_clean();
+				call_user_func_array(array(Workbench::getCurrentController(),$action), HttpContext::getParsedUrl()->getParameters());
+				Workbench::getCurrentController()->AfterLoad();
+			}
+			else
+			{
+				throw new SpherusException(
+						sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getController(),
+								HttpContext::getParsedUrl()->getModuleName()));
+			}
 
-				// Search layout in app first, then in current controller
-				// module
-				$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
+			if(!in_array($action, self::$currentController->noViewControllers))
+			{
+				$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
+						HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
+				Check::FileIsReadable($fileName);
 
-				if(file_exists($layoutFile))
+				self::$currentController->BeforeAction();
+				self::$currentController->IncludeHelpers();
+
+				if(isset(self::$currentController->layout))
 				{
-					Check::FileIsReadable($layoutFile);
 					ob_start();
-					require ($layoutFile);
+					require ($fileName);
 					HttpContext::setPageContent(ob_get_contents());
 					ob_end_clean();
-					self::ProcessPageContent();
-				}
-				else
-				{
-					$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'themes'.SEPARATOR.
-							self::$currentTheme->getName().SEPARATOR.'theme.php';
-					Check::FileIsReadable($moduleThemeFile);
-					require ($moduleThemeFile);
-					$moduleThemeName = self::getCurrentModule()->GetNamespaceName().'\\Themes\\'.self::$currentTheme->getName().'Theme';
-					$moduleThemeObject = new $moduleThemeName();
 
-					unset($moduleThemeFile);
-					unset($moduleThemeName);
+					// Search layout in app first, then in current controller
+					// module
+					$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
 
-					$layoutFile = $moduleThemeObject->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
 					if(file_exists($layoutFile))
 					{
 						Check::FileIsReadable($layoutFile);
@@ -324,127 +302,149 @@ class Workbench
 					}
 					else
 					{
-						throw new SpherusException(sprintf(EXCEPTION_LAYOUT_NOT_FOUND, self::$currentController->layout));
-					}
+						$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'themes'.SEPARATOR.
+								self::$currentTheme->getName().SEPARATOR.'theme.php';
+						Check::FileIsReadable($moduleThemeFile);
+						require ($moduleThemeFile);
+						$moduleThemeName = self::getCurrentModule()->GetNamespaceName().'\\Themes\\'.self::$currentTheme->getName().'Theme';
+						$moduleThemeObject = new $moduleThemeName();
 
-					unset($moduleThemeObject);
+						unset($moduleThemeFile);
+						unset($moduleThemeName);
+
+						$layoutFile = $moduleThemeObject->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
+						if(file_exists($layoutFile))
+						{
+							Check::FileIsReadable($layoutFile);
+							ob_start();
+							require ($layoutFile);
+							HttpContext::setPageContent(ob_get_contents());
+							ob_end_clean();
+							self::ProcessPageContent();
+						}
+						else
+						{
+							throw new SpherusException(sprintf(EXCEPTION_LAYOUT_NOT_FOUND, self::$currentController->layout));
+						}
+
+						unset($moduleThemeObject);
+					}
 				}
+				else
+				{
+					ob_start();
+					require ($fileName);
+					HttpContext::setPageContent(ob_get_contents());
+					ob_end_clean();
+					self::ProcessPageContent();
+				}
+
+				self::getCurrentController()->AfterAction();
+				unset($fileName);
+				unset($layoutFile);
+			}
+			unset($action);
+		}
+
+		/**
+		 * Loads application configuration file
+		 *
+		 * @throws SpherusException When config.php file not found in the
+		 *         public/common folder.
+		 */
+		public static function LoadApplicationConfig()
+		{
+			if(file_exists(APP_COMMON.'config.php'))
+			{
+				require (APP_COMMON.'config.php');
+				\Config::Initialize();
 			}
 			else
 			{
-				ob_start();
-				require ($fileName);
-				HttpContext::setPageContent(ob_get_contents());
-				ob_end_clean();
-				self::ProcessPageContent();
+				throw new SpherusException(EXCEPTION_APP_CONFIG_NOT_FOUND);
+			}
+		}
+
+		/**
+		 * Loads theme for application.
+		 * If not found - the default theme from configuration file will be
+		 * used.
+		 */
+		public static function LoadTheme()
+		{
+			$currentThemeName = Session::GetValue('theme');
+			if(!isset($currentThemeName))
+			{
+				$currentThemeName = \Config::getDefaultTheme();
+				Session::SetValue('theme', $currentThemeName);
 			}
 
-			self::getCurrentController()->AfterAction();
-			unset($fileName);
-			unset($layoutFile);
-		}
-		unset($action);
-	}
+			$currentThemeFilePath = THEMES.$currentThemeName.SEPARATOR.'theme.php';
+			Check::FileIsReadable($currentThemeFilePath);
+			require ($currentThemeFilePath);
 
-	/**
-	 * Loads application configuration file
-	 *
-	 * @throws SpherusException When config.php file not found in the
-	 *         public/common folder.
-	 */
-	public static function LoadApplicationConfig()
-	{
-		if(file_exists(APP_COMMON.'config.php'))
-		{
-			require (APP_COMMON.'config.php');
-			\Config::Initialize();
-		}
-		else
-		{
-			throw new SpherusException(EXCEPTION_APP_CONFIG_NOT_FOUND);
-		}
-	}
+			// Define theme paths
+			$themePath = substr(THEMES.$currentThemeName.SEPARATOR, 1);
+			define('THEME_CSS', $themePath.'css'.SEPARATOR);
+			define('THEME_SCRIPTS', $themePath.'scripts'.SEPARATOR);
+			define('THEME_IMAGES', $themePath.'images'.SEPARATOR);
 
-	/**
-	 * Loads theme for application.
-	 * If not found - the default theme from configuration file will be
-	 * used.
-	 */
-	public static function LoadTheme()
-	{
-		$currentThemeName = Session::GetValue('theme');
-		if(!isset($currentThemeName))
-		{
-			$currentThemeName = \Config::getDefaultTheme();
-			Session::SetValue('theme', $currentThemeName);
+			$currentThemeName = 'Spherus\\Themes\\'.$currentThemeName.'Theme';
+			self::$currentTheme = new $currentThemeName();
+
+			unset($currentThemeName);
+			unset($currentThemeFilePath);
+			unset($themePath);
 		}
 
-		$currentThemeFilePath = THEMES.$currentThemeName.SEPARATOR.'theme.php';
-		Check::FileIsReadable($currentThemeFilePath);
-		require ($currentThemeFilePath);
-
-		// Define theme paths
-		$themePath = substr(THEMES.$currentThemeName.SEPARATOR, 1);
-		define('THEME_CSS', $themePath.'css'.SEPARATOR);
-		define('THEME_SCRIPTS', $themePath.'scripts'.SEPARATOR);
-		define('THEME_IMAGES', $themePath.'images'.SEPARATOR);
-
-		$currentThemeName = 'Spherus\\Themes\\'.$currentThemeName.'Theme';
-		self::$currentTheme = new $currentThemeName();
-
-		unset($currentThemeName);
-		unset($currentThemeFilePath);
-		unset($themePath);
-	}
-
-	/**
-	 * Loads controller attributes (layouts, helpers etc).
-	 *
-	 * @param ControllerBase $controller The controller object to parse.
-	 * @throws SpherusException When $controllerObject parameter is null or
-	 *         empty.
-	 */
-	private static function LoadControllerAttributes($controller)
-	{
-		Check::IsNullOrEmpty($controller);
-
-		// Load layout
-		if(!isset($controller->layout))
+		/**
+		 * Loads controller attributes (layouts, helpers etc).
+		 *
+		 * @param ControllerBase $controller The controller object to parse.
+		 * @throws SpherusException When $controllerObject parameter is null or
+		 *         empty.
+		 */
+		private static function LoadControllerAttributes($controller)
 		{
-			$controller->layout = \Config::getDefaultLayout();
+			Check::IsNullOrEmpty($controller);
+
+			// Load layout
+			if(!isset($controller->layout))
+			{
+				$controller->layout = \Config::getDefaultLayout();
+			}
+		}
+
+		/**
+		 * Processes page content
+		 */
+		private static function ProcessPageContent()
+		{
+			echo HttpContext::getPageContent();
+		}
+
+		/**
+		 * Add an module to the modules collection
+		 *
+		 * @param Spherus\Interfaces\Imodule $module The module to add
+		 * @throws SpherusException When $module parameter is null or empty
+		 * @throws SpherusException When module contains a null or empty name
+		 * @throws SpherusException When module collection already contains a
+		 *         module with the same name
+		 */
+		private static function AddModule($module)
+		{
+			Check::IsNullOrEmpty($module);
+			$moduleName = $module->GetModuleName();
+			Check::IsNullOrEmpty($moduleName);
+
+			if(self::GetModuleByName($moduleName)==null)
+			{
+				self::$modules[$moduleName] = $module;
+			}
+			else
+			{
+				throw new SpherusException(EXCEPTION_DUPLICATE_MODULE);
+			}
 		}
 	}
-
-	/**
-	 * Processes page content
-	 */
-	private static function ProcessPageContent()
-	{
-		echo HttpContext::getPageContent();
-	}
-
-	/**
-	 * Add an module to the modules collection
-	 *
-	 * @param Spherus\Interfaces\Imodule $module The module to add
-	 * @throws SpherusException When $module parameter is null or empty
-	 * @throws SpherusException When module contains a null or empty name
-	 * @throws SpherusException When module collection already contains a
-	 *         module with the same name
-	 */
-	private static function AddModule($module)
-	{
-		Check::IsNullOrEmpty($module);
-		$moduleName = $module->GetModuleName();
-		Check::IsNullOrEmpty($moduleName);
-
-		if(self::GetModuleByName($moduleName)==null)
-		{
-			self::$modules[$moduleName] = $module;
-		}
-		else
-		{
-			throw new SpherusException(EXCEPTION_DUPLICATE_MODULE);
-		}
-	}
-}
