@@ -1,6 +1,6 @@
 <?php
 
-	/**
+/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,177 +8,192 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
+namespace Spherus\Routing
+{
+    use Spherus\Core\Check;
+    use Spherus\Core\SpherusException;
 
-	namespace Spherus\Routing
-	{
+    /**
+     * Defines a Route object class
+     *
+     * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+     * @package spherus.routing
+     */
+    class Route
+    {
+        
+        /* CONSTRUCTOR */
+        
+        /**
+         * Initializes a new instance of Route class.
+         *
+         * @param string $name
+         *            The route name
+         * @param string $url
+         *            The route url
+         * @param string $module
+         *            The route module name, optional
+         * @param string $controller
+         *            The route controller name, optional
+         * @param string $action
+         *            The route action name, optional
+         * @param array $parameters
+         *            The route parameters name, optional
+         *            
+         * @throws SpherusException When $url parameter is null or empty
+         */
+        public function __construct ($name, $url, $module = null, $controller = null, 
+                $action = null, $parameters = null)
+        {
+            Check::IsNullOrEmpty($url);
+            
+            $this->name = $name;
+            $this->url = $url;
+            $this->module = $module;
+            $this->controller = $controller;
+            $this->action = $action;
+            $this->parameters = $parameters;
+        }
+        
+        /* FIELDS */
+        
+        /**
+         * Defines the route name
+         *
+         * @var string
+         */
+        var $name = null;
 
-		use Spherus\Core\Check;
-		use Spherus\Core\SpherusException;
+        /**
+         * Defines the route url
+         *
+         * @var string
+         */
+        var $url;
 
-		/**
-		* Defines a Route object class
-		*
-		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-		* @package spherus.routing
-		*/
-		class Route
-		{
-			
-			/* CONSTRUCTOR */
-			
-			/**
-			 * Initializes a new instance of Route class.
-			 * 
-			 * @param string $name The route name
-			 * @param string $url The route url
-			 * @param string $module The route module name, optional
-			 * @param string $controller The route controller name, optional
-			 * @param string $action The route action name, optional
-			 * @param array $parameters The route parameters name, optional
-			 * 
-			 * @throws SpherusException When $url parameter is null or empty
-			 */
-			public function __construct($name, $url, $module = null, $controller = null, $action = null, $parameters = null)
-			{			
-			    Check::IsNullOrEmpty($url);
+        /**
+         * Defines the route module name
+         *
+         * @var string
+         */
+        var $module;
 
-			    $this->name = $name;
-				$this->url = $url;
-				$this->module = $module;
-				$this->controller = $controller;
-				$this->action = $action;
-				$this->parameters = $parameters;
-			}
-			
-			
-			/* FIELDS */
-			
-			/**
-			 * Defines the route name
-			 * @var string
-			 */
-			var $name = null;
-			
-			/**
-			 * Defines the route url
-			 * @var string
-			 */
-			var $url;
-			
-			/**
-			 * Defines the route module name
-			 * @var string 
-			 */
-			var $module;
-			
-			/**
-			 * Defines the route controller name
-			 * @var string
-			 */
-			var $controller;
-			
-			/**
-			 * Defines the route action name
-			 * @var string
-			 */
-			var $action;
-			
-			/**
-			 * Defines the route parameters
-			 * @var mixed, array|null 
-			 */
-			var $parameters = null;
+        /**
+         * Defines the route controller name
+         *
+         * @var string
+         */
+        var $controller;
 
-			/**
-			 * Defines the route query parameters
-			 * @var string
-			 */
-			var $query = null;
-			
+        /**
+         * Defines the route action name
+         *
+         * @var string
+         */
+        var $action;
 
-			/**
-			 * Gets the route quesy parameters.
-			* @return string
-			*/
-			public function getQuery()
-			{
-				return $this->query;
-			}
+        /**
+         * Defines the route parameters
+         *
+         * @var mixed, array|null
+         */
+        var $parameters = null;
 
-			/* PROPERTIES */
-			
-			/**
-			 * Gets the route name
-			 * @return string
-			 */
-			public function getName()
-			{
-			    return $this->name;
-			}
-			
-			/**
-			 * @return Route url
-			 * @var string
-			 */
-			public function getUrl() 
-			{
-				return $this->url;
-			}
-		
-			/**
-			 * @return Route module name
-			 * @var string 
-			 */
-			public function getModule() 
-			{
-				return $this->module;
-			}
-		
-			/**
-			 * @return Route controller name
-			 * @var string
-			 */
-			public function getController() 
-			{
-				return $this->controller;
-			}
-		
-			/**
-			 * @return Route action name
-			 * @var string
-			 */
-			public function getAction() 
-			{
-				return $this->action;
-			}
-			
-			/**
-			 * @return Route parameters
-			 * @var mixed, array|null 
-			 */
-			public function getParameters()
-			{
-				return $this->parameters;
-			}
+        /**
+         * Defines the route query parameters
+         *
+         * @var string
+         */
+        var $query = null;
 
-			
-			/* PUBLIC FUNCTIONS */
-			
-			/**
-			 * Returns an array of route query parameters.
-			 * @return array
-			 */
-			public function GetQueryParametersAsArray()
-			{
-				if(isset($this->query))
-				{
-					return spliti('?', $this->query);
-				}
-				
-				return array();
-			}
-		}
-	
-	}
+        /**
+         * Gets the route quesy parameters.
+         *
+         * @return string
+         */
+        public function getQuery ()
+        {
+            return $this->query;
+        }
+        
+        /* PROPERTIES */
+        
+        /**
+         * Gets the route name
+         *
+         * @return string
+         */
+        public function getName ()
+        {
+            return $this->name;
+        }
+
+        /**
+         *
+         * @return Route url
+         * @var string
+         */
+        public function getUrl ()
+        {
+            return $this->url;
+        }
+
+        /**
+         *
+         * @return Route module name
+         * @var string
+         */
+        public function getModule ()
+        {
+            return $this->module;
+        }
+
+        /**
+         *
+         * @return Route controller name
+         * @var string
+         */
+        public function getController ()
+        {
+            return $this->controller;
+        }
+
+        /**
+         *
+         * @return Route action name
+         * @var string
+         */
+        public function getAction ()
+        {
+            return $this->action;
+        }
+
+        /**
+         *
+         * @return Route parameters
+         * @var mixed, array|null
+         */
+        public function getParameters ()
+        {
+            return $this->parameters;
+        }
+        
+        /* PUBLIC FUNCTIONS */
+        
+        /**
+         * Returns an array of route query parameters.
+         *
+         * @return array
+         */
+        public function GetQueryParametersAsArray ()
+        {
+            if (isset($this->query)) {
+                return spliti('?', $this->query);
+            }
+            
+            return array();
+        }
+    }
+}
 
 ?>

@@ -9,12 +9,12 @@
 	* @since 3.0
 	*/
 
-	namespace Spherus\HttpContext
+    namespace Spherus\HttpContext
 	{
-	
+
 		use Spherus\Core\SpherusException;
 		use Spherus\Core\Check;
-		
+
 
 		/**
 		* Class that represents the http context session object
@@ -24,32 +24,32 @@
 		*/
 		class Session
 		{
-						
+
 			/* FIELDS */
-			
+
 			/**
 			 * Defines the session content. Filtered by $sessionName variable
-			 * 
+			 *
 			 * @var array
 			 */
 			private static $content = null;
-			
+
 			/**
 			 * Defines the session name
-			 * 
+			 *
 			 * @var string
 			 */
-			private static $sessionName = 'spherus'; 
-			
-			
+			private static $sessionName = 'spherus';
+
+
 			/* PROPERTIES */
 
-			
+
 			/* PUBLIC FUNCTIONS */
-			
+
 			/**
 			 * Gets session value
-			 * 
+			 *
 			 * @param mixed $key The session key to search
 			 * @return Mixed|null
 			 */
@@ -62,16 +62,16 @@
 						return self::$content[$key];
 					}
 				}
-				
+
 				return null;
 			}
-			
+
 			/**
 			 * Sets a session value.
-			 * 
+			 *
 			 * @param string $key The session key.
 			 * @param mixed $value The session value to set. If $value parameter is an object - serialized object will be stored.
-			 * 
+			 *
 			 * @throws SpherusException When $key parameter is null or empty.
 			 * @throws SpherusException When $value parameter is null or empty.
 			 */
@@ -79,16 +79,16 @@
 			{
 				Check::IsNullOrEmpty($key);
 				Check::IsNullOrEmpty($value);
-				
+
 				if(is_object($value))
 				{
 					$value = serialize($value);
 				}
-				
+
 				self::$content[$key] = $value;
 				$_SESSION[self::$sessionName][$key] = $value;
 			}
-			
+
 			/**
 			 * Clears current session
 			 */
@@ -97,7 +97,7 @@
 				self::$content = null;
 				unset($_SESSION[self::$sessionName]);
 			}
-			
+
 			/**
 			 * Starts session
 			 */
@@ -111,9 +111,7 @@
 					}
 				}
 			}
-						
-		}
-		
-	}
 
+		}
+	}
 ?>

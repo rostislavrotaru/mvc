@@ -1,6 +1,6 @@
 <?php
 
-	/**
+/**
 	* Redistributions of files must retain the above copyright notice.
 	*
 	* @copyright SPHERUS (http://spherus.net)
@@ -8,52 +8,55 @@
 	* @link http://spherus.net
 	* @since 3.0
 	*/
+namespace Spherus\Interfaces
+{
 
-	namespace Spherus\Interfaces
-	{
-		
-		/**
-		* Defines interface for application themes
-		*
-		* @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-		* @package spherus.interfaces
-		*/
-		interface ITheme
-		{
-			
-			//Should be implemeted in theme.php file for each module
-			
-			/**
-			 * Gets the name of theme
-			 * @return string 
-			 */
-			public function getName();
-		
-			/**
-			 * Gets the path of CSS files
-			 * @return string 
-			 */
-			public function getCssPath();
-			
-			/**
-			 * Gets the path of image files
-			 * @return string
-			 */
-			public function getImagesPath();
+    /**
+     * Defines interface for application themes
+     *
+     * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+     * @package spherus.interfaces
+     */
+    interface ITheme
+    {
+        
+        // Should be implemeted in theme.php file for each module
+        
+        /**
+         * Gets the name of theme
+         *
+         * @return string
+         */
+        public function getName ();
 
-			/**
-			 * Gets the path of layout files
-			 * @return string
-			 */
-			public function getLayoutsPath();
-			
-			/**
-			 * Gets the path of script files
-			 * @return string
-			 */
-			public function getScriptsPath();
-			
-		}
-	}
+        /**
+         * Gets the path of CSS files
+         *
+         * @return string
+         */
+        public function getCssPath ();
+
+        /**
+         * Gets the path of image files
+         *
+         * @return string
+         */
+        public function getImagesPath ();
+
+        /**
+         * Gets the path of layout files
+         *
+         * @return string
+         */
+        public function getLayoutsPath ();
+
+        /**
+         * Gets the path of script files
+         *
+         * @return string
+         */
+        public function getScriptsPath ();
+    }
+}
 
 ?>
