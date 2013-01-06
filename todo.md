@@ -5,3 +5,5 @@
 - Make unit tests
 - Refactor and split Workbench class methods into smaller methods
 - Add suplimental functionality on default router class
+- Use SPL as much as possible
+- Use PSR0/1/2
