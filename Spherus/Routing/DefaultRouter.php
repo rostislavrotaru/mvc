@@ -52,6 +52,8 @@
 			$controller = $foundRoute->getController();
 			$action = $foundRoute->getAction();
 
+			$rrr = \Config::getRoutingDefaults()['controller'];
+
 			$result = new ParsedUrl(isset($module) ? $module : (isset($pathPortions[0]) ? $pathPortions[0] : \Config::getRoutingDefaults()['module']),
 					isset($controller) ? $controller : (isset($pathPortions[1]) ? $pathPortions[1] : \Config::getRoutingDefaults()['controller']),
 					isset($action) ? $action : (isset($pathPortions[2]) ? $pathPortions[2] : \Config::getRoutingDefaults()['action']), $parameters,

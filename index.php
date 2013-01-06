@@ -15,4 +15,4 @@
  * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
  * @package spherus
  */
-require_once ('spherus/boot.php');
+require_once ('Spherus/Boot.php');

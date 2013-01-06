@@ -22,7 +22,7 @@
 	use Spherus\Routing\RouteManager;
 
 	// Base require files
-	require ('requires.php');
+	require('Requires.php');
 
 	// Starts session
 	Session::Start();

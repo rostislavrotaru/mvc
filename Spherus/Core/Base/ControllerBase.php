@@ -96,14 +96,14 @@
 				// Load helper in following search order: system path, app
 				// helpers path, modules helpers path
 				// Framework helpers path
-				if(file_exists(strtolower(HELPERS.$filename.'.php')))
+				if(file_exists(HELPERS.$filename.'Helper.php'))
 				{
-					require_once (strtolower(HELPERS.$filename.'.php'));
+					require_once (HELPERS.$filename.'Helper.php');
 					return;
 				} // App helpers path
-				elseif(file_exists(strtolower(APP_HELPERS.$filename.'.php')))
+				elseif(file_exists(APP_HELPERS.$filename.'Helper.php'))
 				{
-					require_once (strtolower(APP_HELPERS.$filename.'.php'));
+					require_once (APP_HELPERS.$filename.'Helper.php');
 					return;
 				} // Module helpers path
 				else

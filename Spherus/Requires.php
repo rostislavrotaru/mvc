@@ -22,7 +22,7 @@
 	require ('autoloader.php');
 
 	// Require enum file
-	require (CORE.'enums.php');
+	//require (CORE.'enums.php');
 
 	// Require enums file
 	//require (CORE.'spherusexception.php');

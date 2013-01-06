@@ -214,7 +214,7 @@
 
 			if(isset($moduleObject))
 			{
-				$fileName = MODULES.$parsedUrl->getModuleName().SEPARATOR.'controllers'.SEPARATOR.$parsedUrl->getControllerName().'.php';
+				$fileName = MODULES.$parsedUrl->getModuleName().SEPARATOR.'controllers'.SEPARATOR.$parsedUrl->getControllerName().'Controller.php';
 				if(file_exists($fileName))
 				{
 					if(is_readable($fileName))

@@ -28,8 +28,7 @@
         {
             Request::Initialize();
             self::$serverProtocol = $_SERVER["SERVER_PROTOCOL"];
-            self::$isSecured = empty($_SERVER['HTTPS']) ||
-                     $_SERVER['HTTPS'] == 'off' ? false : true;
+            self::$isSecured = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off' ? false : true;
         }
 
         /* FIELDS */
