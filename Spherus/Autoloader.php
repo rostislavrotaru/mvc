@@ -20,40 +20,68 @@
 	{
 		/* FIELDS */
 
-		private static $includePaths = array
-		(
-			'App'=>APP,
-			'Common'=>APP_COMMON
-		);
+		/**
+		 * Contains Additional include path for classes that does not contains namespaces.
+		 *
+		 * @var Array
+		 */
+		private static $includePaths = array();
+
+
+		/* PROPERTIES */
+
+		/**
+		 * Gets Additional include path for classes that does not contains namespaces.
+		 *
+		 * @return array
+		 */
+		public static function getIncludePaths()
+		{
+			return self::$includePaths;
+		}
 
 
 		/* FUNCTIONS */
 
 		/**
-		 * Class autoload loader.
-		 * This method is provided to be invoked within an __autoload() magic method.
+		 * Class autoloader.
 		 *
-		 * @param string $className class name
-		 * @return boolean whether the class has been loaded successfully
+		 * @param string $className The class name.
+		 * @return boolean Whether the class has been loaded successfully
+		 * @throws SpherusException When class to load not found.
 		 */
 		public static function Autoload($className)
 		{
 			// If class does not have namespace
 			if(strpos($className,'\\')===false)
 			{
-				foreach(self::$includePaths as $key=>$value)
+				foreach(self::$includePaths as $path)
 				{
-					$classFile = $value.$className.'.php';
+					$classFile = $path.$className.'.php';
 					if(is_file($classFile))
 					{
-						return require($classFile);
+						return include($classFile);
 					}
 				}
 
-				return include($className.'.php');
+				throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_EXISTS, $classFile));
 			}
+			else //Class have namespace
+			{
+				return include './'.str_ireplace('\\', '/', $className).'.php';
+			}
+		}
 
-			return include './'.str_ireplace('\\', '/', $className).'.php';
+		/**
+		 * Add include path for class searching during autoload.
+		 *
+		 * @param array $includePath Array of path to add.
+		 * @throws SpherusException When $includePath parameter is not an array.
+		 */
+		public static function AddPathToAutoload(array $includePath)
+		{
+			Check::IsArray($includePath);
+			self::$includePaths = array_merge(self::$includePaths, $includePath);
 		}
 
 		/**
@@ -69,12 +97,22 @@
 		}
 
 		/**
+		 * Unregisters default spherus autoloader.
+		 *
+		 * @return boolean TRUE on success or FALSE on failure.
+		 */
+		public static function UnregisterDefaultAutoloader()
+		{
+			return self::UnregisterAutoloader(array('Spherus\Core\Autoloader', 'Autoload'));
+		}
+
+		/**
 		 * Unegisters an existing class autoloader.
 		 *
 		 * @param callback $autoloadFunction The autoload function being unregistered.
 		 * @return boolean TRUE on success or FALSE on failure.
 		 */
-		public static function UnegisterAutoloader($autoloadFunction)
+		public static function UnregisterAutoloader($autoloadFunction)
 		{
 			return spl_autoload_unregister($autoloadFunction);
 		}
