@@ -74,14 +74,19 @@
 		/**
 		 * Add include path for class searching during autoload.
 		 *
-		 * @param array $includePath Array of path to add.
+		 * @param arra|string $includePath Array of path to add.
 		 * @throws SpherusException When $includePath parameter is not an array.
 		 */
-		public static function AddPathToAutoload(array $includePath)
+		public static function AddPathToAutoload($includePath)
 		{
-			Check::IsArray($includePath);
-			self::$includePaths = array_merge(self::$includePaths, $includePath);
-			$rr = self::$includePaths;
+			if(is_array($includePath))
+			{
+				self::$includePaths = array_merge(self::$includePaths, $includePath);
+			}
+			else
+			{
+				self::$includePaths[] = $includePath;
+			}
 		}
 
 		/**

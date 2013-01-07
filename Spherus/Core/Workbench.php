@@ -121,23 +121,18 @@ class Workbench
 	 */
 	public static function LoadModules()
 	{
-		// Find all module directories
 		$moduleDirectories = Workbench::ListDirectoryFolders(MODULES);
 		if(isset($moduleDirectories))
 		{
 			foreach($moduleDirectories as $directory)
 			{
-				Autoloader::AddPathToAutoload(array(MODULES.$directory.SEPARATOR));
-
+				Autoloader::AddPathToAutoload(MODULES.$directory.SEPARATOR);
 				$moduleName = $directory.'Module';
 				$module = new $moduleName();
 
-				// Check if created object implements IModule interface
-				if($module instanceof IModule)
-				{
-					self::AddModule($module);
-					$module->Run();
-				}
+				Check::IsInstanceOf($module, 'Spherus\\Interfaces\\IModule');
+				self::AddModule($module);
+				$module->Run();
 			}
 		}
 	}
@@ -394,8 +389,6 @@ class Workbench
 	private static function LoadControllerAttributes($controller)
 	{
 		Check::IsNullOrEmpty($controller);
-
-		// Load layout
 		if(!isset($controller->layout))
 		{
 			$controller->layout = Config::getDefaultLayout();
