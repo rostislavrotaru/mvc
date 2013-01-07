@@ -153,6 +153,8 @@
 			{
 				IpFilterParser::Parse();
 			}
+
+			$rr = spl_autoload_functions();
 		}
 
 		/**
