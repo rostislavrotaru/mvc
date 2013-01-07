@@ -1,4 +1,5 @@
 <?php
+
 	use Spherus\Interfaces\IModule;
 
 	class MainModule implements IModule

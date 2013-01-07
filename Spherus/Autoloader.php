@@ -60,15 +60,14 @@
 					$classFile = $path.$className.'.php';
 					if(is_file($classFile))
 					{
-						return include($classFile);
+						return require($classFile);
 					}
 				}
-
-				throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_EXISTS, $classFile));
+				throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_EXISTS, $className));
 			}
 			else //Class have namespace
 			{
-				return include '../'.str_ireplace('\\', '/', $className).'.php';
+				return require('../'.str_ireplace('\\', '/', $className).'.php');
 			}
 		}
 
@@ -82,6 +81,7 @@
 		{
 			Check::IsArray($includePath);
 			self::$includePaths = array_merge(self::$includePaths, $includePath);
+			$rr = self::$includePaths;
 		}
 
 		/**
