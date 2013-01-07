@@ -16,15 +16,11 @@
  * @package spherus
  */
 
-/* CONSTANTS */
-
 // Root path
 define('ROOT', '.');
 
 // Directory separator
 define('SEPARATOR', '/');
-
-// /* APPLICATION CONSTANTS */
 
 // Public application path
 define('APP', ROOT.SEPARATOR);
