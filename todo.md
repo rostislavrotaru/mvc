@@ -7,3 +7,4 @@
 - Add suplimental functionality on default router class
 - Use SPL as much as possible
 - Use PSR0/1/2
+- Review code to work with personal collections (not arrays etc).
