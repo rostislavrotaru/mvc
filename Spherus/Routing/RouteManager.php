@@ -64,24 +64,18 @@
 		/* PUBLIC FUNCTIONS */
 
 		/**
-		 * Initialize RouteHandler object functionality
+		 * Initialize Router object according to the configuration files
 		 */
 		public static function Initialize()
 		{
 			$router = Config::getRoutingDefaults()['router'];
 			if(isset($router))
 			{
-				// Check if default router should be used
-// 				if($router=='Spherus\Routing\DefaultRouter')
-// 				{
-// 					require (ROUTING.'defaultrouter.php');
-// 				}
 				self::$router = new $router();
 				self::$router->Initialize();
 
 				// Check if router implements IRouter interface
 				Check::IsInstanceOf(self::$router, 'Spherus\\Interfaces\\IRouter');
-
 				unset($router);
 			}
 			else

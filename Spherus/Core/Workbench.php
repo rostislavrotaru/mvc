@@ -337,17 +337,6 @@ class Workbench
 	}
 
 	/**
-	 * Loads application configuration file
-	 *
-	 * @throws SpherusException When config.php file not found in the
-	 *         public/common folder.
-	 */
-	public static function LoadApplicationConfig()
-	{
-		Config::Initialize();
-	}
-
-	/**
 	 * Loads theme for application.
 	 * If not found - the default theme from configuration file will be
 	 * used.

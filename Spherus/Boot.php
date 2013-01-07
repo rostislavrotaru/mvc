@@ -20,6 +20,7 @@ use Spherus\Core\Workbench;
 use Spherus\HttpContext\HttpContext;
 use Spherus\HttpContext\Session;
 use Spherus\Routing\RouteManager;
+use App\Common\Config;
 
 // Base require files
 require ('Paths.php');
@@ -30,7 +31,7 @@ Session::Start();
 
 // Load application configuration file
 // Throws exception if not found
-Workbench::LoadApplicationConfig();
+Config::Initialize();
 
 // Initialize route handler
 RouteManager::Initialize();
