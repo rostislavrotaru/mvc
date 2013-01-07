@@ -10,9 +10,6 @@
 	 */
 	namespace Spherus\Core\Base;
 
-	use Spherus\Core\SpherusException;
-	use Spherus\Core\Workbench;
-
 	/**
 	 * Class that represents the base for all application controllers
 	 *
@@ -91,32 +88,6 @@
 		 */
 		public function IncludeHelpers()
 		{
-			foreach($this->helpers as $filename)
-			{
-				// Load helper in following search order: system path, app
-				// helpers path, modules helpers path
-				// Framework helpers path
-				if(file_exists(HELPERS.$filename.'Helper.php'))
-				{
-					require_once (HELPERS.$filename.'Helper.php');
-					return;
-				} // App helpers path
-				elseif(file_exists(APP_HELPERS.$filename.'Helper.php'))
-				{
-					require_once (APP_HELPERS.$filename.'Helper.php');
-					return;
-				} // Module helpers path
-				else
-				{
-					$filePath = Workbench::getCurrentModule()->GetHelpersPath().SEPARATOR.$filename.'.php';
-					if(file_exists($filePath))
-					{
-						require_once ($filePath);
-						return;
-					}
-				}
 
-				throw new SpherusException(sprintf(EXCEPTION_HELPER_NOT_FOUND, $filename));
-			}
 		}
 	}

@@ -22,7 +22,8 @@
 	use Spherus\Routing\RouteManager;
 
 	// Base require files
-	require('Requires.php');
+	require ('Paths.php');
+	require ('Autoloader.php');
 
 	// Starts session
 	Session::Start();

@@ -15,4 +15,4 @@
  * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
  * @package spherus
  */
-require('App/index.php');
+require('../Spherus/Boot.php');

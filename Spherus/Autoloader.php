@@ -68,7 +68,7 @@
 			}
 			else //Class have namespace
 			{
-				return include './'.str_ireplace('\\', '/', $className).'.php';
+				return include '../'.str_ireplace('\\', '/', $className).'.php';
 			}
 		}
 
