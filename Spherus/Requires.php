@@ -17,9 +17,8 @@
 	 */
 
 	// File with all configured paths
-	require ('paths.php');
-
-	require ('autoloader.php');
+	require ('Paths.php');
+	require ('Autoloader.php');
 
 	// Require enum file
 	//require (CORE.'enums.php');
@@ -28,46 +27,46 @@
 	//require (CORE.'spherusexception.php');
 
 	// Base controller file
-	require (BASE.'controllerbase.php');
+	//require (BASE.'controllerbase.php');
 
 	// Require routes handler file
-	require (ROUTING.'routemanager.php');
+	//require (ROUTING.'routemanager.php');
 
 	// Require route file
-	require (ROUTING.'route.php');
+	//require (ROUTING.'route.php');
 
 	// File with internal configurations (extended in application)
-	require (CORE.'spherusconfig.php');
+	//require (CORE.'spherusconfig.php');
 
 	// Application workbench file
 	//require (CORE.'workbench.php');
 
 	// Checks file
-	require (CORE.'check.php');
+	//require (CORE.'check.php');
 
 	// Require IModule interface
-	require (INTERFACES.'imodule.php');
+	//require (INTERFACES.'imodule.php');
 
 	// Require ITheme interface
-	require (INTERFACES.'itheme.php');
+	//require (INTERFACES.'itheme.php');
 
 	// Require IRouter interface
-	require (INTERFACES.'irouter.php');
+	//require (INTERFACES.'irouter.php');
 
 	// Require http context file
-	require (HTTP_CONTEXT.'httpcontext.php');
+	//require (HTTP_CONTEXT.'httpcontext.php');
 
 	// Require http context request file
-	require (HTTP_CONTEXT.'request.php');
+	//require (HTTP_CONTEXT.'request.php');
 
 	// Require http context response file
-	require (HTTP_CONTEXT.'response.php');
+	//require (HTTP_CONTEXT.'response.php');
 
 	// Require http context session file
-	require (HTTP_CONTEXT.'session.php');
+	//require (HTTP_CONTEXT.'session.php');
 
 	// Require http context cookie file
-	require (HTTP_CONTEXT.'cookie.php');
+	//require (HTTP_CONTEXT.'cookie.php');
 
 	// Require parsedurl file
-	require (HTTP_CONTEXT.'parsedurl.php');
+	//require (HTTP_CONTEXT.'parsedurl.php');

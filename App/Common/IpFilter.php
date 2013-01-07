@@ -1,5 +1,7 @@
 <?php
 
+	namespace App\Common;
+
 	/**
 	 * Contains lists of allowed and denied IP addresses
 	 *

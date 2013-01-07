@@ -10,6 +10,7 @@
 	 */
 	namespace Spherus\Core;
 
+	use App\Common\Config;
 	use Spherus\HttpContext\HttpContext;
 	use Spherus\HttpContext\Session;
 	use Spherus\Parsers\IpFilterParser;
@@ -150,10 +151,6 @@
 		{
 			if(file_exists(APP_COMMON.'ipfilter.php'))
 			{
-				require (APP_COMMON.'ipfilter.php');
-				require (PARSERS.'ipfilterparser.php');
-
-				// Check IP Filter rules
 				IpFilterParser::Parse();
 			}
 		}
@@ -354,15 +351,8 @@
 		 */
 		public static function LoadApplicationConfig()
 		{
-			if(file_exists(APP_COMMON.'config.php'))
-			{
-				require (APP_COMMON.'config.php');
-				\Config::Initialize();
-			}
-			else
-			{
-				throw new SpherusException(EXCEPTION_APP_CONFIG_NOT_FOUND);
-			}
+			Check::FileIsReadable(APP_COMMON.'config.php');
+			Config::Initialize();
 		}
 
 		/**
@@ -375,7 +365,7 @@
 			$currentThemeName = Session::GetValue('theme');
 			if(!isset($currentThemeName))
 			{
-				$currentThemeName = \Config::getDefaultTheme();
+				$currentThemeName = Config::getDefaultTheme();
 				Session::SetValue('theme', $currentThemeName);
 			}
 
@@ -411,7 +401,7 @@
 			// Load layout
 			if(!isset($controller->layout))
 			{
-				$controller->layout = \Config::getDefaultLayout();
+				$controller->layout =Config::getDefaultLayout();
 			}
 		}
 

@@ -18,18 +18,12 @@
 	 */
 	class Autoloader
 	{
-
 		/* FIELDS */
 
-		/**
-		 * Contains an array of all framework classes that will be included in autoload.
-		 *
-		 * @var Array
-		 */
-		private static $frameworkClasses = array
+		private static $includePaths = array
 		(
-			'Spherus\Core\Workbench' => './spherus/core/workbench.php',
-			'Spherus\Core\SpherusException' => './spherus/core/spherusexception.php'
+			'App'=>APP,
+			'Common'=>APP_COMMON
 		);
 
 
@@ -44,10 +38,22 @@
 		 */
 		public static function Autoload($className)
 		{
-			Check::IsNullOrEmpty($className);
-			Check::IsNullOrEmpty(self::$frameworkClasses[$className]);
+			// If class does not have namespace
+			if(strpos($className,'\\')===false)
+			{
+				foreach(self::$includePaths as $key=>$value)
+				{
+					$classFile = $value.$className.'.php';
+					if(is_file($classFile))
+					{
+						return require($classFile);
+					}
+				}
 
-			return include self::$frameworkClasses[$className];
+				return include($className.'.php');
+			}
+
+			return include './'.str_ireplace('\\', '/', $className).'.php';
 		}
 
 		/**

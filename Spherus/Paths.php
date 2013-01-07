@@ -27,28 +27,28 @@
 	// Spherus path
 	define('SPHERUS', ROOT.SEPARATOR.'spherus'.SEPARATOR);
 
-	// Core path
-	define('CORE', SPHERUS.'core'.SEPARATOR);
+// 	// Core path
+// 	define('CORE', SPHERUS.'core'.SEPARATOR);
 
-	// Core base path
-	define('BASE', CORE.'base'.SEPARATOR);
+// 	// Core base path
+// 	define('BASE', CORE.'base'.SEPARATOR);
 
-	// Parsers path
-	define('PARSERS', SPHERUS.'parsers'.SEPARATOR);
+// 	// Parsers path
+// 	define('PARSERS', SPHERUS.'parsers'.SEPARATOR);
 
-	// Routing path
-	define('ROUTING', SPHERUS.'routing'.SEPARATOR);
+// 	// Routing path
+// 	define('ROUTING', SPHERUS.'routing'.SEPARATOR);
 
-	// HttpContext path
-	define('HTTP_CONTEXT', SPHERUS.'httpcontext'.SEPARATOR);
+// 	// HttpContext path
+// 	define('HTTP_CONTEXT', SPHERUS.'httpcontext'.SEPARATOR);
 
-	// Interfaces path
-	define('INTERFACES', SPHERUS.'interfaces'.SEPARATOR);
+// 	// Interfaces path
+// 	define('INTERFACES', SPHERUS.'interfaces'.SEPARATOR);
 
 	// Helpers path
 	defined('HELPERS') or define('HELPERS', SPHERUS.'helpers'.SEPARATOR);
 
-	/* APPLICATION CONSTANTS */
+// 	/* APPLICATION CONSTANTS */
 
 	// Public application path
 	define('APP', ROOT.SEPARATOR.'app'.SEPARATOR);

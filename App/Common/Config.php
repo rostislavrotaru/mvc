@@ -1,5 +1,7 @@
 <?php
 
+	namespace App\Common;
+
 	use Spherus\Core\SpherusConfig;
 
 	/**

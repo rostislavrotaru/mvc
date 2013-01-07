@@ -10,6 +10,7 @@
 	 */
 	namespace Spherus\Routing;
 
+	use App\Common\Config;
 	use Spherus\Interfaces\IRouter;
 	use Spherus\HttpContext\Request;
 	use Spherus\HttpContext\ParsedUrl;
@@ -52,11 +53,11 @@
 			$controller = $foundRoute->getController();
 			$action = $foundRoute->getAction();
 
-			$rrr = \Config::getRoutingDefaults()['controller'];
+			$rrr = Config::getRoutingDefaults()['controller'];
 
-			$result = new ParsedUrl(isset($module) ? $module : (isset($pathPortions[0]) ? $pathPortions[0] : \Config::getRoutingDefaults()['module']),
-					isset($controller) ? $controller : (isset($pathPortions[1]) ? $pathPortions[1] : \Config::getRoutingDefaults()['controller']),
-					isset($action) ? $action : (isset($pathPortions[2]) ? $pathPortions[2] : \Config::getRoutingDefaults()['action']), $parameters,
+			$result = new ParsedUrl(isset($module) ? $module : (isset($pathPortions[0]) ? $pathPortions[0] : Config::getRoutingDefaults()['module']),
+					isset($controller) ? $controller : (isset($pathPortions[1]) ? $pathPortions[1] : Config::getRoutingDefaults()['controller']),
+					isset($action) ? $action : (isset($pathPortions[2]) ? $pathPortions[2] : Config::getRoutingDefaults()['action']), $parameters,
 					$foundRoute);
 
 			// Unset all unnecessary variables
@@ -86,7 +87,7 @@
 		 */
 		private function RegisterDefaultRoute()
 		{
-			RouteManager::RegisterRoute(new Route(\Config::getRoutingDefaults(), '/', 'main'));
+			RouteManager::RegisterRoute(new Route(Config::getRoutingDefaults(), '/', 'main'));
 		}
 
 		/**
@@ -114,7 +115,7 @@
 
 			if(!isset($foundRoute)) // trying to find default route
 			{
-				$foundRoute = RouteManager::GetRouteByName(\Config::getRoutingDefaults());
+				$foundRoute = RouteManager::GetRouteByName(Config::getRoutingDefaults());
 				if(isset($foundRoute))
 				{
 					return $foundRoute;
