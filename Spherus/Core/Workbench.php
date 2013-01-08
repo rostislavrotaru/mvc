@@ -108,7 +108,7 @@ class Workbench
 	 */
 	public static function Initialize()
 	{
-		self::SetIPFilter();
+		IpFilterParser::Parse();
 		self::LoadModules();
 		HttpContext::setParsedUrl(RouteManager::getRouter()->Parse());
 		self::LoadController();
@@ -126,7 +126,7 @@ class Workbench
 		{
 			foreach($moduleDirectories as $directory)
 			{
-				Autoloader::AddPathToAutoload(MODULES.$directory.SEPARATOR);
+				Autoloader::AddPath(MODULES.$directory.SEPARATOR);
 				$moduleName = $directory.'Module';
 				$module = new $moduleName();
 
@@ -138,35 +138,17 @@ class Workbench
 	}
 
 	/**
-	 * Sets Ip filters
-	 */
-	public static function SetIPFilter()
-	{
-		if(file_exists(APP_COMMON.'ipfilter.php'))
-		{
-			IpFilterParser::Parse();
-		}
-	}
-
-	/**
 	 * Gets module object by its name
 	 *
 	 * @param string $moduleName The name of module to search
-	 * @return Spherus\Interfaces\IModule NULL
+	 * @return Spherus\Interfaces\IModule|NULL
 	 */
 	public static function GetModuleByName($moduleName)
 	{
-		$modules = Workbench::$modules;
-		foreach($modules as $key=>$value)
+		if(isset(self::$modules[$moduleName]))
 		{
-			if($moduleName===$key)
-			{
-				unset($modules);
-				return $value;
-			}
+			return self::$modules[$moduleName];
 		}
-
-		unset($modules);
 
 		return null;
 	}
@@ -179,6 +161,8 @@ class Workbench
 	 */
 	public static function ListDirectoryFolders($path)
 	{
+		$directories = new \DirectoryIterator($path);
+
 		$result = null;
 		$files = preg_grep('/^([^.])/', scandir($path));
 		foreach($files as $file)

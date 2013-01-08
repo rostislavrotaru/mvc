@@ -77,7 +77,7 @@ class Autoloader
 	 * @param arra|string $includePath Array of path to add.
 	 * @throws SpherusException When $includePath parameter is not an array.
 	 */
-	public static function AddPathToAutoload($includePath)
+	public static function AddPath($includePath)
 	{
 		if(is_array($includePath))
 		{

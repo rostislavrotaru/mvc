@@ -5,6 +5,19 @@
 	/**
 	 * Contains lists of allowed and denied IP addresses
 	 *
+	 * --------------------------------------------------
+	 * How to use:
+	 *
+	 * - simple ip address: 10.10.10.10.
+	 * - you can use wildcard (*) symbol (means any symbol) in place of any sybol, e.g: 10.10.10.*
+	 * - other examples:
+	 *   *
+	 *   10.*
+	 *   10.10.*
+	 *   127.*.1.1
+	 *
+	 * --------------------------------------------------
+	 *
 	 * @version 3.0
 	 * @package Spherus
 	 * @author Rostislav Rotaru
@@ -19,14 +32,20 @@
 		 *
 		 * @var array
 		 */
-		private static $allow = array('all','172.17.2.3');
+		private static $allow = array
+		(
+			'127.*'
+		);
 
 		/**
 		 * Contains denied IP addresses list
 		 *
 		 * @var array
 		 */
-		private static $deny = array('all','172.17.2.4');
+		private static $deny = array
+		(
+			'137.*'
+		);
 
 		/* PROPERTIES */
 
@@ -49,4 +68,5 @@
 		{
 			return self::$deny;
 		}
+
 	}

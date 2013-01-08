@@ -39,5 +39,5 @@ RouteManager::Initialize();
 // Initialize http context
 HttpContext::Initialize();
 
-// Initialize context
+// Initialize workbench
 Workbench::Initialize();
