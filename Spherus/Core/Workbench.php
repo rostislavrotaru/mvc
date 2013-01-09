@@ -16,6 +16,7 @@ use Spherus\HttpContext\Session;
 use Spherus\Parsers\IpFilterParser;
 use Spherus\Interfaces\IModule;
 use Spherus\Routing\RouteManager;
+use Spherus\Common\FileSystem;
 
 /**
  * Class that represents the framework workbench
@@ -121,10 +122,11 @@ class Workbench
 	 */
 	public static function LoadModules()
 	{
-		$moduleDirectories = Workbench::ListDirectoryFolders(MODULES);
-		if(isset($moduleDirectories))
+		$moduleDirectories = FileSystem::ListDirectoryFolders(MODULES);
+
+		if(isset($moduleDirectories['folders']))
 		{
-			foreach($moduleDirectories as $directory)
+			foreach($moduleDirectories['folders'] as $directory)
 			{
 				Autoloader::AddPath(MODULES.$directory.SEPARATOR);
 				$moduleName = $directory.'Module';
@@ -151,29 +153,6 @@ class Workbench
 		}
 
 		return null;
-	}
-
-	/**
-	 * Lists directory folders
-	 *
-	 * @param string $path. The path to the directory
-	 * @return array
-	 */
-	public static function ListDirectoryFolders($path)
-	{
-		$directories = new \DirectoryIterator($path);
-
-		$result = null;
-		$files = preg_grep('/^([^.])/', scandir($path));
-		foreach($files as $file)
-		{
-			if(is_dir(MODULES.SEPARATOR.$file))
-			{
-				$result[] = $file;
-			}
-		}
-
-		return $result;
 	}
 
 	/**
