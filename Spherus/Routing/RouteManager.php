@@ -103,7 +103,7 @@ class RouteManager
 		}
 		else
 		{
-			self::$registeredRoutes[] = $route;
+			self::$registeredRoutes[$route->getName()] = $route;
 		}
 
 		unset($foundRoute);
@@ -118,14 +118,10 @@ class RouteManager
 	 */
 	public static function GetRouteByName($routeName)
 	{
-		foreach(self::$registeredRoutes as $registeredRoute)
+		if(isset(self::$registeredRoutes[$routeName]))
 		{
-			if($registeredRoute->getName()==$routeName)
-			{
-				return $registeredRoute;
-			}
+			return self::$registeredRoutes[$routeName];
 		}
-
 		return null;
 	}
 }
