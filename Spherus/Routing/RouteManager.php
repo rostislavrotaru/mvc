@@ -35,7 +35,7 @@ class RouteManager
 	/**
 	 * Contains the current router object
 	 *
-	 * @var IRouter
+	 * @var Spherus\Interfaces\IRouter
 	 */
 	private static $router = null;
 
@@ -68,15 +68,14 @@ class RouteManager
 	 */
 	public static function Initialize()
 	{
-		$router = Config::getRoutingDefaults()['router'];
-		if(isset($router))
+		if(isset(Config::getRoutingDefaults()['router']))
 		{
+			$router = Config::getRoutingDefaults()['router'];
 			self::$router = new $router();
 			self::$router->Initialize();
-
-			// Check if router implements IRouter interface
-			Check::IsInstanceOf(self::$router, 'Spherus\\Interfaces\\IRouter');
 			unset($router);
+
+			Check::IsInstanceOf(self::$router, 'Spherus\\Interfaces\\IRouter');
 		}
 		else
 		{
@@ -123,5 +122,15 @@ class RouteManager
 			return self::$registeredRoutes[$routeName];
 		}
 		return null;
+	}
+
+	/**
+	 * Parses url into splitted elements
+	 *
+	 * @return array Array of parsed url(module, controller, action and parameters)
+	 */
+	public static function ParseUrl()
+	{
+		return self::$router->Parse();
 	}
 }
