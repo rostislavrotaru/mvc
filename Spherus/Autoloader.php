@@ -72,7 +72,6 @@ class Autoloader
 			{
 				return require ('../'.str_ireplace('\\', '/', $className).'.php');
 			}
-
 			return false;
 		}
 	}
