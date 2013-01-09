@@ -63,11 +63,17 @@ class Autoloader
 					return require ($classFile);
 				}
 			}
-			throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_EXISTS, $className));
+			return false;
 		}
 		else // Class have namespace
 		{
-			return require ('../'.str_ireplace('\\', '/', $className).'.php');
+			$fileName = '../'.str_ireplace('\\', '/', $className).'.php';
+			if(file_exists($fileName))
+			{
+				return require ('../'.str_ireplace('\\', '/', $className).'.php');
+			}
+
+			return false;
 		}
 	}
 
