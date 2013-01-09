@@ -111,7 +111,7 @@ class Workbench
 	{
 		IpFilterParser::Parse();
 		self::LoadModules();
-		HttpContext::setParsedUrl(RouteManager::getRouter()->Parse());
+		HttpContext::setParsedUrl(RouteManager::ParseUrl());
 		self::LoadController();
 		self::LoadTheme();
 		self::LoadView();
