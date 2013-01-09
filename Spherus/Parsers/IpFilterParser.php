@@ -47,19 +47,23 @@ class IpFilterParser
 	public static function Parse()
 	{
 		$allowedIpAddresses = IpFilter::getAllow();
-		$result  = false;
+		$result = false;
 		if(isset($allowedIpAddresses))
 		{
-			$result = self::CheckIpExistence($allowedIpAddresses);
+			$result = self::CheckIp($allowedIpAddresses);
+			if($result===true)
+			{
+				return true;
+			}
 		}
 
 		$deniedIpAddresses = IpFilter::getDeny();
 		if(isset($deniedIpAddresses))
 		{
-			$result = !self::CheckIpExistence($deniedIpAddresses);
+			$result = !self::CheckIp($deniedIpAddresses);
 		}
 
-		if($result === false)
+		if($result===false)
 		{
 			throw new SpherusException(EXCEPTION_ACCESS_DENIED);
 		}
@@ -71,31 +75,30 @@ class IpFilterParser
 	 * Checks if IP is a valid V4 or V6 IP and Match it from the list
 	 *
 	 * @param array $ipAddressesList Array of IP addresses to check.
-	 *
 	 * @return boolean TRUE if exists, otherwise FALSE.
 	 */
-	private static function CheckIpExistence($ipAddressesList)
+	private static function CheckIp($ipAddressesList)
 	{
-		foreach($ipAddressesList as $ipAddress)
+		if(filter_var(Request::getRemoteAddress(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4))
 		{
-			$regex = preg_match_all(self::$ipFilterV4, $ipAddress, $ip);
-			if($regex !== false && $regex > 0)
-			{
-				$ip = $ip[0][0];
-				if (self::MatchIp($ip, Request::getRemoteAddress()))
-				{
-					return true;
-				}
-			}
+			$ipAddressesList = filter_var_array(
+					array('ipAddresses' => $ipAddressesList),
+					array('ipAddresses' => array('filter' => FILTER_VALIDATE_REGEXP,'flags' => FILTER_REQUIRE_ARRAY|FILTER_NULL_ON_FAILURE,
+						  'options' => array('regexp' => self::$ipFilterV4))));
+		}
+		else
+		{
+			$ipAddressesList = filter_var_array(
+					array('ipAddresses' => $ipAddressesList),
+					array('ipAddresses' => array('filter' => FILTER_VALIDATE_REGEXP,'flags' => FILTER_REQUIRE_ARRAY|FILTER_NULL_ON_FAILURE,
+						  'options' => array('regexp' => self::$ipFilterV6))));
+		}
 
-			$regex = preg_match_all(self::$ipFilterV6, $ipAddress, $ip);
-			if($regex !== false && $regex > 0)
+		foreach($ipAddressesList['ipAddresses'] as $ipAddress)
+		{
+			if(self::MatchIp($ipAddress, Request::getRemoteAddress()))
 			{
-				$ip = $ip[0][0];
-				if (self::MatchIp($ip, Request::getRemoteAddress()))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 
@@ -105,14 +108,13 @@ class IpFilterParser
 	/**
 	 * Match IP address according to the given parrtern
 	 *
-	 * @param string $pattern the patern to match
-	 * @param string $string The IP Address (can contain wilcards).
-	 *
+	 * @param string $pattern The Ip address patern to match.
+	 * @param string $ipAddress The IP Address (can contain wilcards).
 	 * @return boolean TRUE if match, otherwise FALSE.
 	 */
-	private static function MatchIp($pattern, $string)
+	private static function MatchIp($pattern, $ipAddress)
 	{
 		$regex = '/^'.strtr(addcslashes($pattern, '.+^$(){}=!<>|'), array('*' => '.*','?' => '.?')).'$/i';
-		return (boolean)@preg_match($regex, $string);
+		return (boolean)preg_match($regex, $ipAddress);
 	}
 }

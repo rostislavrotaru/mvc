@@ -8,7 +8,7 @@
 	 * --------------------------------------------------
 	 * How to use:
 	 *
-	 * - simple ip address: 10.10.10.10.
+	 * - simple ip address: 10.10.10.10
 	 * - you can use wildcard (*) symbol (means any symbol) in place of any sybol, e.g: 10.10.10.*
 	 * - other examples:
 	 *   *
