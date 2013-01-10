@@ -10,3 +10,4 @@
 - Review code to work with personal collections (not arrays etc).
 - Change indents to spaces instead of tabulation
 - Make a code style guide
+- Implement Dependency Injection
