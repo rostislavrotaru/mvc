@@ -30,7 +30,7 @@ class RouteManager
 	 *
 	 * @var array
 	 */
-	private static $registeredRoutes = array();
+	private static $registeredRoutes = [];
 
 	/**
 	 * Contains the current router object
@@ -100,10 +100,8 @@ class RouteManager
 		{
 			throw new SpherusException(sprintf(EXCEPTION_DUPLICATE_ROUTE, $route->getName()));
 		}
-		else
-		{
-			self::$registeredRoutes[$route->getName()] = $route;
-		}
+
+		self::$registeredRoutes[$route->getName()] = $route;
 
 		unset($foundRoute);
 		unset($route);
