@@ -14,6 +14,7 @@ namespace Spherus\Common;
  * Class that represents the files and folders functionality
  *
  * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+ * @author Sergey Calugher (SlKelevro@gmail.com)
  * @package spherus.core
  */
 class FileSystem
