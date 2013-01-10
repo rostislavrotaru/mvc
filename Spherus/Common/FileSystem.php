@@ -71,21 +71,47 @@ class FileSystem
 	 */
 	private static function ReadDirectory($path, $includeHiddenFiles = false, $readDirectories = true, $readFiles = true)
 	{
-		$result = null;
+		$result = [];
 		$iterator = new \DirectoryIterator($path);
 
-		foreach($iterator as $fileinfo)
+		if (!$readFiles && !$readDirectories)
 		{
-			if($includeHiddenFiles==true)
+			return $result;
+		}
+
+		if ($includeHiddenFiles)
+		{
+			foreach ($iterator as $fileinfo)
 			{
-				($fileinfo->isFile()&&$readFiles) ? $result['files'][] = $fileinfo->getFilename() : (($fileinfo->isDir()&&$readDirectories) ? $result['folders'][] = $fileinfo->getFilename() : null);
-			}
-			elseif(!$fileinfo->isDot())
-			{
-				($fileinfo->isFile()&&$readFiles) ? $result['files'][] = $fileinfo->getFilename() : (($fileinfo->isDir()&&$readDirectories) ? $result['folders'][] = $fileinfo->getFilename() : null);
+				if ($fileinfo->isFile() && $readFiles)
+				{
+					$result['files'][] = $fileinfo->getFilename();
+				}
+				elseif ($fileinfo->isDir() && $readDirectories)
+				{
+					$result['folders'][] = $fileinfo->getFilename();
+				}
 			}
 		}
-		unset($iterator);
+		else
+		{
+			foreach ($iterator as $fileinfo)
+			{
+				if ($fileinfo->isDot())
+				{
+					continue;
+				}
+				if ($fileinfo->isFile() && $readFiles)
+				{
+					$result['files'][] = $fileinfo->getFilename();
+				}
+				elseif ($fileinfo->isDir() && $readDirectories)
+				{
+					$result['folders'][] = $fileinfo->getFilename();
+				}
+			}
+		}
+
 		return $result;
 	}
 }
