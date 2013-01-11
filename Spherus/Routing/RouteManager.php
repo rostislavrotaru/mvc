@@ -101,7 +101,7 @@ class RouteManager
 			throw new SpherusException(sprintf(EXCEPTION_DUPLICATE_ROUTE, $route->getName()));
 		}
 
-		self::$registeredRoutes[$route->getName()] = $route;
+		array_unshift(self::$registeredRoutes, $route);
 
 		unset($foundRoute);
 		unset($route);
@@ -115,10 +115,14 @@ class RouteManager
 	 */
 	public static function GetRouteByName($routeName)
 	{
-		if(isset(self::$registeredRoutes[$routeName]))
+		foreach (self::$registeredRoutes as $route)
 		{
-			return self::$registeredRoutes[$routeName];
+			if($route->getName() == $routeName)
+			{
+				return $route;
+			}
 		}
+
 		return null;
 	}
 
