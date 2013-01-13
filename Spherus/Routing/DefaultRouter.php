@@ -92,7 +92,7 @@ class DefaultRouter implements IRouter
 	 */
 	private function MatchRoute($route, $splittedUrl)
 	{
-		if(strpos($route->getUrl(), '/') > 0)
+		if(strpos($route->getUrl(), '/')>0)
 		{
 			return null;
 		}
@@ -101,23 +101,23 @@ class DefaultRouter implements IRouter
 		$splittedUrlCount = count($splittedUrl);
 		$splittedRouteUrlCount = count($splittedRouteUrl);
 
-		if($splittedRouteUrlCount > $splittedUrlCount)
+		if($splittedRouteUrlCount>$splittedUrlCount)
 		{
 			return null;
 		}
 
-		if(strpos($route->getUrl(), '*') !== false)
+		if(strpos($route->getUrl(), '*')!==false)
 		{
-			//check if wilcard is the last element
+			// check if wilcard is the last element
 			if(!(boolean)preg_match('~[^\*]+/\*$~', $route->getUrl()))
 			{
 				return null;
 			}
 		}
 
-		//find top elements index that are equal
+		// find top elements index that are equal
 		$matchedIndex = null;
-		for($i = 0; $i < $splittedRouteUrlCount; $i++)
+		for($i = 0; $i<$splittedRouteUrlCount; $i++)
 		{
 			if($splittedRouteUrl[$i]==$splittedUrl[$i])
 			{
@@ -125,18 +125,22 @@ class DefaultRouter implements IRouter
 			}
 		}
 
-		//if found some top elements equality
+		// if found some top elements equality
 		if(isset($matchedIndex))
 		{
-			for($i = $matchedIndex + 1; $i < $splittedRouteUrlCount; $i++)
+			for($i = $matchedIndex+1; $i<$splittedRouteUrlCount; $i++)
 			{
-				if((strpos($splittedRouteUrl[$i], ':') !== 0) || ($splittedRouteUrl[$i] !== '*'))
+				if((strpos($splittedRouteUrl[$i], ':')!==0)||($splittedRouteUrl[$i]!=='*'))
 				{
-					//if element is not a parameter or wilcard
+					// if element is not a parameter or wilcard
 					return null;
 				}
 			}
 		}
+
+		unset($splittedRouteUrl);
+		unset($splittedUrlCount);
+		unset($splittedRouteUrlCount);
 
 		return $matchedIndex;
 	}
