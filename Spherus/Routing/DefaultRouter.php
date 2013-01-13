@@ -92,7 +92,7 @@ class DefaultRouter implements IRouter
 	 */
 	private function MatchRoute($route, $splittedUrl)
 	{
-		if(strpos($route->getUrl(), '/')>0)
+		if(strpos($route->getUrl(), '/') > 0)
 		{
 			return null;
 		}
@@ -101,7 +101,7 @@ class DefaultRouter implements IRouter
 		$splittedUrlCount = count($splittedUrl);
 		$splittedRouteUrlCount = count($splittedRouteUrl);
 
-		if($splittedRouteUrlCount>$splittedUrlCount)
+		if($splittedRouteUrlCount > $splittedUrlCount)
 		{
 			return null;
 		}
