@@ -47,7 +47,6 @@
 	define('EXCEPTION_FILE_NOT_READABLE', 'The "%s" file is not readable. Please check file system permissions');
 	define('EXCEPTION_FILE_NOT_EXISTS', 'The given file does not exists: "%s"');
 	define('EXCEPTION_NO_ROUTE_TO_REDIRECT', 'No Route to redirect found');
-	define('EXCEPTION_NO_ROUTES_AVAILABLE', 'No routes available');
 	define('EXCEPTION_DUPLICATE_ROUTE', 'The route "%s" already exists and cannot be registsred.');
 	define('EXCEPTION_INVALID_INTEGER', 'Given value is not a valid integer value');
 	define('EXCEPTION_DUPLICATE_MODULE', 'An module with the same name already exists');

@@ -1,128 +1,143 @@
 <?php
 
-	/**
-	 * Redistributions of files must retain the above copyright notice.
-	 *
-	 * @copyright SPHERUS (http://spherus.net)
-	 * @license http://license.spherus.net
-	 * @link http://spherus.net
-	 * @since 3.0
-	 */
-	namespace Spherus\Routing;
+/**
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright SPHERUS (http://spherus.net)
+ * @license http://license.spherus.net
+ * @link http://spherus.net
+ * @since 3.0
+ */
+namespace Spherus\Routing;
 
-	use App\Common\Config;
-	use Spherus\Interfaces\IRouter;
-	use Spherus\HttpContext\Request;
-	use Spherus\HttpContext\ParsedUrl;
-	use Spherus\Core\SpherusException;
-	use Spherus\Core\Check;
+use App\Common\Config;
+use Spherus\Interfaces\IRouter;
+use Spherus\Core\SpherusException;
+use Spherus\HttpContext\Request;
+use Spherus\Core\Check;
+
+/**
+ * Defines a default router class.
+ * Used for standard routing.
+ *
+ * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+ * @author Sergey Calugher (SlKelevro@gmail.com)
+ * @package spherus.routing
+ */
+class DefaultRouter implements IRouter
+{
+	/* PUBLIC METHODS */
 
 	/**
-	 * Defines a default router class.
-	 * Used for standard routing.
+	 * Parses url into module, controller, action and parameters
 	 *
-	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-	 * @package spherus.routing
+	 * @return array Array of parsed url(module, controller, action and parameters)
+	 * @throws SpherusException When $currentUrl is null or empty
+	 * @throws SpherusException When default route is not found
 	 */
-	class DefaultRouter implements IRouter
+	public function Parse()
 	{
+		$registeredRoutes = RouteManager::getRegisteredRoutes();
+		Check::IsNullOrEmpty($registeredRoutes);
 
-		/* PUBLIC METHODS */
+		$foundRoute = null;
+		$splittedUrl = preg_split('/\//', Request::getCurrentUrl(), null, PREG_SPLIT_NO_EMPTY);
 
-		/**
-		 * Parses url into module, controller, action and parameters
-		 *
-		 * @return array Array of parsed url(module, controller, action and parameters)
-		 * @throws SpherusException When $currentUrl is null or empty
-		 * @throws SpherusException When default route is not found
-		 */
-		public function Parse()
+		if((boolean)$splittedUrl)
 		{
-			Check::IsNullOrEmpty(Request::getCurrentUrl());
-
-			$foundRoute = self::GetRouteByUrl(Request::getCurrentUrl(), null, null, null);
-			$pathPortions = preg_split('/\//', Request::getCurrentUrl(), null, PREG_SPLIT_NO_EMPTY);
-
-			$parameters = array();
-			for($i = 3; $i<count($pathPortions); $i++)
+			foreach($registeredRoutes as $route)
 			{
-				$parameters[] = $pathPortions[$i];
-			}
-
-			$module = $foundRoute->getModule();
-			$controller = $foundRoute->getController();
-			$action = $foundRoute->getAction();
-
-			$rrr = Config::getRoutingDefaults()['controller'];
-
-			$result = new ParsedUrl(isset($module) ? $module : (isset($pathPortions[0]) ? $pathPortions[0] : Config::getRoutingDefaults()['module']),
-					isset($controller) ? $controller : (isset($pathPortions[1]) ? $pathPortions[1] : Config::getRoutingDefaults()['controller']),
-					isset($action) ? $action : (isset($pathPortions[2]) ? $pathPortions[2] : Config::getRoutingDefaults()['action']), $parameters,
-					$foundRoute);
-
-			// Unset all unnecessary variables
-			unset($pathPortions);
-			unset($parameters);
-			unset($foundRoute);
-			unset($urlPath);
-			unset($i);
-			unset($pathPortions);
-
-			return $result;
-		}
-
-		/*
-		* (non-PHPdoc) @see \Spherus\Interfaces\IRouter::Initialize()
-		*/
-		public function Initialize()
-		{
-			self::RegisterDefaultRoute();
-		}
-
-
-		/* PRIVATE METHODS */
-
-		/**
-		 * Registers default route
-		 */
-		private function RegisterDefaultRoute()
-		{
-			RouteManager::RegisterRoute(new Route(Config::getRoutingDefaults(), '/', 'main'));
-		}
-
-		/**
-		 *
-		 * @param string $url URL to parse
-		 * @throws SpherusException When default route not found.
-		 * @return Ambigous \Spherus\Routing\IRoute|NULL
-		 */
-		private function GetRouteByUrl($url)
-		{
-			$pathPortions = preg_split('/\//', $url, null, PREG_SPLIT_NO_EMPTY);
-			$registeredRoutes = RouteManager::getRegisteredRoutes();
-
-			foreach($pathPortions as $pathPortion)
-			{
-				foreach($registeredRoutes as $route)
+				$matchedIndex = self::MatchRoute($route, $splittedUrl);
+				if(isset($matchedIndex))
 				{
-					preg_match('/'.$pathPortion.'/', $route->getUrl(), $match);
-					if($match)
-					{
-						return $route;
-					}
+					$foundRoute = $route;
+					break;
 				}
 			}
+		}
 
-			if(!isset($foundRoute)) // trying to find default route
-			{
-				$foundRoute = RouteManager::GetRouteByName(Config::getRoutingDefaults());
-				if(isset($foundRoute))
-				{
-					return $foundRoute;
-				}
-				throw new SpherusException(EXCEPTION_DEFAULT_ROUTE_NOT_FOUND);
-			}
+		if($foundRoute==null)
+		{
+			$foundRoute = RouteManager::GetRouteByName(Config::getRoutingDefaults()['default_route_name']);
+		}
 
+		Check::IsNullOrEmpty($foundRoute);
+	}
+
+	/*
+	* (non-PHPdoc) @see \Spherus\Interfaces\IRouter::Initialize()
+	*/
+	public function Initialize()
+	{
+		self::RegisterDefaultRoute();
+	}
+
+
+	/* PRIVATE METHODS */
+
+	/**
+	 * Registers default route
+	 */
+	private function RegisterDefaultRoute()
+	{
+		RouteManager::RegisterRoute(new Route(Config::getRoutingDefaults()['default_route_name'], '/', 'main'));
+	}
+
+	/**
+	 * Determine if given route matches given splitted url
+	 *
+	 * @param Spherus\Routing\IRoute $route The route to parse.
+	 * @param array $splittedUrl url splitted into parts.
+	 * @return NULL Ambigous number> Matched splitted url index or null if route isn't matching.
+	 */
+	private function MatchRoute($route, $splittedUrl)
+	{
+		if(strpos($route->getUrl(), '/') > 0)
+		{
 			return null;
 		}
+
+		$splittedRouteUrl = preg_split('/\//', $route->getUrl(), null, PREG_SPLIT_NO_EMPTY);
+		$splittedUrlCount = count($splittedUrl);
+		$splittedRouteUrlCount = count($splittedRouteUrl);
+
+		if($splittedRouteUrlCount > $splittedUrlCount)
+		{
+			return null;
+		}
+
+		if(strpos($route->getUrl(), '*') !== false)
+		{
+			//check if wilcard is the last element
+			if(!(boolean)preg_match('~[^\*]+/\*$~', $route->getUrl()))
+			{
+				return null;
+			}
+		}
+
+		//find top elements index that are equal
+		$matchedIndex = null;
+		for($i = 0; $i < $splittedRouteUrlCount; $i++)
+		{
+			if($splittedRouteUrl[$i]==$splittedUrl[$i])
+			{
+				$matchedIndex = $i;
+			}
+		}
+
+		//if found some top elements equality
+		if(isset($matchedIndex))
+		{
+			for($i = $matchedIndex + 1; $i < $splittedRouteUrlCount; $i++)
+			{
+				if((strpos($splittedRouteUrl[$i], ':') !== 0) || ($splittedRouteUrl[$i] !== '*'))
+				{
+					//if element is not a parameter or wilcard
+					return null;
+				}
+			}
+		}
+
+		return $matchedIndex;
 	}
+}

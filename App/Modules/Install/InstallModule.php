@@ -12,7 +12,8 @@
 		 */
 		function Run()
 		{
-			RouteManager::RegisterRoute(new Route('InstallRoute', '/install/{controller}/{action}/{parameters}', 'install'));
+			//RouteManager::RegisterRoute(new Route('InstallRoute', '/install/home/index', 'cucu'));
+			RouteManager::RegisterRoute(new Route('HomeRoute', '/install/:param/*', 'cucu'));
 		}
 
 		public function GetNamespaceName()

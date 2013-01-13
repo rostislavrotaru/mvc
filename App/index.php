@@ -12,7 +12,7 @@
 /**
  * Main entry point
  *
- * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
+ * @author Rostislav Rotaru
  * @package spherus
  */
-require('../Spherus/Boot.php');
+require ('../Spherus/Boot.php');
