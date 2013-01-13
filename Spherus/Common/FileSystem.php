@@ -73,45 +73,31 @@ class FileSystem
 	private static function ReadDirectory($path, $includeHiddenFiles = false, $readDirectories = true, $readFiles = true)
 	{
 		$result = [];
-		$iterator = new \DirectoryIterator($path);
 
 		if (!$readFiles && !$readDirectories)
 		{
 			return $result;
 		}
 
-		if ($includeHiddenFiles)
+		$flags = $includeHiddenFiles
+				? \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::KEY_AS_FILENAME
+				: \FilesystemIterator::KEY_AS_FILENAME;
+
+		$iterator = new \FilesystemIterator($path, $flags);
+
+		while($iterator->valid())
 		{
-			foreach ($iterator as $fileinfo)
+			if($readFiles)
 			{
-				if ($fileinfo->isFile() && $readFiles)
-				{
-					$result['files'][] = $fileinfo->getFilename();
-				}
-				elseif ($fileinfo->isDir() && $readDirectories)
-				{
-					$result['folders'][] = $fileinfo->getFilename();
-				}
+				$iterator->isFile() ? $result['files'][] = $iterator->getFilename() : null;
 			}
-		}
-		else
-		{
-			foreach ($iterator as $fileinfo)
+			if($readDirectories)
 			{
-				if ($fileinfo->isDot())
-				{
-					continue;
-				}
-				if ($fileinfo->isFile() && $readFiles)
-				{
-					$result['files'][] = $fileinfo->getFilename();
-				}
-				elseif ($fileinfo->isDir() && $readDirectories)
-				{
-					$result['folders'][] = $fileinfo->getFilename();
-				}
+				$iterator->isDir() ? $result['folders'][] = $iterator->getFilename() : null;
 			}
+			$iterator->next();
 		}
+		unset($iterator);
 
 		return $result;
 	}
