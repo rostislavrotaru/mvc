@@ -29,22 +29,16 @@ class Route
 	 *
 	 * @param string $name The route name
 	 * @param string $url The route url
-	 * @param string $module The route module name, optional
-	 * @param string $controller The route controller name, optional
-	 * @param string $action The route action name, optional
-	 * @param array $parameters The route parameters name, optional
 	 * @throws SpherusException When $url parameter is null or empty
 	 */
-	public function __construct($name, $url, $module = null, $controller = null, $action = null, $parameters = null)
+	public function __construct($name, $url, $routeRules = null)
 	{
 		Check::IsNullOrEmpty($url);
 
 		$this->name = $name;
 		$this->url = $url;
-		$this->module = $module;
-		$this->controller = $controller;
-		$this->action = $action;
-		$this->parameters = $parameters;
+		$this->routeRules[] = $routeRules;
+
 	}
 
 	/* FIELDS */
@@ -54,49 +48,21 @@ class Route
 	 *
 	 * @var string
 	 */
-	var $name = null;
+	private $name = null;
 
 	/**
 	 * Defines the route url
 	 *
 	 * @var string
 	 */
-	var $url;
+	private $url = null;
 
 	/**
-	 * Defines the route module name
+	 * Defines a list of route rules
 	 *
-	 * @var string
+	 * @var mixed Array or single object of RouteRule.
 	 */
-	var $module;
-
-	/**
-	 * Defines the route controller name
-	 *
-	 * @var string
-	 */
-	var $controller;
-
-	/**
-	 * Defines the route action name
-	 *
-	 * @var string
-	 */
-	var $action;
-
-	/**
-	 * Defines the route parameters
-	 *
-	 * @var mixed, array|null
-	 */
-	var $parameters = null;
-
-	/**
-	 * Defines the route query parameters
-	 *
-	 * @var string
-	 */
-	var $query = null;
+	private $routeRules = null;
 
 
 	/* PROPERTIES */
@@ -121,70 +87,4 @@ class Route
 		return $this->url;
 	}
 
-	/**
-	 *
-	 * @return Route module name
-	 * @var string
-	 */
-	public function getModule()
-	{
-		return $this->module;
-	}
-
-	/**
-	 *
-	 * @return Route controller name
-	 * @var string
-	 */
-	public function getController()
-	{
-		return $this->controller;
-	}
-
-	/**
-	 *
-	 * @return Route action name
-	 * @var string
-	 */
-	public function getAction()
-	{
-		return $this->action;
-	}
-
-	/**
-	 *
-	 * @return Route parameters
-	 * @var mixed, array|null
-	 */
-	public function getParameters()
-	{
-		return $this->parameters;
-	}
-
-	/**
-	 * Gets the route query parameters.
-	 *
-	 * @return string
-	 */
-	public function getQuery()
-	{
-		return $this->query;
-	}
-
-	/* PUBLIC FUNCTIONS */
-
-	/**
-	 * Returns an array of route query parameters.
-	 *
-	 * @return array
-	 */
-	public function GetQueryParametersAsArray()
-	{
-		if(isset($this->query))
-		{
-			return spliti('&', $this->query);
-		}
-
-		return array();
-	}
 }

@@ -80,7 +80,11 @@ class DefaultRouter implements IRouter
 	 */
 	private function RegisterDefaultRoute()
 	{
-		RouteManager::RegisterRoute(new Route(Config::getRoutingDefaults()['default_route_name'], '/', 'main'));
+		$routeRule = new RouteRule();
+		$routeRule->AddParameter(':param', RouteRule::PARAMETER_NUMBER | RouteRule::PARAMETER_REGEX, '~[^\*]+/\*$~');
+		$route = new Route(Config::getRoutingDefaults()['default_route_name'], '/', $routeRule);
+
+		RouteManager::RegisterRoute($route);
 	}
 
 	/**
@@ -117,9 +121,9 @@ class DefaultRouter implements IRouter
 
 		// find top elements index that are equal
 		$matchedIndex = null;
-		for($i = 0; $i<$splittedRouteUrlCount; $i++)
+		for($i = 0; $i < $splittedRouteUrlCount; $i++)
 		{
-			if($splittedRouteUrl[$i]==$splittedUrl[$i])
+			if($splittedRouteUrl[$i] == $splittedUrl[$i])
 			{
 				$matchedIndex = $i;
 			}
@@ -128,9 +132,9 @@ class DefaultRouter implements IRouter
 		// if found some top elements equality
 		if(isset($matchedIndex))
 		{
-			for($i = $matchedIndex+1; $i<$splittedRouteUrlCount; $i++)
+			for($i = $matchedIndex+1; $i < $splittedRouteUrlCount; $i++)
 			{
-				if((strpos($splittedRouteUrl[$i], ':')!==0)||($splittedRouteUrl[$i]!=='*'))
+				if((strpos($splittedRouteUrl[$i], ':') !== 0)||($splittedRouteUrl[$i] !== '*'))
 				{
 					// if element is not a parameter or wilcard
 					return null;
