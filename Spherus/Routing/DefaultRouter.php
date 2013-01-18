@@ -81,7 +81,7 @@ class DefaultRouter implements IRouter
 	private function RegisterDefaultRoute()
 	{
 		$routeRule = new RouteRule();
-		$routeRule->AddParameter(':param', RouteRule::PARAMETER_NUMBER | RouteRule::PARAMETER_REGEX, '~[^\*]+/\*$~');
+		$routeRule->AddParameter(':param', RouteRule::PARAMETER_REGEX, '~[^\*]+/\*$~');
 		$route = new Route(Config::getRoutingDefaults()['default_route_name'], '/', $routeRule);
 
 		RouteManager::RegisterRoute($route);
@@ -96,6 +96,7 @@ class DefaultRouter implements IRouter
 	 */
 	private function MatchRoute($route, $splittedUrl)
 	{
+		//if route url is not beginnign with slash
 		if(strpos($route->getUrl(), '/') > 0)
 		{
 			return null;
@@ -105,15 +106,15 @@ class DefaultRouter implements IRouter
 		$splittedUrlCount = count($splittedUrl);
 		$splittedRouteUrlCount = count($splittedRouteUrl);
 
+		//A route template length cannot be greather that the request url
 		if($splittedRouteUrlCount > $splittedUrlCount)
 		{
 			return null;
 		}
 
-		if(strpos($route->getUrl(), '*')!==false)
+		if(strpos($route->getUrl(), '*') !== false)
 		{
-			// check if wilcard is the last element
-			if(!(boolean)preg_match('~[^\*]+/\*$~', $route->getUrl()))
+			if(!(boolean)preg_match('~[^\*]+/\*$~', $route->getUrl())) // check if wildcard is the last element
 			{
 				return null;
 			}
@@ -129,22 +130,30 @@ class DefaultRouter implements IRouter
 			}
 		}
 
-		// if found some top elements equality
+		$counter = 0;
 		if(isset($matchedIndex))
 		{
-			for($i = $matchedIndex+1; $i < $splittedRouteUrlCount; $i++)
+			$counter = $matchedIndex + 1;
+		}
+
+		//parse for parameters and wildcard
+		for($i = $counter; $i < $splittedRouteUrlCount; $i++)
+		{
+			if(strpos($splittedRouteUrl[$i], ':') !== 0) // if element is not a parameter or wildcard
 			{
-				if((strpos($splittedRouteUrl[$i], ':') !== 0)||($splittedRouteUrl[$i] !== '*'))
+				if($splittedRouteUrl[$i] !== '*')
 				{
-					// if element is not a parameter or wilcard
 					return null;
 				}
 			}
 		}
 
+		//unset unused variables
 		unset($splittedRouteUrl);
 		unset($splittedUrlCount);
 		unset($splittedRouteUrlCount);
+		unset($counter);
+		unset($route);
 
 		return $matchedIndex;
 	}
