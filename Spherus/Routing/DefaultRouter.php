@@ -47,8 +47,7 @@ class DefaultRouter implements IRouter
 		{
 			foreach($registeredRoutes as $route)
 			{
-				$matchedIndex = self::MatchRoute($route, $splittedUrl);
-				if(isset($matchedIndex))
+				if(self::MatchRoute($route, $splittedUrl) === true)
 				{
 					$foundRoute = $route;
 					break;
@@ -80,9 +79,9 @@ class DefaultRouter implements IRouter
 	 */
 	private function RegisterDefaultRoute()
 	{
-		$routeRule = new RouteRule();
-		$routeRule->AddParameter(':param', RouteRule::PARAMETER_REGEX, '~[^\*]+/\*$~');
-		$route = new Route(Config::getRoutingDefaults()['default_route_name'], '/', $routeRule);
+		$route = new Route(Config::getRoutingDefaults()['default_route_name'], '/');
+		$route->AddRule(new RouteRule('main', null, null, ':param', RouteRule::PARAMETER_REGEX, '~[^\*]+/\*$~'));
+		$route->AddRule(new RouteRule(null, 'test', null, ':param', RouteRule::PARAMETER_STRING));
 
 		RouteManager::RegisterRoute($route);
 	}
@@ -139,12 +138,9 @@ class DefaultRouter implements IRouter
 		//parse for parameters and wildcard
 		for($i = $counter; $i < $splittedRouteUrlCount; $i++)
 		{
-			if(strpos($splittedRouteUrl[$i], ':') !== 0) // if element is not a parameter or wildcard
+			if(strpos($splittedRouteUrl[$i], ':') !== 0 and $splittedRouteUrl[$i] !== '*')// if element is not a parameter or wildcard
 			{
-				if($splittedRouteUrl[$i] !== '*')
-				{
-					return null;
-				}
+				return null;
 			}
 		}
 

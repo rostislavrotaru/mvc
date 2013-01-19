@@ -11,6 +11,8 @@
 namespace Spherus\Routing;
 
 use Spherus\Core\Check;
+use Spherus\Core\SpherusException;
+
 /**
  * Defines a Route object class
  *
@@ -28,21 +30,36 @@ class RouteRule
 	 * @param string $module The route module name, optional
 	 * @param string $controller The route controller name, optional
 	 * @param string $action The route action name, optional
-	 * @param array $parameters The route parameters name, optional
+	 * @param string $parameterName The name of parameter,
+	 * @param string $parameterType The parameter type (taken from constants)
+	 * @param string $parameterValue The parameter value. Optional.
+	 * @throws SpherusException When $parameterName is null or empty.
+	 * @throws SpherusException When $parameterType is null or empty.
+	 * @throws SpherusException When $parameterType is regex and $parameterValue is null or empty.
+	 * @throws SpherusException When one of the following parameters is not set: $module or $controller or $action
 	 */
-	public function __construct($module = null, $controller = null, $action = null, $parameters = null)
+	public function __construct($module = null, $controller = null, $action = null, $parameterName, $parameterType, $parameterValue = null)
 	{
+		if(!isset($module) and !isset($controller) and !isset($action))
+		{
+			throw new SpherusException(EXCEPTION_ROUTE_RULE_CONSTRUCTOR_PARAMETERS_NOT_SET);
+		}
+		Check::IsNullOrEmpty($parameterName);
+		Check::IsNullOrEmpty($parameterType);
+		$parameterType===$this::PARAMETER_REGEX ? Check::IsNullOrEmpty($parameterValue) : null;
+
 		$this->module = $module;
 		$this->controller = $controller;
 		$this->action = $action;
-		$this->parameters = $parameters;
+		$this->parameterName = $parameterName;
+		$this->parameterType = $parameterType;
+		$this->parameterValue = $parameterValue;
 	}
 
 	/* CONSTANTS */
-
-	const PARAMETER_NUMBER = 1;
-	const PARAMETER_STRING = 2;
-	const PARAMETER_REGEX = 4;
+	const PARAMETER_NUMBER = 'PARAMETER_NUMBER';
+	const PARAMETER_STRING = 'PARAMETER_STRING';
+	const PARAMETER_REGEX = 'PARAMETER_REGEX';
 
 	/* FIELDS */
 
@@ -51,34 +68,108 @@ class RouteRule
 	 *
 	 * @var string
 	 */
-	var $module;
+	private $module;
 
 	/**
 	 * Defines the route controller name
 	 *
 	 * @var string
 	 */
-	var $controller;
+	private $controller;
 
 	/**
 	 * Defines the route action name
 	 *
 	 * @var string
 	 */
-	var $action;
+	private $action;
 
 	/**
-	 * Defines the route parameters
+	 * Defines the parameter name
 	 *
-	 * @var mixed, array|null
+	 * @var string
 	 */
-	var $parameters = null;
+	private $parameterName;
+
+	/**
+	 * Defines the parameter type (taken from constants)
+	 *
+	 * @var string
+	 */
+	private $parameterType;
+
+	/**
+	 * Defines the parameter value;
+	 *
+	 * @var string
+	 */
+	private $parameterValue;
 
 	/* PROPERTIES */
 
 	/**
+	 * Gets the parameter name.
 	 *
-	 * @return Route module name
+	 * @return string
+	 */
+	public function getParameterName()
+	{
+		return $this->parameterName;
+	}
+
+	/**
+	 * Sets the parameter name.
+	 *
+	 * @param string parameterName The name of parameter to set.
+	 */
+	public function setParameterName($parameterName)
+	{
+		$this->parameterName = parameterName;
+	}
+
+	/**
+	 * Gets the parameter type.
+	 *
+	 * @return string
+	 */
+	public function getParameterType()
+	{
+		return $this->parameterType;
+	}
+
+	/**
+	 * Sets the parameter type.
+	 *
+	 * @param string $parameterType The type of parameter to set (taken from constants).
+	 */
+	public function setParameterType($parameterType)
+	{
+		$this->$parameterType = $parameterType;
+	}
+
+	/**
+	 * Gets the parameter value.
+	 *
+	 * @return string
+	 */
+	public function getParameterValue()
+	{
+		return $this->parameterValue;
+	}
+
+	/**
+	 * Sets the parameter value.
+	 *
+	 * @param string $parameterValue The value of parameter to set.
+	 */
+	public function setParameterValue($parameterValue)
+	{
+		$this->parameterValue = $parameterValue;
+	}
+
+	/**
+	 *
+	 * @return Route Rule module name
 	 * @var string
 	 */
 	public function getModule()
@@ -116,26 +207,4 @@ class RouteRule
 		return $this->parameters;
 	}
 
-	/* PUBLIC FUNCTIONS */
-
-	public function AddParameter($parameterName, $parameterType, $parameterValue = null)
-	{
-		Check::IsNullOrEmpty($parameterName);
-		Check::IsNullOrEmpty($parameterType);
-		if($parameterType & $this::PARAMETER_REGEX)
-		{
-			Check::IsNullOrEmpty($parameterValue);
-			$this->parameters[$parameterName][$this::PARAMETER_REGEX] = $parameterValue;
-		}
-
-		if($parameterType & $this::PARAMETER_NUMBER)
-		{
-			$this->parameters[$parameterName][$this::PARAMETER_NUMBER] = null;
-		}
-
-		if($parameterType & $this::PARAMETER_STRING)
-		{
-			$this->parameters[$parameterName][$this::PARAMETER_STRING] = null;
-		}
-	}
 }

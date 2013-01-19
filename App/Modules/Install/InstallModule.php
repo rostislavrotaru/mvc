@@ -12,7 +12,6 @@
 		 */
 		function Run()
 		{
-			//RouteManager::RegisterRoute(new Route('InstallRoute', '/install/home/index', 'cucu'));
 			RouteManager::RegisterRoute(new Route('HomeRoute', '/install/:param/*', 'cucu'));
 		}
 

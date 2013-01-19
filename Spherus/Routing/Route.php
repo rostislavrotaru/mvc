@@ -37,8 +37,10 @@ class Route
 
 		$this->name = $name;
 		$this->url = $url;
-		$this->routeRules[] = $routeRules;
-
+		if(isset($routeRules))
+		{
+			is_array($routeRules) ? $this->routeRules = array_merge($this->routeRules, $routeRules) : $this->routeRules[] = $routeRules;
+		}
 	}
 
 	/* FIELDS */
@@ -62,7 +64,7 @@ class Route
 	 *
 	 * @var mixed Array or single object of RouteRule.
 	 */
-	private $routeRules = null;
+	private $routeRules = [];
 
 
 	/* PROPERTIES */
@@ -85,6 +87,20 @@ class Route
 	public function getUrl()
 	{
 		return $this->url;
+	}
+
+	/* PUBLIC FUNCTIONS */
+
+	/**
+	 * Add a route rule
+	 *
+	 * @param Spherus\Routing\RouterUle $routeRule The route rule to add.
+	 * @throws SpherusException When $routeRule is not an instance of 'Spherus\Routing\RouteRule'
+	 */
+	public function AddRule($routeRule)
+	{
+		Check::IsInstanceOf($routeRule, 'Spherus\Routing\RouteRule');
+		$this->routeRules[] = $routeRule;
 	}
 
 }
