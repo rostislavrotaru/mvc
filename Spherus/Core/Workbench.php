@@ -122,20 +122,17 @@ class Workbench
 	 */
 	public static function LoadModules()
 	{
-		$moduleDirectories = FileSystem::ListDirectoryFolders(MODULES);
+		$installedModules = Config::getInstalledModules();
 
-		if(isset($moduleDirectories['folders']))
+		foreach($installedModules as $module)
 		{
-			foreach($moduleDirectories['folders'] as $directory)
-			{
-				Autoloader::AddPath(MODULES.$directory.SEPARATOR);
-				$moduleName = $directory.'Module';
-				$module = new $moduleName();
-
-				Check::IsInstanceOf($module, 'Spherus\\Interfaces\\IModule');
-				self::AddModule($module);
-				$module->Run();
-			}
+			$moduleObject = new $module;
+			Check::IsInstanceOf($moduleObject, 'Spherus\\Interfaces\\IModule');
+			
+			self::AddModule($moduleObject);
+			$moduleObject->Run();
+			
+			unset($moduleObject);
 		}
 	}
 

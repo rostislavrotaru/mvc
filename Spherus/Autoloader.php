@@ -67,10 +67,10 @@ class Autoloader
 		}
 		else // Class have namespace
 		{
-			$fileName = '../'.str_ireplace('\\', '/', $className).'.php';
+			$fileName = ROOT.str_ireplace('\\', '/', $className).'.php';
 			if(file_exists($fileName))
 			{
-				return require ('../'.str_ireplace('\\', '/', $className).'.php');
+				return require (ROOT.str_ireplace('\\', '/', $className).'.php');
 			}
 			return false;
 		}

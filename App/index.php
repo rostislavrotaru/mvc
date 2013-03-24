@@ -15,4 +15,4 @@
  * @author Rostislav Rotaru
  * @package spherus
  */
-require ('../Spherus/Boot.php');
+require (__DIR__.'/../Spherus/Boot.php');

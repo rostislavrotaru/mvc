@@ -17,19 +17,21 @@
  */
 
 // Root path
-define('ROOT', '.');
+define('ROOT', __DIR__.'/../');
 
 // Directory separator
 define('SEPARATOR', '/');
 
-// Public application path
-define('APP', ROOT.SEPARATOR);
-
-// Public application path
-define('APP_COMMON', 'Common'.SEPARATOR);
-
 // Application modules path
-define('MODULES', 'Modules'.SEPARATOR);
+//define('MODULES', 'Modules'.SEPARATOR);
+
+// Public application path
+//define('APP', ROOT.SEPARATOR);
+
+// Public application path
+//define('APP_COMMON', 'Common'.SEPARATOR);
+
+
 
 // Application themes path
-define('THEMES', APP.'themes'.SEPARATOR);
+//define('THEMES', APP.'themes'.SEPARATOR);
