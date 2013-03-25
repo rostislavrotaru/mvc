@@ -16,7 +16,6 @@ use Spherus\HttpContext\Session;
 use Spherus\Parsers\IpFilterParser;
 use Spherus\Interfaces\IModule;
 use Spherus\Routing\RouteManager;
-use Spherus\Common\FileSystem;
 
 /**
  * Class that represents the framework workbench

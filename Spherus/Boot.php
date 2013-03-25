@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Redistributions of files must retain the above copyright notice.
  *

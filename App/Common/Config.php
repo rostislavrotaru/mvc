@@ -3,7 +3,6 @@
 	namespace App\Common;
 
 	use Spherus\Core\SpherusConfig;
-use App;
 	
 	/**
 	 * Application configuration
