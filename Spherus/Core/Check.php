@@ -138,7 +138,7 @@
 
 			if(!(is_object($object)))
 			{
-				throw new SpherusException(sprintf(EXCEPTION_NOT_OBJECT, get_class($object)));
+				throw new SpherusException(sprintf(EXCEPTION_NOT_OBJECT, $object));
 			}
 		}
 

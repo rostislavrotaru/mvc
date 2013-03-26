@@ -208,6 +208,20 @@ class Request
 			}
 		}
 	}
+	
+	/**
+	 * Initialize Request variables
+	 */
+	private static function InitializeVariables()
+	{
+		self::$method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null;
+		self::$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest') : false;
+		self::$remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
+		self::$redirectStatus = isset($_SERVER['REDIRECT_STATUS']) ? $_SERVER['REDIRECT_STATUS'] : null;
+		self::$currentUrl = self::GetUrl();
+		self::$urlReferrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+		self::$files = $_FILES;
+	}
 
 	/* PUBLIC METHODS */
 
@@ -218,14 +232,7 @@ class Request
 	{
 		self::ParseHeaders();
 		self::ParseCookies();
-
-		self::$method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null;
-		self::$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? ($_SERVER['HTTP_X_REQUESTED_WITH']=='XMLHttpRequest') : false;
-		self::$remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
-		self::$redirectStatus = isset($_SERVER['REDIRECT_STATUS']) ? $_SERVER['REDIRECT_STATUS'] : null;
-		self::$currentUrl = self::GetUrl();
-		self::$urlReferrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
-		self::$files = $_FILES;
+		self::InitializeVariables();
 	}
 
 	/**

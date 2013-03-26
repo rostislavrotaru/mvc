@@ -15,6 +15,7 @@ use Spherus\Interfaces\IRouter;
 use Spherus\Core\SpherusException;
 use Spherus\HttpContext\Request;
 use Spherus\Core\Check;
+use Spherus\HttpContext\ParsedUrl;
 
 /**
  * Defines a default router class.
@@ -47,7 +48,7 @@ class DefaultRouter implements IRouter
 		{
 			foreach($registeredRoutes as $route)
 			{
-				if(self::MatchRoute($route, $splittedUrl) === true)
+				if(self::MatchRoute($route, $splittedUrl) !== null)
 				{
 					$foundRoute = $route;
 					break;
@@ -60,6 +61,9 @@ class DefaultRouter implements IRouter
 			$foundRoute = RouteManager::GetRouteByName(Config::getRoutingDefaults()['default_route_name']);
 		}
 
+		//TODO
+		$parsedUrl = new ParsedUrl(isset($foundRoute->), $controllerName, $actionName, $parameters, $route);
+		
 		Check::IsNullOrEmpty($foundRoute);
 	}
 
@@ -79,11 +83,10 @@ class DefaultRouter implements IRouter
 	 */
 	private function RegisterDefaultRoute()
 	{
-		$route = new Route(Config::getRoutingDefaults()['default_route_name'], '/');
-		$route->AddRule(new RouteRule('main', null, null, ':param', RouteRule::PARAMETER_REGEX, '~[^\*]+/\*$~'));
-		$route->AddRule(new RouteRule(null, 'test', null, ':param', RouteRule::PARAMETER_STRING));
-
+		$route = new Route(Config::getRoutingDefaults()['default_route_name'], '/', new RouteRule('main'));
+		$route2 = new Route('insex', '/insex', new RouteRule('install'));
 		RouteManager::RegisterRoute($route);
+		RouteManager::RegisterRoute($route2);
 	}
 
 	/**

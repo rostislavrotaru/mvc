@@ -14,7 +14,7 @@
 	     */
 	    function Run()
 	    {
-	    	RouteManager::RegisterRoute(new Route('MainRoute', '/main/:param/*', 'cucu'));
+	    	//RouteManager::RegisterRoute(new Route('MainRoute', '/main/:param/*', 'cucu'));
 	    }
 
 	    /**

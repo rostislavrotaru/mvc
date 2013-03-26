@@ -27,8 +27,7 @@ class HttpContext
 	public static function Initialize()
 	{
 		Request::Initialize();
-		self::$serverProtocol = $_SERVER["SERVER_PROTOCOL"];
-		self::$isSecured = empty($_SERVER['HTTPS'])||$_SERVER['HTTPS']=='off' ? false : true;
+		self::InitializeVariables();
 	}
 
 	/* FIELDS */
@@ -61,6 +60,7 @@ class HttpContext
 	 */
 	private static $parsedUrl = null;
 
+	
 	/* PROPERTIES */
 
 	/**
@@ -121,5 +121,17 @@ class HttpContext
 	public static function setParsedUrl($parsedUrl)
 	{
 		self::$parsedUrl = $parsedUrl;
+	}
+
+	
+	/* PRIVATE METHODS */
+
+	/**
+	 * Initializes context variables
+	 */
+	private static function InitializeVariables()
+	{
+		self::$serverProtocol = $_SERVER["SERVER_PROTOCOL"];
+		self::$isSecured = empty($_SERVER['HTTPS'])||$_SERVER['HTTPS']=='off' ? false : true;
 	}
 }

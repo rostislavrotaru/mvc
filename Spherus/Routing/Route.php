@@ -39,7 +39,17 @@ class Route
 		$this->url = $url;
 		if(isset($routeRules))
 		{
-			is_array($routeRules) ? $this->routeRules = array_merge($this->routeRules, $routeRules) : $this->routeRules[] = $routeRules;
+			if(is_array($routeRules))
+			{
+				foreach ($routeRules as $routeRule)
+				{
+					$this->AddRule($routeRule);
+				}
+			}
+			else 
+			{
+				$this->AddRule($routeRules);
+			}
 		}
 	}
 

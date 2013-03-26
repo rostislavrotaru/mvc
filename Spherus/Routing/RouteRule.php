@@ -34,18 +34,17 @@ class RouteRule
 	 * @param string $parameterType The parameter type (taken from constants)
 	 * @param string $parameterValue The parameter value. Optional.
 	 * @throws SpherusException When $parameterName is null or empty.
-	 * @throws SpherusException When $parameterType is null or empty.
 	 * @throws SpherusException When $parameterType is regex and $parameterValue is null or empty.
 	 * @throws SpherusException When one of the following parameters is not set: $module or $controller or $action
 	 */
-	public function __construct($module = null, $controller = null, $action = null, $parameterName, $parameterType, $parameterValue = null)
+	public function __construct($module = null, $controller = null, $action = null, $parameterName = null, $parameterType = null, $parameterValue = null)
 	{
 		if(!isset($module) and !isset($controller) and !isset($action))
 		{
 			throw new SpherusException(EXCEPTION_ROUTE_RULE_CONSTRUCTOR_PARAMETERS_NOT_SET);
 		}
-		Check::IsNullOrEmpty($parameterName);
-		Check::IsNullOrEmpty($parameterType);
+		
+		$parameterType = isset($parameterType) ? $this::PARAMETER_STRING : $parameterType;
 		$parameterType===$this::PARAMETER_REGEX ? Check::IsNullOrEmpty($parameterValue) : null;
 
 		$this->module = $module;

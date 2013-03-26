@@ -52,5 +52,5 @@
 	define('EXCEPTION_DUPLICATE_MODULE', 'An module with the same name already exists');
 	define('EXCEPTION_NO_CONTROLLER_ACTION_METHOD', 'The function "%s" does not exists in controller "%s" in module "%s"');
 	define('EXCEPTION_OBJECT_INVALID_INSTANCE', 'The "%s" object is not a valid instance of "%s"');
-	define('EXCEPTION_NOT_OBJECT', 'The "%s" value is not an object instance');
+	define('EXCEPTION_NOT_OBJECT', 'The "%s" value is not an object');
 	define('EXCEPTION_ROUTE_RULE_CONSTRUCTOR_PARAMETERS_NOT_SET', 'One of the following parameters must be set: $module or $controller or $action');
