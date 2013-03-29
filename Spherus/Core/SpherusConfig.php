@@ -49,7 +49,7 @@
 			'controller' => 'home',
 			'action' => 'index',
 			'router' => 'Spherus\Routing\DefaultRouter',
-			'default_route_name' => 'default'
+			'default_route' => '/:controller/:action/*'
 		);
 
 		/* PROPERTIES */

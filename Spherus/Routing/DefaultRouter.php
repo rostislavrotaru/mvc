@@ -48,7 +48,8 @@ class DefaultRouter implements IRouter
 		{
 			foreach($registeredRoutes as $route)
 			{
-				if(self::MatchRoute($route, $splittedUrl) !== null)
+				$routeMatchIndex = self::MatchRoute($route, $splittedUrl);
+				if($routeMatchIndex !== null)
 				{
 					$foundRoute = $route;
 					break;
@@ -58,11 +59,8 @@ class DefaultRouter implements IRouter
 
 		if($foundRoute==null)
 		{
-			$foundRoute = RouteManager::GetRouteByName(Config::getRoutingDefaults()['default_route_name']);
+			$foundRoute = RouteManager::GetRouteByUrl(Config::getRoutingDefaults()['default_route']);
 		}
-
-		//TODO
-		$parsedUrl = new ParsedUrl(isset($foundRoute->), $controllerName, $actionName, $parameters, $route);
 		
 		Check::IsNullOrEmpty($foundRoute);
 	}
@@ -83,21 +81,19 @@ class DefaultRouter implements IRouter
 	 */
 	private function RegisterDefaultRoute()
 	{
-		$route = new Route(Config::getRoutingDefaults()['default_route_name'], '/', new RouteRule('main'));
-		$route2 = new Route('insex', '/insex', new RouteRule('install'));
-		RouteManager::RegisterRoute($route);
-		RouteManager::RegisterRoute($route2);
+		RouteManager::RegisterRoute(new Route('/:controller/:action/*', new RouteRule('main')));
+		RouteManager::RegisterRoute(new Route('/account/:id', new RouteRule('main', 'users', 'view'), array(new RouteParameter(':id', '/^\d+$/'))));
 	}
 
 	/**
 	 * Determine if given route matches given splitted url
 	 *
-	 * @param Spherus\Routing\IRoute $route The route to parse.
+	 * @param Route $route The route to parse.
 	 * @param array $splittedUrl url splitted into parts.
 	 * @return NULL Ambigous number> Matched splitted url index or null if route isn't matching.
 	 */
 	private function MatchRoute($route, $splittedUrl)
-	{
+	{		
 		//if route url is not beginnign with slash
 		if(strpos($route->getUrl(), '/') > 0)
 		{
@@ -121,7 +117,10 @@ class DefaultRouter implements IRouter
 				return null;
 			}
 		}
-
+		
+		$result = [];
+		$predefinedParameters = array(':module', ':controller', ':action');
+		
 		// find top elements index that are equal
 		$matchedIndex = null;
 		for($i = 0; $i < $splittedRouteUrlCount; $i++)
@@ -138,6 +137,10 @@ class DefaultRouter implements IRouter
 			$counter = $matchedIndex + 1;
 		}
 
+		unset($matchedIndex);
+		
+		$parameters = [];
+		
 		//parse for parameters and wildcard
 		for($i = $counter; $i < $splittedRouteUrlCount; $i++)
 		{
@@ -145,15 +148,72 @@ class DefaultRouter implements IRouter
 			{
 				return null;
 			}
+			else 
+			{
+				if(strpos($splittedRouteUrl[$i], ':') === 0) //is parameter
+				{
+					//if predefined parameters
+					if(in_array($splittedRouteUrl[$i], $predefinedParameters))
+					{
+						$result[$splittedRouteUrl[$i]] = isset($splittedUrl[$i]) ? $splittedUrl[$i] : Config::getRoutingDefaults()[str_replace(':', null, $splittedRouteUrl[$i])];
+					}
+					else //additional parameters
+					{
+						$routeParameter = $route->GetRouteParameterByName($splittedRouteUrl[$i]);
+						if(isset($routeParameter))
+						{
+							if(preg_match($routeParameter->getValue(), $splittedUrl[$i]))
+							{
+								$result[$splittedRouteUrl[$i]] = $splittedUrl[$i];
+							}
+							else 
+							{
+								return null;
+							}
+						}
+						else
+						{
+							return null;
+						}
+					}
+				}
+				else 
+				{
+					$parameters[] = $splittedUrl[$i];
+				}
+			}
+		}
+		
+		$predefinedParameterDifferences = array_diff_key(array_flip($predefinedParameters), $result);
+		
+		//parse the rest of predefined parameters
+		foreach ($predefinedParameterDifferences as $key=>$value)
+		{
+			$methodResult = call_user_func(array($route->getRouteRule(), 'get'.str_replace(':', null, $key)));
+			if(isset($methodResult))
+			{
+				$result[$key] = $methodResult;
+			}
+			else
+			{
+				$result[$key] = Config::getRoutingDefaults()[str_replace(':', null, $key)];
+			}
 		}
 
 		//unset unused variables
+		unset($key);
+		unset($value);
 		unset($splittedRouteUrl);
-		unset($splittedUrlCount);
 		unset($splittedRouteUrlCount);
+		unset($splittedUrl);
+		unset($splittedUrlCount);
 		unset($counter);
-		unset($route);
+		unset($predefinedParameterDifferences);
+		unset($predefinedParameters);
+		unset($i);
+		unset($methodResult);
 
-		return $matchedIndex;
+		return new ParsedUrl($result[':module'], $result[':controller'], $result[':action'], $parameters, $route);
 	}
+
 }

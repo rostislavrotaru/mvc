@@ -3,8 +3,6 @@
 	namespace App\Modules\Main;
 
 	use Spherus\Interfaces\IModule;
-	use Spherus\Routing\Route;
-	use Spherus\Routing\RouteManager;
 
 	class MainModule implements IModule
 	{

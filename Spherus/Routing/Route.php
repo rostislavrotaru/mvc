@@ -27,40 +27,25 @@ class Route
 	/**
 	 * Initializes a new instance of Route class.
 	 *
-	 * @param string $name The route name
 	 * @param string $url The route url
+	 * @param RouteRule $routeRule The Route rule
+	 * @param array $routeParameters The Route Parameters. Optional. Default is null.
+	 * 
 	 * @throws SpherusException When $url parameter is null or empty
+	 * @throws SpherusException When $routeRule parameter is null or empty
 	 */
-	public function __construct($name, $url, $routeRules = null)
+	public function __construct($url, $routeRule, $routeParameters = null)
 	{
 		Check::IsNullOrEmpty($url);
+		Check::IsNullOrEmpty($routeRule);
 
-		$this->name = $name;
 		$this->url = $url;
-		if(isset($routeRules))
-		{
-			if(is_array($routeRules))
-			{
-				foreach ($routeRules as $routeRule)
-				{
-					$this->AddRule($routeRule);
-				}
-			}
-			else 
-			{
-				$this->AddRule($routeRules);
-			}
-		}
+		$this->routeRule = $routeRule;
+		$this->routeParameters = $routeParameters;
 	}
 
+	
 	/* FIELDS */
-
-	/**
-	 * Defines the route name
-	 *
-	 * @var string
-	 */
-	private $name = null;
 
 	/**
 	 * Defines the route url
@@ -70,47 +55,75 @@ class Route
 	private $url = null;
 
 	/**
-	 * Defines a list of route rules
+	 * Defines the route rule
 	 *
-	 * @var mixed Array or single object of RouteRule.
+	 * @var RouteRule
 	 */
-	private $routeRules = [];
+	private $routeRule = null;
+	
+	/**
+	 * Defines the route parameters
+	 *
+	 * @var array
+	 */
+	private $routeParameters = null;
 
 
 	/* PROPERTIES */
-
+	
 	/**
-	 * Gets the route name
+	 *	Gets route url
 	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 *
-	 * @return Route url
 	 * @var string
 	 */
 	public function getUrl()
 	{
 		return $this->url;
 	}
-
-	/* PUBLIC FUNCTIONS */
-
+	
 	/**
-	 * Add a route rule
+	 * Gets route rule
 	 *
-	 * @param Spherus\Routing\RouterUle $routeRule The route rule to add.
-	 * @throws SpherusException When $routeRule is not an instance of 'Spherus\Routing\RouteRule'
+	 * @return RouteRule
 	 */
-	public function AddRule($routeRule)
+	public function getRouteRule()
 	{
-		Check::IsInstanceOf($routeRule, 'Spherus\Routing\RouteRule');
-		$this->routeRules[] = $routeRule;
+		return $this->routeRule;
+	}
+	
+	/**
+	 * Gets the route parameters
+	 *
+	 * @var array
+	 */
+	public function getRouteParameters()
+	{
+		return $this->routeParameters;
 	}
 
+	
+	/* PUBLIC FUNCTIONS */
+	
+	/**
+	 * Gets RouteParameter by it's parameter name
+	 * 
+	 * @param string $name The name of parameter
+	 * @return RouteParameter|NULL The RouteParameter object or null if not found.
+	 */
+	public function GetRouteParameterByName($name)
+	{
+		if(isset($this->routeParameters))
+		{
+			foreach($this->routeParameters as $routeParameter)
+			{
+				if($routeParameter->getName() === $name)
+				{
+					return $routeParameter;
+				}
+			}
+		}
+		
+		return null;
+	} 
+	
 }

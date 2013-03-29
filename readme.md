@@ -5,4 +5,4 @@ website:
 http://spherus.net
 
 license:
-http://license.spherus.net
+http://spherus.net

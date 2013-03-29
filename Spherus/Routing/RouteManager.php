@@ -58,7 +58,7 @@ class RouteManager
 	 */
 	public static function getRegisteredRoutes()
 	{
-		return RouteManager::$registeredRoutes;
+		return self::$registeredRoutes;
 	}
 
 	/* PUBLIC FUNCTIONS */
@@ -93,12 +93,11 @@ class RouteManager
 	public static function RegisterRoute(Route $route)
 	{
 		Check::IsNullOrEmpty($route);
-		Check::IsNullOrEmpty($route->getName());
 
-		$foundRoute = self::GetRouteByName($route->getName());
+		$foundRoute = self::GetRouteByUrl($route->getUrl());
 		if(isset($foundRoute))
 		{
-			throw new SpherusException(sprintf(EXCEPTION_DUPLICATE_ROUTE, $route->getName()));
+			throw new SpherusException(sprintf(EXCEPTION_DUPLICATE_ROUTE, $route->getUrl()));
 		}
 
 		array_unshift(self::$registeredRoutes, $route);
@@ -110,14 +109,14 @@ class RouteManager
 	/**
 	 * Gets route by name
 	 *
-	 * @param string $routeName The name of route to find.
-	 * @return Spherus\Routing\IRoute NULL
+	 * @param string $routeUrl The name of route to find.
+	 * @return IRoute|NULL
 	 */
-	public static function GetRouteByName($routeName)
+	public static function GetRouteByUrl($routeUrl)
 	{
 		foreach (self::$registeredRoutes as $route)
 		{
-			if($route->getName() == $routeName)
+			if($route->getUrl() == $routeUrl)
 			{
 				return $route;
 			}

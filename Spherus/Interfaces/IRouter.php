@@ -23,10 +23,10 @@
          * Parses url from Request::getCurrentUrl() into route (module,
          * controller, action and parameters).
          */
-        function Parse ();
+        function Parse();
 
         /**
          * This function is called after router object is created.
          */
-        function Initialize ();
+        function Initialize();
     }

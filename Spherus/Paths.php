@@ -23,10 +23,10 @@ define('ROOT', __DIR__.'/../');
 define('SEPARATOR', '/');
 
 // Application modules path
-//define('MODULES', 'Modules'.SEPARATOR);
+define('MODULES', 'APP'.SEPARATOR.'Modules');
 
 // Public application path
-//define('APP', ROOT.SEPARATOR);
+define('APP', ROOT.SEPARATOR);
 
 // Public application path
 //define('APP_COMMON', 'Common'.SEPARATOR);
