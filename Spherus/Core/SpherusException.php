@@ -47,10 +47,10 @@
 	define('EXCEPTION_FILE_NOT_READABLE', 'The "%s" file is not readable. Please check file system permissions');
 	define('EXCEPTION_FILE_NOT_EXISTS', 'The given file does not exists: "%s"');
 	define('EXCEPTION_NO_ROUTE_TO_REDIRECT', 'No Route to redirect found');
+	define('EXCEPTION_NO_ROUTE_FOUND', 'No Route to parse given url found');
 	define('EXCEPTION_DUPLICATE_ROUTE', 'The route "%s" already exists and cannot be registsred.');
 	define('EXCEPTION_INVALID_INTEGER', 'Given value is not a valid integer value');
 	define('EXCEPTION_DUPLICATE_MODULE', 'An module with the same name already exists');
 	define('EXCEPTION_NO_CONTROLLER_ACTION_METHOD', 'The function "%s" does not exists in controller "%s" in module "%s"');
 	define('EXCEPTION_OBJECT_INVALID_INSTANCE', 'The "%s" object is not a valid instance of "%s"');
 	define('EXCEPTION_NOT_OBJECT', 'The "%s" value is not an object');
-	define('EXCEPTION_ROUTE_RULE_CONSTRUCTOR_PARAMETERS_NOT_SET', 'One of the following parameters must be set: $module or $controller or $action');

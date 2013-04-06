@@ -34,13 +34,12 @@ class Route
 	 * @throws SpherusException When $url parameter is null or empty
 	 * @throws SpherusException When $routeRule parameter is null or empty
 	 */
-	public function __construct($url, $routeRule, $routeParameters = null)
+	public function __construct($url, $routeRule = null, $routeParameters = null)
 	{
 		Check::IsNullOrEmpty($url);
-		Check::IsNullOrEmpty($routeRule);
 
 		$this->url = $url;
-		$this->routeRule = $routeRule;
+		$this->routeRule = (!isset($routeRule)) ? new RouteRule() : $routeRule;
 		$this->routeParameters = $routeParameters;
 	}
 

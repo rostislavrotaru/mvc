@@ -27,6 +27,17 @@ use Spherus\HttpContext\ParsedUrl;
  */
 class DefaultRouter implements IRouter
 {
+	/* FIELDS */
+	private $splittedRouteUrl = null;
+	private $splittedUrl = null;
+	private $splittedUrlCount = null;
+	private $splittedRouteUrlCount = null;
+	private $currentRoute = null;
+	private $hasWildCard = false;
+	private $predefinedParameters = array(':module', ':controller', ':action');
+	private $result = [];
+	private $parameters = [];
+	
 	/* PUBLIC METHODS */
 
 	/**
@@ -41,28 +52,19 @@ class DefaultRouter implements IRouter
 		$registeredRoutes = RouteManager::getRegisteredRoutes();
 		Check::IsNullOrEmpty($registeredRoutes);
 
-		$foundRoute = null;
 		$splittedUrl = preg_split('/\//', Request::getCurrentUrl(), null, PREG_SPLIT_NO_EMPTY);
 
-		if((boolean)$splittedUrl)
+		foreach($registeredRoutes as $route)
 		{
-			foreach($registeredRoutes as $route)
+			$foundRoute = self::MatchRoute($route, $splittedUrl);
+			if($foundRoute !== null)
 			{
-				$routeMatchIndex = self::MatchRoute($route, $splittedUrl);
-				if($routeMatchIndex !== null)
-				{
-					$foundRoute = $route;
-					break;
-				}
+				return $foundRoute;
+				break;
 			}
 		}
-
-		if($foundRoute==null)
-		{
-			$foundRoute = RouteManager::GetRouteByUrl(Config::getRoutingDefaults()['default_route']);
-		}
 		
-		Check::IsNullOrEmpty($foundRoute);
+		throw new SpherusException(EXCEPTION_NO_ROUTE_FOUND);
 	}
 
 	/*
@@ -82,7 +84,6 @@ class DefaultRouter implements IRouter
 	private function RegisterDefaultRoute()
 	{
 		RouteManager::RegisterRoute(new Route('/:controller/:action/*', new RouteRule('main')));
-		RouteManager::RegisterRoute(new Route('/account/:id', new RouteRule('main', 'users', 'view'), array(new RouteParameter(':id', '/^\d+$/'))));
 	}
 
 	/**
@@ -100,91 +101,76 @@ class DefaultRouter implements IRouter
 			return null;
 		}
 
-		$splittedRouteUrl = preg_split('/\//', $route->getUrl(), null, PREG_SPLIT_NO_EMPTY);
-		$splittedUrlCount = count($splittedUrl);
-		$splittedRouteUrlCount = count($splittedRouteUrl);
-
-		//A route template length cannot be greather that the request url
-		if($splittedRouteUrlCount > $splittedUrlCount)
-		{
-			return null;
-		}
-
+		$this->splittedUrl = $splittedUrl;
+		$this->splittedRouteUrl = preg_split('/\//', $route->getUrl(), null, PREG_SPLIT_NO_EMPTY);
+		$this->splittedUrlCount = count($splittedUrl);
+		$this->splittedRouteUrlCount = count($this->splittedRouteUrl);
+		$this->currentRoute = $route;
+		
 		if(strpos($route->getUrl(), '*') !== false)
 		{
 			if(!(boolean)preg_match('~[^\*]+/\*$~', $route->getUrl())) // check if wildcard is the last element
 			{
 				return null;
 			}
+			else 
+			{
+				$this->hasWildCard = true;
+			}
 		}
 		
-		$result = [];
-		$predefinedParameters = array(':module', ':controller', ':action');
+		//A route template length cannot be greather that the request url when not wildcard
+		if($this->hasWildCard === false and $this->splittedRouteUrlCount > $this->splittedUrlCount)
+		{
+			return null;
+		}
 		
 		// find top elements index that are equal
 		$matchedIndex = null;
-		for($i = 0; $i < $splittedRouteUrlCount; $i++)
+		for($i = 0; $i < $this->splittedRouteUrlCount; $i++)
 		{
-			if($splittedRouteUrl[$i] == $splittedUrl[$i])
+			if(isset($splittedUrl[$i]) and ($this->splittedRouteUrl[$i] === $splittedUrl[$i]))
 			{
 				$matchedIndex = $i;
 			}
-		}
-
-		$counter = 0;
-		if(isset($matchedIndex))
-		{
-			$counter = $matchedIndex + 1;
-		}
-
-		unset($matchedIndex);
-		
-		$parameters = [];
-		
-		//parse for parameters and wildcard
-		for($i = $counter; $i < $splittedRouteUrlCount; $i++)
-		{
-			if(strpos($splittedRouteUrl[$i], ':') !== 0 and $splittedRouteUrl[$i] !== '*')// if element is not a parameter or wildcard
-			{
-				return null;
-			}
 			else 
 			{
-				if(strpos($splittedRouteUrl[$i], ':') === 0) //is parameter
+				break;
+			}
+		}
+
+		$counter = isset($matchedIndex) ? ($matchedIndex + 1) : 0;
+		
+		//parse for parameters and wildcard
+		if($this->splittedRouteUrlCount > $this->splittedUrlCount)
+		{
+			for($i = $counter; $i < $this->splittedRouteUrlCount; $i++)
+			{
+				if(strpos($this->splittedRouteUrl[$i], ':') !== 0 and $this->splittedRouteUrl[$i] !== '*')// if element is not a parameter or wildcard
 				{
-					//if predefined parameters
-					if(in_array($splittedRouteUrl[$i], $predefinedParameters))
-					{
-						$result[$splittedRouteUrl[$i]] = isset($splittedUrl[$i]) ? $splittedUrl[$i] : Config::getRoutingDefaults()[str_replace(':', null, $splittedRouteUrl[$i])];
-					}
-					else //additional parameters
-					{
-						$routeParameter = $route->GetRouteParameterByName($splittedRouteUrl[$i]);
-						if(isset($routeParameter))
-						{
-							if(preg_match($routeParameter->getValue(), $splittedUrl[$i]))
-							{
-								$result[$splittedRouteUrl[$i]] = $splittedUrl[$i];
-							}
-							else 
-							{
-								return null;
-							}
-						}
-						else
-						{
-							return null;
-						}
-					}
+					return null;
 				}
 				else 
 				{
-					$parameters[] = $splittedUrl[$i];
+					if($this->ParseRouteParameters($i) === null)
+					{
+						return null;
+					}
+				}
+			}
+		}
+		else 
+		{
+			for($i = $counter; $i < $this->splittedUrlCount; $i++)
+			{
+				if($this->ParseRouteParameters($i) === null)
+				{
+					return null;
 				}
 			}
 		}
 		
-		$predefinedParameterDifferences = array_diff_key(array_flip($predefinedParameters), $result);
+		$predefinedParameterDifferences = array_diff_key(array_flip($this->predefinedParameters), $this->result);
 		
 		//parse the rest of predefined parameters
 		foreach ($predefinedParameterDifferences as $key=>$value)
@@ -192,28 +178,76 @@ class DefaultRouter implements IRouter
 			$methodResult = call_user_func(array($route->getRouteRule(), 'get'.str_replace(':', null, $key)));
 			if(isset($methodResult))
 			{
-				$result[$key] = $methodResult;
+				$this->result[$key] = $methodResult;
 			}
 			else
 			{
-				$result[$key] = Config::getRoutingDefaults()[str_replace(':', null, $key)];
+				$this->result[$key] = Config::getRoutingDefaults()[str_replace(':', null, $key)];
 			}
 		}
-
+		
 		//unset unused variables
-		unset($key);
-		unset($value);
-		unset($splittedRouteUrl);
-		unset($splittedRouteUrlCount);
+		unset($route);
 		unset($splittedUrl);
-		unset($splittedUrlCount);
+		unset($matchedIndex);
+		unset($i);
 		unset($counter);
 		unset($predefinedParameterDifferences);
-		unset($predefinedParameters);
-		unset($i);
-		unset($methodResult);
-
-		return new ParsedUrl($result[':module'], $result[':controller'], $result[':action'], $parameters, $route);
+		
+		return new ParsedUrl($this->result[':module'], $this->result[':controller'], $this->result[':action'], $this->parameters, $this->currentRoute);
 	}
+	
+	/**
+	 * Parse route parameters
+	 * 
+	 * @param integer $i The parsing iterator
+	 * @return NULL|true Null when entire route is not matched or true if iterator was successful.
+	 */
+	private function ParseRouteParameters($i)
+	{
+		if(isset($this->splittedRouteUrl[$i]))
+		{
+			if(strpos($this->splittedRouteUrl[$i], ':') === 0) //is parameter
+			{
+				//if predefined parameters
+				if(in_array($this->splittedRouteUrl[$i], $this->predefinedParameters))
+				{
+					$this->result[$this->splittedRouteUrl[$i]] = isset($this->splittedUrl[$i]) ? $this->splittedUrl[$i] : Config::getRoutingDefaults()[str_replace(':', null, $this->splittedRouteUrl[$i])];
+				}
+				else //additional parameters
+				{
+					$routeParameter = $this->currentRoute->GetRouteParameterByName($this->splittedRouteUrl[$i]);
+					if(isset($routeParameter))
+					{
+						if(preg_match($routeParameter->getValue(), $this->splittedUrl[$i]))
+						{
+							$this->result[$this->splittedRouteUrl[$i]] = $this->splittedUrl[$i];
+						}
+						else
+						{
+							return null;
+						}
+					}
+					else
+					{
+						return null;
+					}
+				}
+			}
+			else
+			{
+				$this->parameters[] = $this->splittedUrl[$i];
+			}
+		}
+		else 
+		{
+			if(isset($this->splittedUrl[$i]))
+			{
+				$this->parameters[] = $this->splittedUrl[$i];
+			}
+		}
+		
+		return true;
+	} 
 
 }

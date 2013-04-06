@@ -8,9 +8,8 @@
  * @link http://spherus.net
  * @since 3.0
  */
-namespace Spherus\Routing;
 
-use Spherus\Core\SpherusException;
+namespace Spherus\Routing;
 
 /**
  * Defines a Route object class
@@ -30,15 +29,9 @@ class RouteRule
 	 * @param string $controller The route controller name, optional
 	 * @param string $action The route action name, optional
 	 * @param mixed string|array $staticParameters One or an array of parameters
-	 * @throws SpherusException When one of the following parameters is not set: $module or $controller or $action
 	 */
 	public function __construct($module = null, $controller = null, $action = null, $staticParameters = null)
 	{
-		if(!isset($module) and !isset($controller) and !isset($action))
-		{
-			throw new SpherusException(EXCEPTION_ROUTE_RULE_CONSTRUCTOR_PARAMETERS_NOT_SET);
-		}
-
 		$this->module = $module;
 		$this->controller = $controller;
 		$this->action = $action;
