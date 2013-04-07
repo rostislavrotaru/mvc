@@ -31,24 +31,18 @@
 		 * 
 		 * @param string $interface The Dependency interface.
 		 * @param string $class The Dependency class.
-		 * @param string $filePath The Dependency class file path, if the class does not use namespaces. Optional. 
-		 * By default, the class should use namespace.
+		 * @param ModuleBase $module The Dependency module if needed to limit to this module only (will be used on resolving).
 		 * 
 		 * @throws SpherusException When $interface parameter is null or empty.
 		 * @throws SpherusException When $class parameter is null or empty.
 		 */
-		public function __construct($interface, $class, $filePath = null, ModuleBase $module = null)
+		public function __construct($interface, $class, ModuleBase $module = null)
 		{
 			Check::IsNullOrEmpty($interface);
 			Check::IsNullOrEmpty($class);
-			if(isset($module))
-			{
-				Check::IsInstanceOf($module, 'Spherus\Core\Base\ModuleBase');
-			}
 			
 			$this->interface = $interface;
 			$this->class = $class;
-			$this->filePath = $filePath;
 			$this->module = $module;
 		}
 		
@@ -107,7 +101,17 @@
 		{
 			return $this->filePath;
 		}
-
+		
+		/**
+		 * Sets dependency class file path if it not using namespaces.
+		 * 
+		 * @param string $filePath The file path to set.
+		 */
+		public function setFilePath($filePath)
+		{
+			$this->filePath = $filePath;
+		}
+		
 		/**
 		 * Gets the ModuleBase object if dependency is need to be used only in indicated module.
 		 * @var ModuleBase
@@ -115,6 +119,16 @@
 		public function getModule()
 		{
 			return $this->module;
+		}
+		
+		/**
+		 * Sets module in which the class is containing.
+		 *
+		 * @param ModuleBase $module The module to set.
+		 */
+		public function setModule(ModuleBase $module)
+		{
+			$this->module = $module;
 		}
 		
 	}

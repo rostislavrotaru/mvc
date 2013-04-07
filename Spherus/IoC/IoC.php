@@ -55,14 +55,18 @@
 			}
 		}
 		
-		public static function Resolve($interface, $newInstance = false, $parameters = null)
+		/**
+		 * Resolves an IoC dependency and returns an instance of resolved class.
+		 *
+		 * @param string $interface The IoC interface to resolve.
+		 * @param string $module The module for which interface should be resolved. Optional. Default is null.
+		 * @param bool $newInstance Determine whether IoC shoul create a new instance even it is found in the dependencies cache.
+		 * @param array $parameters An array of parameters that will be transmitted to the constructor (as last parameters).
+		 * 
+		 * @return mixed Found instantiated class
+		 */
+		public static function Resolve($interface, $module = null, $newInstance = false, $parameters = null)
 		{
-			$foundDependency = DependencyFactory::GetDependencyByInterface($interface);
-			if(!isset($foundDependency))
-			{
-				throw new SpherusException(printf(EXCEPTION_DEPENDENCY_COULD_NOT_BE_RESOLVED, $interface));
-			}
-
-			return DependencyFactory::Resolve($foundDependency, $newInstance, $parameters);
+			return DependencyFactory::Resolve($interface, $module, $newInstance, $parameters);
 		}
 	}

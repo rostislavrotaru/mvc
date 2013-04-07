@@ -60,7 +60,7 @@ class Autoloader
 				$classFile = $path.$className.'.php';
 				if(is_file($classFile))
 				{
-					return require ($classFile);
+					return require_once($classFile);
 				}
 			}
 			return false;

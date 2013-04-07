@@ -170,8 +170,8 @@ class Workbench
 			throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
 		}
 		
-		$controllerName = ucfirst(strtolower($parsedUrl->getControllerName())).'Controller';
-		$controllerObject = IoC::Resolve($controllerName);
+		$controllerName = strtolower($parsedUrl->getControllerName());
+		$controllerObject = IoC::Resolve($controllerName, $parsedUrl->getModuleName(), true);
 		
 		self::LoadControllerAttributes($controllerObject);
 		$controllerObject->BeforeLoad();

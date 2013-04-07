@@ -6,7 +6,7 @@
 	use Spherus\IoC\IoC;
 	use Spherus\IoC\Dependency;
 	use Spherus\Core\Workbench;
-					
+							
 	class MainModule implements IModule
 	{
 
@@ -26,7 +26,7 @@
 		 */
 		private function RegisterDependencies()
 		{
-			IoC::Register(new Dependency('HomeController', 'App\Modules\Main\Controllers\HomeController', null, Workbench::GetModuleByName('main')));
+			IoC::Register(new Dependency('home', 'App\Modules\Main\Controllers\HomeController', Workbench::GetModuleByName('main')));
 		}
 		
 	}
