@@ -24,24 +24,10 @@
         /**
          * Permits to write custom functionality when module is loaded
          */
-        function Run ();
+        function Run();
 
         /**
-         * Gets module name
-         *
-         * @return string
+         * Gets module controllers namespace
          */
-        function GetModuleName ();
-
-        /**
-         * Gets module namestace name
-         *
-         * @return string
-         */
-        function GetNamespaceName ();
-
-        /**
-         * Gets module helpers path
-         */
-        function GetHelpersPath ();
+        function GetControllersNamespace();
     }

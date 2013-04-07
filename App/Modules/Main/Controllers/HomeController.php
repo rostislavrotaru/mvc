@@ -1,6 +1,6 @@
 <?php
 
-	namespace Spherus\Modules\Main;
+	namespace App\Modules\Main\Controllers;
 
 	use Spherus\HttpContext\Response;
 	use Spherus\HttpContext\Session;

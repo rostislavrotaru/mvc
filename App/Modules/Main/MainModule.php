@@ -3,7 +3,7 @@
 	namespace App\Modules\Main;
 
 	use Spherus\Interfaces\IModule;
-
+	
 	class MainModule implements IModule
 	{
 
@@ -14,32 +14,14 @@
 	    {
 	    	//RouteManager::RegisterRoute(new Route('MainRoute', '/main/:param/*', 'cucu'));
 	    }
+	
+	
+		/* (non-PHPdoc)
+		 * @see \Spherus\Interfaces\IModule::GetControllersNamespace()
+		 */
+		public function GetControllersNamespace() 
+		{
+			return 'App\Modules\Main\Controllers\\';
+		}
 
-	    /**
-	     * Gets module name
-	     *
-	     * @return string
-	     */
-	    public function GetNamespaceName()
-	    {
-	        return 'Spherus\Modules\Main';
-	    }
-
-	    /**
-	     * Gets module namestace name
-	     *
-	     * @return string
-	     */
-	    public function GetModuleName ()
-	    {
-	        return 'main';
-	    }
-
-	    /*
-	     * (non-PHPdoc) @see \Spherus\Interfaces\IModule::GetHelpersPath()
-	     */
-	    public function GetHelpersPath ()
-	    {
-	        return __DIR__ . SEPARATOR . 'includes' . SEPARATOR . 'helpers';
-	    }
 	}

@@ -16,6 +16,7 @@ use Spherus\HttpContext\Session;
 use Spherus\Parsers\IpFilterParser;
 use Spherus\Interfaces\IModule;
 use Spherus\Routing\RouteManager;
+use Spherus\Core\Base\ModuleBase;
 
 /**
  * Class that represents the framework workbench
@@ -33,7 +34,7 @@ class Workbench
 	 *
 	 * @var array
 	 */
-	private static $modules = array();
+	private static $modules = [];
 
 	/**
 	 * Defines the context current controller object
@@ -121,14 +122,13 @@ class Workbench
 	 */
 	public static function LoadModules()
 	{
-		$installedModules = Config::getInstalledModules();
-
-		foreach($installedModules as $module)
+		foreach(Config::getInstalledModules() as $moduleName=>$moduleClass)
 		{
+			$module = $moduleClass.$moduleName.'Module';
 			$moduleObject = new $module;
 			Check::IsInstanceOf($moduleObject, 'Spherus\\Interfaces\\IModule');
 			
-			self::AddModule($moduleObject);
+			self::AddModule(new ModuleBase($moduleName, $moduleClass, $moduleObject));
 			$moduleObject->Run();
 			
 			unset($moduleObject);
@@ -139,13 +139,16 @@ class Workbench
 	 * Gets module object by its name
 	 *
 	 * @param string $moduleName The name of module to search
-	 * @return Spherus\Interfaces\IModule|NULL
+	 * @return ModuleBase|NULL
 	 */
 	public static function GetModuleByName($moduleName)
 	{
-		if(isset(self::$modules[$moduleName]))
+		foreach (self::$modules as $module)
 		{
-			return self::$modules[$moduleName];
+			if($module->getName() === $moduleName)
+			{
+				return $module;
+			}
 		}
 
 		return null;
@@ -159,45 +162,23 @@ class Workbench
 	public static function LoadController()
 	{
 		$parsedUrl = HttpContext::getParsedUrl();
-		$moduleObject = self::GetModuleByName($parsedUrl->getModuleName());
-
-		if(isset($moduleObject))
+		$moduleBase = self::GetModuleByName($parsedUrl->getModuleName());	
+		
+		if(!isset($moduleBase))
 		{
-			$fileName = MODULES.$parsedUrl->getModuleName().SEPARATOR.'controllers'.SEPARATOR.$parsedUrl->getControllerName().'Controller.php';
-			if(file_exists($fileName))
-			{
-				if(is_readable($fileName))
-				{
-					require ($fileName);
-					$controllerName = $moduleObject->GetNamespaceName().'\\'.$parsedUrl->getControllerName().'Controller';
-
-					unset($parsedUrl);
-					unset($moduleObject);
-
-					$controllerObject = new $controllerName();
-					self::LoadControllerAttributes($controllerObject);
-					$controllerObject->BeforeLoad();
-
-					self::setCurrentController($controllerObject);
-				}
-				else
-				{
-					unset($parsedUrl);
-					unset($moduleObject);
-					throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_READABLE, $fileName));
-				}
-			}
-			else
-			{
-				unset($moduleObject);
-				throw new SpherusException(sprintf(EXCEPTION_CONTROLLER_NOT_FOUND, $parsedUrl->getControllerName()));
-			}
-		}
-		else
-		{
-			unset($moduleObject);
 			throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
 		}
+		
+		$controllerName = $moduleBase->getInstance()->GetControllersNamespace().$parsedUrl->getControllerName().'Controller';
+		$controllerObject = new $controllerName();
+		
+		self::LoadControllerAttributes($controllerObject);
+		$controllerObject->BeforeLoad();
+
+		self::setCurrentController($controllerObject);
+		
+		unset($parsedUrl);
+		unset($moduleBase);
 	}
 
 	/**
@@ -360,15 +341,13 @@ class Workbench
 	 * @throws SpherusException When module collection already contains a
 	 *         module with the same name
 	 */
-	private static function AddModule($module)
+	private static function AddModule(ModuleBase $module)
 	{
 		Check::IsNullOrEmpty($module);
-		$moduleName = $module->GetModuleName();
-		Check::IsNullOrEmpty($moduleName);
 
-		if(self::GetModuleByName($moduleName)==null)
+		if(self::GetModuleByName($module->getName()) === null)
 		{
-			self::$modules[$moduleName] = $module;
+			self::$modules[] = $module;
 		}
 		else
 		{

@@ -86,7 +86,7 @@ class HttpContext
 	/**
 	 * Gets RouteHandler url parsing result
 	 *
-	 * @return Spherus\HttpContext\ParsedUrl
+	 * @return ParsedUrl
 	 */
 	public static function getParsedUrl()
 	{

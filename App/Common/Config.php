@@ -23,7 +23,7 @@
 		 */
 		private static $installedModules = array
 		(
-			'App\Modules\Main\MainModule'
+			'main' => 'App\\Modules\\Main\\'
 		);
 
 		

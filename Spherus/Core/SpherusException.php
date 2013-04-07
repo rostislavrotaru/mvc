@@ -40,7 +40,6 @@
 	define('EXCEPTION_INVALID_ROUTER_CONFIG', 'Invalid configuration for router definition');
 	define('EXCEPTION_EMPTY', 'Empty value provided');
 	define('EXCEPTION_ACCESS_DENIED', 'Access to this resource is denied');
-	define('EXCEPTION_CONTROLLER_NOT_FOUND', 'The "%s" controller not found');
 	define('EXCEPTION_MODULE_NOT_FOUND', 'The "%s" module not found');
 	define('EXCEPTION_LAYOUT_NOT_FOUND', 'The "%s" layout not found');
 	define('EXCEPTION_HELPER_NOT_FOUND', 'The "%s" helper not found');
