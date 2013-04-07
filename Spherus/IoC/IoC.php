@@ -46,7 +46,7 @@
 				}
 				else 
 				{
-					throw new SpherusException(printf(EXCEPTION_DUPLICATE_DEPENDENCY), $dependency->getInterface());
+					throw new SpherusException(printf(EXCEPTION_DUPLICATE_DEPENDENCY, $dependency->getInterface()));
 				}
 			}
 			else 
@@ -66,7 +66,7 @@
 		 */
 		private static function GetDependencyByInterface($interface)
 		{
-			foreach(self::$dependencied as $dependencyInterface=>$dependencyObject)
+			foreach(self::$dependencies as $dependencyInterface=>$dependencyObject)
 			{
 				if($dependencyInterface === $interface)
 				{

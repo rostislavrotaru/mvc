@@ -50,7 +50,7 @@
 	define('EXCEPTION_DUPLICATE_ROUTE', 'The route "%s" already exists and cannot be registsred.');
 	define('EXCEPTION_INVALID_INTEGER', 'Given value is not a valid integer value');
 	define('EXCEPTION_DUPLICATE_MODULE', 'An module with the same name already exists');
-	define('EXCEPTION_DUPLICATE_DEPENDENCY', 'An dependency with the same name "$s" already exists');
+	define('EXCEPTION_DUPLICATE_DEPENDENCY', 'An dependency with the name "%s" already exists');
 	define('EXCEPTION_NO_CONTROLLER_ACTION_METHOD', 'The function "%s" does not exists in controller "%s" in module "%s"');
 	define('EXCEPTION_OBJECT_INVALID_INSTANCE', 'The "%s" object is not a valid instance of "%s"');
 	define('EXCEPTION_NOT_OBJECT', 'The "%s" value is not an object');

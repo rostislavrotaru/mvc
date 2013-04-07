@@ -41,7 +41,10 @@
 		{
 			Check::IsNullOrEmpty($interface);
 			Check::IsNullOrEmpty($class);
-			Check::IsInstanceOf($module, ModuleBase);
+			if(isset($module))
+			{
+				Check::IsInstanceOf($module, 'Spherus\Core\Base\ModuleBase');
+			}
 			
 			$this->interface = $interface;
 			$this->class = $class;
