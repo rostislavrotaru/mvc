@@ -23,26 +23,26 @@
 	class IoC
 	{
 		
-		/* FIELDS */
-		
-		/**
-		 * Defines an array of Dependency class objects
-		 * @var array
-		 */
-		private static $dependencies = [];
-
-		
 		/* PUBLIC FUNCTIONS */
 		
+		/**
+		 * Register an IoC dependency
+		 * 
+		 * @param Dependency $dependency The initialized dependency class object.
+		 * @param bool $overwrite Determine if an existing dependency will be overrited if found. Optional. Default is false.
+		 * 
+		 * @throws SpherusException When $dependency object is not an instance of Dependency class.
+		 */
 		public static function Register(Dependency $dependency, $overwrite = false)
 		{
-			Check::IsNullOrEmpty($dependency);
-			$foundDependency = self::GetDependencyByInterface($dependency->getInterface());
+			Check::IsInstanceOf($dependency, 'Spherus\IoC\Dependency');
+			
+			$foundDependency = DependencyFactory::GetDependencyByInterface($dependency->getInterface());
 			if(isset($foundDependency))
 			{
 				if($overwrite === true)
 				{
-					self::$dependencies[$dependency->getInterface()] = $dependency;
+					DependencyFactory::RegisterDependency($dependency);
 				}
 				else 
 				{
@@ -51,29 +51,18 @@
 			}
 			else 
 			{
-				self::$dependencies[$dependency->getInterface()] = $dependency; 
+				DependencyFactory::RegisterDependency($dependency); 
 			}
 		}
 		
-		
-		/* PRIVATE FUNCTIONS */
-		
-		/**
-		 * Get dependency by interface name.
-		 * 
-		 * @param string $interface The interface name.
-		 * @return Dependency|NULL Found Dependency object or null.
-		 */
-		private static function GetDependencyByInterface($interface)
+		public static function Resolve($interface, $newInstance = false, $parameters = null)
 		{
-			foreach(self::$dependencies as $dependencyInterface=>$dependencyObject)
+			$foundDependency = DependencyFactory::GetDependencyByInterface($interface);
+			if(!isset($foundDependency))
 			{
-				if($dependencyInterface === $interface)
-				{
-					return $dependencyObject;
-				}
+				throw new SpherusException(printf(EXCEPTION_DEPENDENCY_COULD_NOT_BE_RESOLVED, $interface));
 			}
-			
-			return null;
+
+			return DependencyFactory::Resolve($foundDependency, $newInstance, $parameters);
 		}
 	}

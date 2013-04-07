@@ -5,7 +5,8 @@
 	use Spherus\Interfaces\IModule;
 	use Spherus\IoC\IoC;
 	use Spherus\IoC\Dependency;
-			
+	use Spherus\Core\Workbench;
+					
 	class MainModule implements IModule
 	{
 
@@ -16,16 +17,6 @@
 	    {
 	    	$this->RegisterDependencies();
 	    }
-	
-	    
-	
-		/* (non-PHPdoc)
-		 * @see \Spherus\Interfaces\IModule::GetControllersNamespace()
-		 */
-		public function GetControllersNamespace() 
-		{
-			return 'App\Modules\Main\Controllers\\';
-		}
 
 		
 		/* PRIVATE FUNCTIONS */
@@ -35,7 +26,7 @@
 		 */
 		private function RegisterDependencies()
 		{
-			IoC::Register(new Dependency('IHomeController', 'App\Modules\Main\Controllers\HomeController'));
+			IoC::Register(new Dependency('HomeController', 'App\Modules\Main\Controllers\HomeController', null, Workbench::GetModuleByName('main')));
 		}
 		
 	}

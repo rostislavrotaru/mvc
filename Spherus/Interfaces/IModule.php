@@ -25,9 +25,4 @@
          * Permits to write custom functionality when module is loaded
          */
         function Run();
-
-        /**
-         * Gets module controllers namespace
-         */
-        function GetControllersNamespace();
     }

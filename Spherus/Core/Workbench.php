@@ -17,6 +17,7 @@ use Spherus\Parsers\IpFilterParser;
 use Spherus\Interfaces\IModule;
 use Spherus\Routing\RouteManager;
 use Spherus\Core\Base\ModuleBase;
+use Spherus\IoC\IoC;
 
 /**
  * Class that represents the framework workbench
@@ -75,11 +76,11 @@ class Workbench
 	/**
 	 * Sets the context current controller
 	 *
-	 * @param Spherus\Core\ControllerBase The controller object to set
+	 * @param Spherus\Core\ControllerBase $controller The controller object to set.
 	 */
-	public static function setCurrentController($currentController)
+	public static function setCurrentController($controller)
 	{
-		self::$currentController = $currentController;
+		self::$currentController = $controller;
 	}
 
 	/**
@@ -169,8 +170,8 @@ class Workbench
 			throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
 		}
 		
-		$controllerName = $moduleBase->getInstance()->GetControllersNamespace().$parsedUrl->getControllerName().'Controller';
-		$controllerObject = new $controllerName();
+		$controllerName = ucfirst(strtolower($parsedUrl->getControllerName())).'Controller';
+		$controllerObject = IoC::Resolve($controllerName);
 		
 		self::LoadControllerAttributes($controllerObject);
 		$controllerObject->BeforeLoad();
