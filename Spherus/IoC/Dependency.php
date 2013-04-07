@@ -13,7 +13,8 @@
 	
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
-	
+	use Spherus\Core\Base\ModuleBase;
+		
 		/**
 	 * Class that represents an object containing dependencies
 	 *
@@ -36,14 +37,16 @@
 		 * @throws SpherusException When $interface parameter is null or empty.
 		 * @throws SpherusException When $class parameter is null or empty.
 		 */
-		public function __construct($interface, $class, $filePath = null)
+		public function __construct($interface, $class, $filePath = null, ModuleBase $module = null)
 		{
 			Check::IsNullOrEmpty($interface);
 			Check::IsNullOrEmpty($class);
+			Check::IsInstanceOf($module, ModuleBase);
 			
 			$this->interface = $interface;
 			$this->class = $class;
 			$this->filePath = $filePath;
+			$this->module = $module;
 		}
 		
 		/* FIELDS */
@@ -66,6 +69,12 @@
 		 */
 		private $filePath = null;
 		
+		/**
+		 * Defines the ModuleBase object if dependency is need to be used only in indicated module.
+		 * @var ModuleBase
+		 */
+		private $module = null;
+		
 		
 		/* PROPERTIES */
 	
@@ -73,7 +82,7 @@
 		 * Gets the interface name.
 		 * @var string
 		 */
-		public function getInterface() 
+		public function getInterface()
 		{
 			return $this->interface;
 		}
@@ -96,4 +105,13 @@
 			return $this->filePath;
 		}
 
+		/**
+		 * Gets the ModuleBase object if dependency is need to be used only in indicated module.
+		 * @var ModuleBase
+		 */
+		public function getModule()
+		{
+			return $this->module;
+		}
+		
 	}
