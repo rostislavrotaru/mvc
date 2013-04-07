@@ -12,7 +12,8 @@
 	namespace Spherus\IoC;
 
 	use Spherus\Core\Check;
-	
+	use Spherus\Core\SpherusException;
+		
 	/**
 	 * Class that represents functionality for inversion of control
 	 *
@@ -25,16 +26,54 @@
 		/* FIELDS */
 		
 		/**
-		 * Defines an array of dependencies objects
+		 * Defines an array of Dependency class objects
 		 * @var array
 		 */
-		private $dependencies = [];
+		private static $dependencies = [];
 
+		
 		/* PUBLIC FUNCTIONS */
 		
-		public static function Register($interface, $class)
+		public static function Register(Dependency $dependency, $overwrite = false)
 		{
-			Check::IsNullOrEmpty($interface);
-			Check::IsNullOrEmpty($class);
+			Check::IsNullOrEmpty($dependency);
+			$foundDependency = self::GetDependencyByInterface($dependency->getInterface());
+			if(isset($foundDependency))
+			{
+				if($overwrite === true)
+				{
+					self::$dependencies[$dependency->getInterface()] = $dependency;
+				}
+				else 
+				{
+					throw new SpherusException(printf(EXCEPTION_DUPLICATE_DEPENDENCY), $dependency->getInterface());
+				}
+			}
+			else 
+			{
+				self::$dependencies[$dependency->getInterface()] = $dependency; 
+			}
+		}
+		
+		
+		/* PRIVATE FUNCTIONS */
+		
+		/**
+		 * Get dependency by interface name.
+		 * 
+		 * @param string $interface The interface name.
+		 * @return Dependency|NULL Found Dependency object or null.
+		 */
+		private static function GetDependencyByInterface($interface)
+		{
+			foreach(self::$dependencied as $dependencyInterface=>$dependencyObject)
+			{
+				if($dependencyInterface === $interface)
+				{
+					return $dependencyObject;
+				}
+			}
+			
+			return null;
 		}
 	}
