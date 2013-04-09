@@ -11,7 +11,6 @@
 	
 	namespace Spherus\IoC;
 
-	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
 		
 	/**
@@ -35,24 +34,13 @@
 		 */
 		public static function Register(Dependency $dependency, $overwrite = false)
 		{
-			Check::IsInstanceOf($dependency, 'Spherus\IoC\Dependency');
-			
 			$foundDependency = DependencyFactory::GetDependencyByInterface($dependency->getInterface());
-			if(isset($foundDependency))
+			if(!isset($foundDependency) or $overwrite === true)
 			{
-				if($overwrite === true)
-				{
-					DependencyFactory::RegisterDependency($dependency);
-				}
-				else 
-				{
-					throw new SpherusException(printf(EXCEPTION_DUPLICATE_DEPENDENCY, $dependency->getInterface()));
-				}
+				return DependencyFactory::Register($dependency);
 			}
-			else 
-			{
-				DependencyFactory::RegisterDependency($dependency); 
-			}
+			
+			throw new SpherusException(printf(EXCEPTION_DUPLICATE_DEPENDENCY, $dependency->getInterface()));
 		}
 		
 		/**

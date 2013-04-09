@@ -47,21 +47,57 @@
 		 * @param string $interface The interface name.
 		 * @return Dependency|NULL Found Dependency object or null.
 		 */
-		public static function GetDependencyByInterface($interface, $module = null, $useCache = false)
+		public static function GetDependencyByInterface($interface, $module = null)
 		{
-			$source = $useCache === false ? self::$dependencies : self::$dependencyObjectsCache;
-			foreach($source as $dependency)
+			foreach(self::$dependencies as $dependency)
 			{
-				$dependencyModule = $dependency->getModule();
-				if(isset($module) and ($dependency->getInterface() === $interface) and isset($dependencyModule) and $dependencyModule->getName() === $module)
+				if(!isset($dependency))
+				{ 
+					continue;
+				}
+				
+				if(!isset($module))
 				{
 					return $dependency;
 				}
-				elseif(!isset($module) and ($dependency->getInterface() === $interface))
+				
+				$dependencyModule = $dependency->getModule();
+				if(isset($dependencyModule) and $dependencyModule->getName() === $module)
 				{
 					return $dependency;
+				}
+				
+			}
+			
+			return null;
+		}
+		
+		/**
+		 * Get dependency by interface name.
+		 *
+		 * @param string $interface The interface name.
+		 * @return Dependency|NULL Found Dependency object or null.
+		 */
+		public static function GetDependencyByInterfaceFromCahce($interface, $module = null)
+		{
+			foreach(self::$dependencyObjectsCache as $dependency)
+			{
+				if($dependency['interface'] !== $interface)
+				{
+					continue;
+				}
+		
+				if(!isset($module))
+				{
+					return $dependency['object'];
+				}
+		
+				if(isset($dependency['module']) and $dependency['module'] === $module)
+				{
+					return $dependency['object'];
 				}
 			}
+				
 			return null;
 		}
 		
@@ -73,22 +109,22 @@
 		 * @param bool $newInstance Determine whether IoC shoul create a new instance even it is found in the dependencies cache.
 		 * @throws SpherusException When $interface parameter cannot be resolved.
 		 * 
+		 * @ignore 
+		 * 
 		 * @return mixed Found instantiated class
 		 */
 		public static function Resolve($interface, $module = null, $newInstance = false)
 		{
 			Check::IsNullOrEmpty($interface);
 			
-			$foundDependency = self::GetDependencyByInterface($interface, $module);
-			if(!isset($foundDependency))
+			if(!$foundDependency = self::GetDependencyByInterface($interface, $module))
 			{
 				throw new SpherusException(printf(EXCEPTION_DEPENDENCY_COULD_NOT_BE_RESOLVED, $interface));
 			}
 			
 			if($newInstance === false)
 			{
-				$foundObject = self::GetDependencyByInterface($interface, $module, true);
-				if(isset($foundObject))
+				if(@$foundObject = self::GetDependencyByInterfaceFromCahce($interface, $module))
 				{
 					return $foundObject;
 				}
@@ -96,9 +132,9 @@
 			
 			$fileObject = self::CreateObject($foundDependency->getClass());
 			
-			if(self::GetDependencyByInterface($interface, $module, true) === null)
+			if(self::GetDependencyByInterfaceFromCahce($interface, $module) === null)
 			{
-				self::$dependencyObjectsCache[] = $fileObject;
+				self::$dependencyObjectsCache[] = array('interface'=>$interface, 'module'=>$module, 'object'=>$fileObject);
 			}
 			
 			return $fileObject;
@@ -110,7 +146,7 @@
 		 * @param Dependency $dependency The Dependency object to register.
 		 * @throws SpherusException When $dependency parameter is not an instance of Dependency class.
 		 */
-		public static function RegisterDependency(Dependency $dependency)
+		public static function Register(Dependency $dependency)
 		{
 			$filePath = $dependency->getFilePath();
 			if(isset($filePath))
@@ -131,34 +167,31 @@
 		 * @throws SpherusException When the dependency could not be resolved.
 		 * 
 		 * @return object Resolved object.
-		 */
+		 */		
 		private static function CreateObject($fileClass)
 		{
-			$reflectionClass = new \ReflectionClass($fileClass);
-			if(isset($reflectionClass))
+			if(!$reflectionClass = new \ReflectionClass($fileClass))
 			{
-				$parameterObjects = [];
-				$constructor = $reflectionClass->getConstructor();
-				if(isset($constructor))
-				{
-					$params = $constructor->getParameters();
-					foreach ($params as $parameter)
-					{
-						$constructorParameter = $parameter->getClass();
-						if(isset($constructorParameter))
-						{
-							$parameterObjects[] = self::CreateObject($constructorParameter->getName());
-						}
-						else 
-						{
-							$parameterObjects[] = self::Resolve($parameter->getName());
-						}
-					}
-				}
-				
-				return $reflectionClass->newInstanceArgs($parameterObjects);
+				throw new SpherusException(printf(EXCEPTION_DEPENDENCY_COULD_NOT_BE_RESOLVED, $fileClass));
 			}
-			
-			throw new SpherusException(printf(EXCEPTION_DEPENDENCY_COULD_NOT_BE_RESOLVED, $fileClass));
+		
+			if (!$constructor = $reflectionClass->getConstructor())
+			{
+				return $reflectionClass->newInstanceArgs(array());
+			}
+		
+			$parameterObjects = [];
+			foreach ($constructor->getParameters() as $parameter)
+			{
+				if(@$constructorParameter = $parameter->getClass())
+				{
+					$parameterObjects[] = self::CreateObject($constructorParameter->getName());
+				}
+				else
+				{
+					$parameterObjects[] = self::Resolve($parameter->getName());
+				}
+			}
+			return $reflectionClass->newInstanceArgs($parameterObjects);
 		}
 	}
