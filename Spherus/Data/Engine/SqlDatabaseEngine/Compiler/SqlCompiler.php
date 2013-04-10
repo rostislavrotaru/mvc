@@ -24,7 +24,7 @@
 		/**
     	 * Initializes a new instance of SqlCompiler class
     	 * 
-    	 * @param ISqlCompilerContext SqlCompilerContext The sql compiler context.
+    	 * @param ISqlCompilerContext $sqlCompilerContext The sql compiler context.
     	 * @param ISqlTranslator $sqlTranslator The sql translator.
     	 */
 		public function __construct(ISqlCompilerContext $sqlCompilerContext, ISqlTranslator $sqlTranslator) 
@@ -46,25 +46,24 @@
 		 * @var ISqlTranslator
 		 */
 		private $sqlTranslator = null;
-	
+
 		
 		/* PROPERTIES */
-	
-		/**
-		 * @return the $sqlCompilerContext
-		 */
+		
+		/* (non-PHPdoc)
+		 * @see ISqlCompiler::getSqlCompilerContext()
+		*/
 		public function getSqlCompilerContext() 
 		{
 			return $this->sqlCompilerContext;
 		}
-	
-		/**
-		 * @return the $sqlTranslator
-		 */
+		
+		/* (non-PHPdoc)
+		 * @see ISqlCompiler::getSqlTranslator()
+		*/
 		public function getSqlTranslator() 
 		{
 			return $this->sqlTranslator;
 		}
 
-    	
     }

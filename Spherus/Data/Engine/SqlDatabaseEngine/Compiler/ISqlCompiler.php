@@ -27,9 +27,13 @@
     	
     	/**
     	 * Gets the sql compiler context
-    	 * @return the $sqlCompilerContext
+    	 * @return ISqlCompilerContext
     	 */
     	public function getSqlCompilerContext();
     	
+    	/**
+    	 * Gets the sql translator
+    	 * @return ISqlTranslator
+    	 */
     	public function getSqlTranslator();
     }
