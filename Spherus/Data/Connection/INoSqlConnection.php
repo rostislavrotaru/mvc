@@ -11,12 +11,12 @@
 	namespace Spherus\Data\Connection;
 
     /**
-     * Class that represents a no-sql database object connection
+     * Interface that represents a no-sql database object connection
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data
      */
-    class NoSqlConnection extends Connection implements INoSqlConnection
+    interface INoSqlConnection
     {
 
     }
