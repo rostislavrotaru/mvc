@@ -16,7 +16,55 @@
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data
      */
-    class SqlCompiler
+    class SqlCompiler implements ISqlCompiler
     {
+	
+    	/* CONSTRUCTOR */
+	
+		/**
+    	 * Initializes a new instance of SqlCompiler class
+    	 * 
+    	 * @param ISqlCompilerContext SqlCompilerContext The sql compiler context.
+    	 * @param ISqlTranslator $sqlTranslator The sql translator.
+    	 */
+		public function __construct(ISqlCompilerContext $sqlCompilerContext, ISqlTranslator $sqlTranslator) 
+		{
+			$this->sqlCompilerContext = $sqlCompilerContext;
+			$this->sqlTranslator = $sqlTranslator;
+		}
+
+		/* FILEDS */
+		
+		/**
+		 * Defines the sql compiler context
+		 * @var ISqlCompilerContext
+		 */
+		private $sqlCompilerContext = null;
+		
+		/**
+		 * Defines the sql translator
+		 * @var ISqlTranslator
+		 */
+		private $sqlTranslator = null;
+	
+		
+		/* PROPERTIES */
+	
+		/**
+		 * @return the $sqlCompilerContext
+		 */
+		public function getSqlCompilerContext() 
+		{
+			return $this->sqlCompilerContext;
+		}
+	
+		/**
+		 * @return the $sqlTranslator
+		 */
+		public function getSqlTranslator() 
+		{
+			return $this->sqlTranslator;
+		}
+
     	
     }

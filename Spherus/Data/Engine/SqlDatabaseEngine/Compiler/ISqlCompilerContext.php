@@ -11,41 +11,29 @@
 	namespace Spherus\Data\Engine\SqlDatabaseEngine\Compiler;
 
     /**
-     * Class that represents the sql database engine compiler context
+     * Interface that represents the sql database engine compiler context
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data
      */
-    class SqlCompilerContext implements ISqlCompilerContext
+    interface ISqlCompilerContext
     {
-    	
-    	/* FIELDS */
-    	
-    	/**
-    	 * Contains compilation result sql
-    	 * @var string
-    	 */
-    	private $sql = null;
-    	
     	
     	/* PROPERTIES */
     	
-    	/* (non-PHPdoc)
-    	 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlCompilerContext::getSql()
-    	*/
-    	public function getSql()
-    	{
-    		return $this->sql;
-    	}
+    	/**
+    	 * Gest the compilation result sql
+    	 * @var string
+    	 */
+    	public function getSql();
+    	
     	
     	/* PUBLIC METHODS */
     	
     	/**
     	 * Appends text to the compilation result sql
-    	 * @param string $text
+    	 * @param string $text The text to append
     	 */
-    	public function AppendText($text)
-    	{
-    		$this->sql .= isset($text) ? ' '.$text : null;
-    	}
+    	public function AppendText($text);
+    
     }

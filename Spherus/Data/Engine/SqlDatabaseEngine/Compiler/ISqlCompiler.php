@@ -18,5 +18,18 @@
      */
     interface ISqlCompiler
     {
+    	/* CONSTRUCTOR */
     	
+    	public function __construct(ISqlCompilerContext $sqlCompilerContext, ISqlTranslator $sqlTranslator);
+    	
+    	
+    	/* PROPERTIES */
+    	
+    	/**
+    	 * Gets the sql compiler context
+    	 * @return the $sqlCompilerContext
+    	 */
+    	public function getSqlCompilerContext();
+    	
+    	public function getSqlTranslator();
     }
