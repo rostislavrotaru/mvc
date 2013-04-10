@@ -8,9 +8,9 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Data\Engine\SqlDatabaseEngine\SqlCompiler\MSSQL;
+	namespace Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MSSQL;
 	
-	use Spherus\Data\Engine\SqlDatabaseEngine\SqlCompiler\SqlCompiler;
+	use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\SqlCompiler;
 
     /**
      * Class that represents the mssql database engine compiler

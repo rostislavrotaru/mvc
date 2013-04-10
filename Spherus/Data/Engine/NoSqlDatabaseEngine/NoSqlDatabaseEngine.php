@@ -8,10 +8,10 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Data\Engine\NoSqlEngine;
+	namespace Spherus\Data\Engine\NoSqlDatabaseEngine;
 
     /**
-     * Class that represents the no-sql database engine
+     * Class that represents a no-sql database engine
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data

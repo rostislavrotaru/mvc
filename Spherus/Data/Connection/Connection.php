@@ -11,7 +11,7 @@
 	namespace Spherus\Data\Connection;
 
     /**
-     * Class that represents the sql or no-sql database object connection
+     * Class that represents a sql or no-sql database object connection
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data

@@ -11,7 +11,7 @@
 	namespace Spherus\Data\Database;
 
     /**
-     * Class that represents no-sql database object
+     * Class that represents a no-sql database object
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data

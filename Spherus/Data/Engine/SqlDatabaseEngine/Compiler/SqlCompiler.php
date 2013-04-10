@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Data\Engine\SqlDatabaseEngine\SqlCompiler;
+	namespace Spherus\Data\Engine\SqlDatabaseEngine\Compiler;
 
     /**
      * Class that represents the sql database engine compiler

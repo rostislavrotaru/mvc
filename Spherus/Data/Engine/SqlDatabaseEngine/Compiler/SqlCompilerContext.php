@@ -1,4 +1,4 @@
-mobile-agps.l.google.com<?php
+<?php
 
 	/**
 	 * Redistributions of files must retain the above copyright notice.
@@ -8,7 +8,7 @@ mobile-agps.l.google.com<?php
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Data\Engine\SqlDatabaseEngine\SqlCompiler;
+	namespace Spherus\Data\Engine\SqlDatabaseEngine\Compiler;
 
     /**
      * Class that represents the sql database engine compiler context

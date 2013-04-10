@@ -11,12 +11,12 @@
 	namespace Spherus\Data;
 
     /**
-     * Class that represents the main database engine
+     * Class that represents a database engine
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data
      */
-    class DatabaseEngine
+    abstract class DatabaseEngine
     {
 
     }
