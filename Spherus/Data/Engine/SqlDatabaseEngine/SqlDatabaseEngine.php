@@ -10,7 +10,11 @@
 	 */
 	namespace Spherus\Data\Engine\SqlDatabaseEngine;
 
-    /**
+    use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlCompiler;
+	use Spherus\Core\Check;
+	use Spherus\Core\SpherusException;
+					
+								/**
      * Class that represents the sql database engine
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
@@ -24,11 +28,11 @@
     	/**
     	 * Initialize a new instance of SqlDatabaseEngine class.
     	 *
-    	 * @param string $providerName The database provider name that will server the sql compilation and translation.
+    	 * @param SqlCompiler $sqlCompiler The database compiler that will server the sql compilation and translation.
     	 */
-    	public function __construct($providerName = null)
+    	public function __construct(ISqlCompiler $sqlCompiler)
     	{
-    		$this->InitializeCompiler($providerName);
+    		$this->setCompiler($sqlCompiler);
     	}
     	
     	
@@ -36,9 +40,34 @@
     	
     	/**
     	 * Determine the compiler used for sql generation
-    	 * @var SqlCompiler
+    	 * @var ISqlCompiler
     	 */
     	private $compiler = null;
+    	
+    	
+    	/* PROPERTIES */
+    	
+    	/**
+    	 * Returns the sql compiler.
+    	 * 
+    	 * @return ISqlCompiler
+    	 */
+    	public function getCompiler()
+    	{
+    		return $this->compiler;
+    	}
+    	
+    	/**
+    	 * Sets the sql compiler
+    	 * 
+    	 * @param SqlCompiler $sqlCompiler The sql compiler to set.
+    	 * @throws SpherusException When $sqlCompiler parameter is null or empty.
+    	 */
+    	public function setCompiler(ISqlCompiler $sqlCompiler)
+    	{
+    		Check::IsNullOrEmpty($sqlCompiler);
+    		$this->compiler = $sqlCompiler;
+    	}
     	
     	
     	/* PUBLIC METHODS */
@@ -74,28 +103,5 @@
 //     		}
     			
 //     		throw new Exception('Invalid SqlStatement given for compilation!');
-    	}
-    	
-    	
-    	/* PRIVATE METHODS */
-    	
-    	/**
-    	 * Initializes compiler according to the given name.
-    	 *
-    	 * @param string $compilerName The name of compiler to initialize.
-    	 */
-    	private function InitializeCompiler($compilerName)
-    	{
-    		require_once(SPHQUERY_COMPILER.'sqlcompiler.php');
-    			
-    		$filename = SPHQUERY_COMPILER.$compilerName.SEPARATOR.'compiler.php';
-    		if (file_exists($filename))
-    		{
-    			require_once($filename);
-    		}
-    		unset($filename);
-    			
-    		$compilerFullName = $compilerName.'Compiler';
-    		$this->compiler = new $compilerFullName($compilerName);
-    	}
+    	}    	
     }
