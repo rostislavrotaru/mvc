@@ -46,8 +46,11 @@
 		 */
 		public static function Initialize()
 		{
+			parent::Initialize();
+			
 			self::SetIniDirectives();
 			self::AddRoutes();
+			
 		}
 
 		/* PRIVATE METHODS */

@@ -32,18 +32,25 @@
 		 * @param string $interface The Dependency interface.
 		 * @param string $class The Dependency class.
 		 * @param ModuleBase $module The Dependency module if needed to limit to this module only (will be used on resolving).
+		 * @param boolean $checkInstance Determine the IoC to check if interface is instance of class when resolving.
 		 * 
 		 * @throws SpherusException When $interface parameter is null or empty.
 		 * @throws SpherusException When $class parameter is null or empty.
 		 */
-		public function __construct($interface, $class, ModuleBase $module = null)
+		public function __construct($interface, $class, ModuleBase $module = null, $checkInstance = false)
 		{
 			Check::IsNullOrEmpty($interface);
 			Check::IsNullOrEmpty($class);
+			if($checkInstance === true)
+			{
+				Check::IsInstanceOf($class, $interface, $checkInstance);
+			}
+
 			
 			$this->interface = $interface;
 			$this->class = $class;
 			$this->module = $module;
+			$this->checkInstance = $checkInstance;
 		}
 		
 		/* FIELDS */
@@ -71,6 +78,12 @@
 		 * @var ModuleBase
 		 */
 		private $module = null;
+		
+		/**
+		 * Determine the IoC to check if interface is instance of class when resolving.
+		 * @var boolean
+		 */
+		private $checkInstance = false;
 		
 		
 		/* PROPERTIES */
@@ -131,4 +144,12 @@
 			$this->module = $module;
 		}
 		
+		/**
+		 * Gets whether the IoC to check if interface is instance of class when resolving.
+		 * @var string
+		 */
+		public function getCheckInstance()
+		{
+			return $this->checkInstance;
+		}
 	}

@@ -45,13 +45,14 @@
 		 * Get dependency by interface name.
 		 *
 		 * @param string $interface The interface name.
+		 * @param ModuleBase $module the module to check if not null.
 		 * @return Dependency|NULL Found Dependency object or null.
 		 */
 		public static function GetDependencyByInterface($interface, $module = null)
 		{
 			foreach(self::$dependencies as $dependency)
 			{
-				if(!isset($dependency))
+				if($dependency->getInterface() !== $interface)
 				{ 
 					continue;
 				}
@@ -73,12 +74,13 @@
 		}
 		
 		/**
-		 * Get dependency by interface name.
+		 * Get dependency by interface name from cache.
 		 *
 		 * @param string $interface The interface name.
+		 * @param ModuleBase $module the module to check if not null.
 		 * @return Dependency|NULL Found Dependency object or null.
 		 */
-		public static function GetDependencyByInterfaceFromCahce($interface, $module = null)
+		public static function GetDependencyByInterfaceFromCache($interface, $module = null)
 		{
 			foreach(self::$dependencyObjectsCache as $dependency)
 			{
@@ -111,7 +113,7 @@
 		 * 
 		 * @ignore 
 		 * 
-		 * @return mixed Found instantiated class
+		 * @return object Found instantiated class
 		 */
 		public static function Resolve($interface, $module = null, $newInstance = false)
 		{
@@ -124,7 +126,7 @@
 			
 			if($newInstance === false)
 			{
-				if(@$foundObject = self::GetDependencyByInterfaceFromCahce($interface, $module))
+				if(@$foundObject = self::GetDependencyByInterfaceFromCache($interface, $module))
 				{
 					return $foundObject;
 				}
@@ -132,7 +134,7 @@
 			
 			$fileObject = self::CreateObject($foundDependency->getClass());
 			
-			if(self::GetDependencyByInterfaceFromCahce($interface, $module) === null)
+			if(self::GetDependencyByInterfaceFromCache($interface, $module) === null)
 			{
 				self::$dependencyObjectsCache[] = array('interface'=>$interface, 'module'=>$module, 'object'=>$fileObject);
 			}

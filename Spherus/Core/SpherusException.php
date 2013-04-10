@@ -53,5 +53,5 @@
 	define('EXCEPTION_DUPLICATE_DEPENDENCY', 'An dependency with the name "%s" already exists.');
 	define('EXCEPTION_DEPENDENCY_COULD_NOT_BE_RESOLVED', 'The dependency "%s" cannot be resolved.');
 	define('EXCEPTION_NO_CONTROLLER_ACTION_METHOD', 'The function "%s" does not exists in controller "%s" in module "%s"');
-	define('EXCEPTION_OBJECT_INVALID_INSTANCE', 'The "%s" object is not a valid instance of "%s"');
+	define('EXCEPTION_OBJECT_INVALID_INSTANCE', 'The "%s" is not a valid instance of "%s"');
 	define('EXCEPTION_NOT_OBJECT', 'The "%s" value is not an object');

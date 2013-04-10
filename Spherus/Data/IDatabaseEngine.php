@@ -11,12 +11,12 @@
 	namespace Spherus\Data;
 
     /**
-     * Class that represents a database engine
+     * Interface that represents a database engine
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data
      */
-    class DatabaseEngine implements IDatabaseEngine
+    interface IDatabaseEngine
     {
-
+		
     }

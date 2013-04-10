@@ -10,7 +10,11 @@
 	 */
 	namespace Spherus\Core;
 
-	/**
+	use Spherus\IoC\IoC;
+	use Spherus\IoC\Dependency;
+	use Spherus\Data\IDatabaseEngine;
+	
+				/**
 	 * Class that represents the Application base configuration
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
@@ -117,7 +121,7 @@
 		 */
 		public static function Initialize()
 		{
-			// Overwrite in Application config file
+			self::RegisterIoCDependencies();
 		}
 
 		/**
@@ -135,4 +139,16 @@
 
 			self::$routingDefaults[$key] = $value;
 		}
+	
+		
+		/* PUBLIC METHODS */
+		
+		private static function RegisterIoCDependencies()
+		{
+			IoC::Register(new Dependency('Spherus\Data\IDatabaseEngine', 'Spherus\Data\DatabaseEngine', null, true));
+			
+			/* @var $tw IDatabaseEngine */
+			$tw = IoC::Resolve('Spherus\Data\IDatabaseEngine');
+		}
+	
 	}

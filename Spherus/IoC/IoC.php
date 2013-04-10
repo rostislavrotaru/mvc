@@ -28,14 +28,12 @@
 		 * Register an IoC dependency
 		 * 
 		 * @param Dependency $dependency The initialized dependency class object.
-		 * @param bool $overwrite Determine if an existing dependency will be overrited if found. Optional. Default is false.
 		 * 
 		 * @throws SpherusException When $dependency object is not an instance of Dependency class.
 		 */
-		public static function Register(Dependency $dependency, $overwrite = false)
+		public static function Register(Dependency $dependency)
 		{
-			$foundDependency = DependencyFactory::GetDependencyByInterface($dependency->getInterface());
-			if(!isset($foundDependency) or $overwrite === true)
+			if(!$foundDependency = DependencyFactory::GetDependencyByInterface($dependency->getInterface(), $dependency->getModule()))
 			{
 				return DependencyFactory::Register($dependency);
 			}

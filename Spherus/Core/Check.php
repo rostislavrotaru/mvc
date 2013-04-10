@@ -151,17 +151,18 @@
 		 * @throws SpherusException When given object is not an instance of
 		 *         $instance class.
 		 */
-		public static function IsInstanceOf($object, $instance)
+		public static function IsInstanceOf($object, $instance, $allowString = false)
 		{
-			self::IsObject($object);
-
-			switch(true)
+			if(!is_a($object, $instance, $allowString))
 			{
-				case is_subclass_of($object, $instance):
-				case $object instanceof $instance:
-					return true;
-				default:
-					throw new SpherusException(sprintf(EXCEPTION_OBJECT_INVALID_INSTANCE, get_class($object), $instance));
+				if(is_object($object))
+				{
+					$object = get_class($object);
+				}
+				
+				throw new SpherusException(sprintf(EXCEPTION_OBJECT_INVALID_INSTANCE, $object, $instance));
 			}
+			
+			return true;
 		}
 	}
