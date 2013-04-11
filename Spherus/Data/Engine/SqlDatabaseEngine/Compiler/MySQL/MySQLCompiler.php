@@ -10,15 +10,15 @@
 	 */
 	namespace Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MSSQL;
 	
-	use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\SqlTranslator;
+	use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\SqlCompiler;
 
     /**
-     * Class that represents the mssql database engine translator
+     * Class that represents the mysql database engine compiler
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data
      */
-	class MSSQLTranslator extends SqlTranslator
+	class MySQLCompiler extends SqlCompiler
 	{
 		
 	}

@@ -13,12 +13,12 @@
 	use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\SqlTranslator;
 
     /**
-     * Class that represents the mssql database engine translator
+     * Class that represents the mysql database engine translator
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.data
      */
-	class MSSQLTranslator extends SqlTranslator
+	class MySQLTranslator extends SqlTranslator
 	{
 		
 	}

@@ -12,7 +12,7 @@
 
 	use Spherus\IoC\IoC;
 	use Spherus\IoC\Dependency;
-	use Spherus\Data\IDatabaseEngine;
+	use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator;
 	
 				/**
 	 * Class that represents the Application base configuration
@@ -146,9 +146,10 @@
 		private static function RegisterIoCDependencies()
 		{
 			IoC::Register(new Dependency('Spherus\Data\IDatabaseEngine', 'Spherus\Data\DatabaseEngine', null, true));
+			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MSSQL\MSSQLTranslator', null, true));
 			
-			/* @var $tw IDatabaseEngine */
-			$tw = IoC::Resolve('Spherus\Data\IDatabaseEngine');
+			/* @var $rrrr ISqlTranslator */
+			$rrrr = IoC::Resolve('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator');
 		}
 	
 	}
