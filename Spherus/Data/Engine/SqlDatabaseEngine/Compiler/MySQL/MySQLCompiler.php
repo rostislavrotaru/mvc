@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MSSQL;
+	namespace Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MySQL;
 	
 	use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\SqlCompiler;
 

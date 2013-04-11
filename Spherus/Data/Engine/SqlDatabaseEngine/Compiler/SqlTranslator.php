@@ -99,29 +99,13 @@
 		{
 			return $this->openBracket;		
 		}
-		
-		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setOpenBracket()
-		*/
-		public function setOpenBracket($openBracket) 
-		{
-			$this->openBracket = $openBracket;
-		}
-		
+				
 		/* (non-PHPdoc)
 		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::getCloseBracket()
 		*/
 		public function getCloseBracket() 
 		{
 			return $this->closeBracket;
-		}
-		
-		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setCloseBracket()
-		*/
-		public function setCloseBracket($closeBracket) 
-		{
-			$this->closeBracket = $closeBracket;
 		}
 		
 		/* (non-PHPdoc)
@@ -133,14 +117,6 @@
 		}
 		
 		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setQuote()
-		*/
-		public function setQuote($quote) 
-		{
-			$this->quote = $quote;
-		}
-		
-		/* (non-PHPdoc)
 		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::getOpeningParenthesis()
 		*/
 		public function getOpeningParenthesis() 
@@ -149,25 +125,9 @@
 		}
 		
 		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setOpeningParenthesis()
-		*/
-		public function setOpeningParenthesis($openingParenthesis) 
-		{
-			$this->openingParenthesis = $openingParenthesis;
-		}
-		
-		/* (non-PHPdoc)
 		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::getClosingParenthesis()
 		*/
 		public function getClosingParenthesis() 
-		{
-			return $this->closingParenthesis;
-		}
-		
-		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setClosingParenthesis()
-		*/
-		public function setClosingParenthesis($closingParenthesis) 
 		{
 			return $this->closingParenthesis;
 		}
@@ -181,27 +141,11 @@
 		}
 		
 		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setColumnDelimiter()
-		*/
-		public function setColumnDelimiter($columnDelimiter) 
-		{
-			$this->columnDelimiter = $columnDelimiter;
-		}
-		
-		/* (non-PHPdoc)
 		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::getArgumentDelimiter()
 		*/
 		public function getArgumentDelimiter() 
 		{
 			return $this->argumentDelimiter;
-		}
-		
-		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setArgumentDelimiter()
-		*/
-		public function setArgumentDelimiter($argumentDelimiter) 
-		{
-			$this->argumentDelimiter = $argumentDelimiter;
 		}
 		
 		/* (non-PHPdoc)
@@ -213,27 +157,11 @@
 		}
 		
 		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setAsterisc()
-		*/
-		public function setAsterisc($asterisk) 
-		{
-			$this->asterisk = $asterisk;
-		}
-		
-		/* (non-PHPdoc)
 		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::getBatchBegin()
 		*/
 		public function getBatchBegin() 
 		{
 			return $this->batchBegin;
-		}
-		
-		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setBatchBegin()
-		*/
-		public function setBatchBegin($batchBegin) 
-		{
-			$this->batchBegin = $batchBegin;
 		}
 		
 		/* (non-PHPdoc)
@@ -245,27 +173,11 @@
 		}
 		
 		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setBatchEnd()
-		*/
-		public function setBatchEnd($batchEnd) 
-		{
-			$this->batchEnd = $batchEnd;
-		}
-		
-		/* (non-PHPdoc)
 		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::getBatchDelimiter()
 		*/
 		public function getBatchDelimiter() 
 		{
 			return $this->batchDelimiter;
-		}
-		
-		/* (non-PHPdoc)
-		 * @see \Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator::setBatchDelimiter()
-		*/
-		public function setBatchDelimiter($batchDelimiter) 
-		{
-			$this->batchDelimiter = $batchDelimiter;
 		}
 		
 		

@@ -145,8 +145,9 @@
 		
 		private static function RegisterIoCDependencies()
 		{
-			IoC::Register(new Dependency('Spherus\Data\IDatabaseEngine', 'Spherus\Data\DatabaseEngine', null, true));
-			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MSSQL\MSSQLTranslator', null, true));
+			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MySQL\MySQLTranslator', null, true));
+			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlCompiler', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MySQL\MySQLCompiler', null, true));
+			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlCompilerContext', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\SqlCompilerContext', null, true));
 			
 			/* @var $rrrr ISqlTranslator */
 			$rrrr = IoC::Resolve('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator');
