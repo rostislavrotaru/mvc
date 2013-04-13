@@ -236,7 +236,10 @@ class DefaultRouter implements IRouter
 			}
 			else
 			{
-				$this->parameters[] = $this->splittedUrl[$i];
+				if(isset($this->splittedUrl[$i]))
+				{
+					$this->parameters[] = $this->splittedUrl[$i];
+				}
 			}
 		}
 		else 
