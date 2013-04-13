@@ -36,12 +36,12 @@
 		public $layout = null;
 
 		/**
-		 * Defines the list of controller helpers
+		 * Defines whether the Workbench should use IoC for loading views. 
 		 *
-		 * @var array
+		 * @var boolean
 		 */
-		public $helpers = array();
-
+		public $useIocForViews = false;
+		
 		/* EVENT TEMPLATES */
 
 		/**

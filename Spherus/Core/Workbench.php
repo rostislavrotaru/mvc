@@ -204,8 +204,7 @@ class Workbench
 
 		if(!in_array($action, self::$currentController->noViewControllers))
 		{
-			$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
- 					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
+			
 
 			self::$currentController->BeforeAction();
 			self::$currentController->IncludeHelpers();
@@ -213,9 +212,20 @@ class Workbench
 			if(isset(self::$currentController->layout))
 			{
 				ob_start();
-				$parsedUrl = HttpContext::getParsedUrl();
-				require(IoC::Resolve($parsedUrl->getModuleName().$parsedUrl->getControllerName().$parsedUrl->getActionName().'View'));
-				unset($parsedUrl);
+				if(self::$currentController->useIocForViews === true)
+				{
+					$parsedUrl = HttpContext::getParsedUrl();
+					require(IoC::Resolve($parsedUrl->getModuleName().$parsedUrl->getControllerName().$parsedUrl->getActionName().'View'));
+					unset($parsedUrl);
+				}
+				else 
+				{
+					$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
+					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
+					
+					Check::FileExists($fileName);
+					require($fileName);
+				}
 				
 				HttpContext::setPageContent(ob_get_contents());
 				ob_end_clean();
