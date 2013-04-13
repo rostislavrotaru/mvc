@@ -71,11 +71,7 @@
 		*/
     	public function GenerateSql($sqlStatement)
     	{
-//     		if ($sqlStatement instanceof SqlBatch)
-//     		{
-//     			return $this->compiler->VisitBatch($sqlStatement);
-//     		}
-//     		elseif ($sqlStatement instanceof SqlSelect)
+//     		if ($sqlStatement instanceof SqlSelect)
 //     		{
 //     			return $this->compiler->VisitSelect($sqlStatement);
 //     		}

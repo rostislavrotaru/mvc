@@ -3,21 +3,16 @@
 	namespace App\Modules\Main\Controllers;
 
 	use Spherus\Core\Base\ControllerBase;
-
+	use App\Modules\Main\Services\DataEngineService;
+	
 	class HomeController extends ControllerBase
 	{
-		public function BeforeLoad()
-		{
-			$this->noViewControllers = array('redirect');
-			$this->helpers = array('html');
-		}
-
 		public function index()
 		{
-			// $this->layout = null;
+			DataEngineService::Test();
 		}
 
-		public function about($id = null)
+		public function about()
 		{
 			 $this->layout = 'site';
 		}

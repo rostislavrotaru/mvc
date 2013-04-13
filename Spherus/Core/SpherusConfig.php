@@ -9,9 +9,6 @@
 	 * @since 3.0
 	 */
 	namespace Spherus\Core;
-
-	use Spherus\IoC\IoC;
-	use Spherus\IoC\Dependency;
 	
 				/**
 	 * Class that represents the Application base configuration
@@ -144,13 +141,7 @@
 		
 		private static function RegisterIoCDependencies()
 		{
-			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\ISqlDatabaseEngine', 'Spherus\Data\Engine\SqlDatabaseEngine\SqlDatabaseEngine', null, true));
-			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlTranslator', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MySQL\MySQLTranslator', null, true));
-			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlCompiler', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\MySQL\MySQLCompiler', null, true));
-			IoC::Register(new Dependency('Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlCompilerContext', 'Spherus\Data\Engine\SqlDatabaseEngine\Compiler\SqlCompilerContext', null, true));
 			
-			/* @var $rrrr ISqlDatabaseEngine */
-			$databaseEngine = IoC::Resolve('Spherus\Data\Engine\SqlDatabaseEngine\ISqlDatabaseEngine');
 		}
 	
 	}
