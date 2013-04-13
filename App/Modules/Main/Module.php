@@ -27,14 +27,6 @@
 		private function RegisterDependencies()
 		{
 			IoC::Register(new Dependency('HomeController', 'App\Modules\Main\Controllers\HomeController', Workbench::GetModuleByName('Main')));
-			
-			$homeIndexView = new Dependency('MainHomeIndexView', null, Workbench::GetModuleByName('Main'));
-			$homeIndexView->setFilePath(APP.SEPARATOR.'Modules/Main/Views/Home/Index.php');
-			IoC::Register($homeIndexView);
-			
-			$homeAboutView = new Dependency('MainHomeAboutView', null, Workbench::GetModuleByName('Main'));
-			$homeAboutView->setFilePath(APP.SEPARATOR.'Modules/Main/Views/Home/About.php');
-			IoC::Register($homeAboutView);
 		}
 	
 		/* (non-PHPdoc)

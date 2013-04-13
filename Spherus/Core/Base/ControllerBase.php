@@ -42,6 +42,7 @@
 		 */
 		public $useIocForViews = false;
 		
+		
 		/* EVENT TEMPLATES */
 
 		/**
