@@ -40,9 +40,9 @@
 		public function __construct($interface, $class, ModuleBase $module = null, $checkInstance = false)
 		{
 			Check::IsNullOrEmpty($interface);
-			Check::IsNullOrEmpty($class);
 			if($checkInstance === true)
 			{
+				Check::IsNullOrEmpty($class);
 				Check::IsInstanceOf($class, $interface, $checkInstance);
 			}
 

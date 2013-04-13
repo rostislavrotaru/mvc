@@ -132,8 +132,14 @@
 				}
 			}
 			
+			$filePath = $foundDependency->getFilePath();
+			if(isset($filePath))
+			{
+				Check::FileExists($filePath);
+				return $filePath;
+			}
+
 			$fileObject = self::CreateObject($foundDependency->getClass());
-			
 			if(self::GetDependencyByInterfaceFromCache($interface, $module) === null)
 			{
 				self::$dependencyObjectsCache[] = array('interface'=>$interface, 'module'=>$module, 'object'=>$fileObject);

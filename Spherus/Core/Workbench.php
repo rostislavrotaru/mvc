@@ -16,6 +16,7 @@ use Spherus\HttpContext\Session;
 use Spherus\Parsers\IpFilterParser;
 use Spherus\Routing\RouteManager;
 use Spherus\Core\Base\ModuleBase;
+use Spherus\Core\Base\ControllerBase;
 use Spherus\IoC\IoC;
 
 /**
@@ -65,7 +66,7 @@ class Workbench
 	/**
 	 * Gets the context current controller object
 	 *
-	 * @return Spherus\Core\Base\ControllerBase
+	 * @return ControllerBase
 	 */
 	public static function getCurrentController()
 	{
@@ -168,8 +169,8 @@ class Workbench
 			throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
 		}
 		
-		$controllerName = strtolower($parsedUrl->getControllerName());
-		$controllerObject = IoC::Resolve($controllerName, $parsedUrl->getModuleName(), true);
+		$controllerName = strtolower($parsedUrl->getControllerName()).'Controller';
+		$controllerObject = IoC::Resolve($controllerName, $parsedUrl->getModuleName());
 		
 		self::LoadControllerAttributes($controllerObject);
 		$controllerObject->BeforeLoad();
@@ -204,8 +205,7 @@ class Workbench
 		if(!in_array($action, self::$currentController->noViewControllers))
 		{
 			$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
-					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
-			Check::FileIsReadable($fileName);
+ 					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
 
 			self::$currentController->BeforeAction();
 			self::$currentController->IncludeHelpers();
@@ -213,7 +213,10 @@ class Workbench
 			if(isset(self::$currentController->layout))
 			{
 				ob_start();
-				require ($fileName);
+				$parsedUrl = HttpContext::getParsedUrl();
+				require(IoC::Resolve($parsedUrl->getModuleName().$parsedUrl->getControllerName().$parsedUrl->getActionName().'View'));
+				unset($parsedUrl);
+				
 				HttpContext::setPageContent(ob_get_contents());
 				ob_end_clean();
 
