@@ -7,7 +7,7 @@
 	use Spherus\IoC\Dependency;
 	use Spherus\Core\Workbench;
 							
-	class MainModule implements IModule
+	class Module implements IModule
 	{
 
 	    /**

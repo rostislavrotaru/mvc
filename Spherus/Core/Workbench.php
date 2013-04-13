@@ -125,8 +125,7 @@ class Workbench
 	{
 		foreach(Config::getInstalledModules() as $moduleName=>$moduleClass)
 		{
-			$module = $moduleClass.$moduleName.'Module';
-			$moduleObject = new $module;
+			$moduleObject = new $moduleClass;
 			Check::IsInstanceOf($moduleObject, 'Spherus\\Interfaces\\IModule');
 			
 			self::AddModule(new ModuleBase($moduleName, $moduleClass, $moduleObject));

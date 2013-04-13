@@ -23,7 +23,17 @@
 		 */
 		private static $installedModules = array
 		(
-			'main' => 'App\\Modules\\Main\\'
+			'main' => 'App\Modules\Main\Module'
+		);
+		
+		/**
+		 * Defines installed themes array
+		 *
+		 * @var array
+		 */
+		private static $installedThemes = array
+		(
+			'standard' => 'App\Themes\Standard\Theme'
 		);
 
 		
