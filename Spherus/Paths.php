@@ -28,10 +28,7 @@ define('MODULES', 'APP'.SEPARATOR.'Modules');
 // Public application path
 define('APP', ROOT.SEPARATOR);
 
-// Public application path
-//define('APP_COMMON', 'Common'.SEPARATOR);
-
-
-
 // Application themes path
-//define('THEMES', APP.'themes'.SEPARATOR);
+define('THEMES', APP.'themes'.SEPARATOR);
+
+
