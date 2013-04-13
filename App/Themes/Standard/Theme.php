@@ -1,10 +1,10 @@
 <?php
 
-	namespace Spherus\Themes;
+	namespace App\Themes\Standard;
 
 	use Spherus\Interfaces\ITheme;
 
-	class DefaultTheme implements ITheme
+	class Theme implements ITheme
 	{
 
 		/* FIELDS */
