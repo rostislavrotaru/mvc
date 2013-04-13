@@ -14,7 +14,6 @@ use App\Common\Config;
 use Spherus\HttpContext\HttpContext;
 use Spherus\HttpContext\Session;
 use Spherus\Parsers\IpFilterParser;
-use Spherus\Interfaces\IModule;
 use Spherus\Routing\RouteManager;
 use Spherus\Core\Base\ModuleBase;
 use Spherus\IoC\IoC;
@@ -96,7 +95,7 @@ class Workbench
 	/**
 	 * Gets current module object
 	 *
-	 * @return IModule
+	 * @return ModuleBase
 	 */
 	public static function getCurrentModule()
 	{
@@ -145,7 +144,7 @@ class Workbench
 	{
 		foreach (self::$modules as $module)
 		{
-			if($module->getName() === $moduleName)
+			if(strtolower($module->getName()) == strtolower($moduleName))
 			{
 				return $module;
 			}
@@ -191,19 +190,20 @@ class Workbench
 		// Call action in current controller
 		if(method_exists(Workbench::getCurrentController(), $action))
 		{
-			call_user_func_array(array(Workbench::getCurrentController(),$action), HttpContext::getParsedUrl()->getParameters());
+			call_user_func_array(array(Workbench::getCurrentController(), $action), HttpContext::getParsedUrl()->getParameters());
 			Workbench::getCurrentController()->AfterLoad();
 		}
 		else
 		{
+			$rrrr  = HttpContext::getParsedUrl();
 			throw new SpherusException(
-					sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getController(),
+					sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getControllerName(),
 							HttpContext::getParsedUrl()->getModuleName()));
 		}
 
 		if(!in_array($action, self::$currentController->noViewControllers))
 		{
-			$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
+			$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
 					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
 			Check::FileIsReadable($fileName);
 
@@ -232,15 +232,10 @@ class Workbench
 				}
 				else
 				{
-					$moduleThemeFile = MODULES.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'themes'.SEPARATOR.
-							self::$currentTheme->getName().SEPARATOR.'theme.php';
-					Check::FileIsReadable($moduleThemeFile);
-					require ($moduleThemeFile);
-					$moduleThemeName = self::getCurrentModule()->GetNamespaceName().'\\Themes\\'.self::$currentTheme->getName().'Theme';
-					$moduleThemeObject = new $moduleThemeName();
+					$themeNamespace = self::getCurrentModule()->getInstance()->GetThemesNamespace().'\\'.self::$currentTheme->getName().'\\Theme';
+					$moduleThemeObject = new $themeNamespace;
 
-					unset($moduleThemeFile);
-					unset($moduleThemeName);
+					unset($themeNamespace);
 
 					$layoutFile = $moduleThemeObject->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
 					if(file_exists($layoutFile))
@@ -290,22 +285,21 @@ class Workbench
 			Session::SetValue('theme', $currentThemeName);
 		}
 
-		$currentThemeFilePath = THEMES.$currentThemeName.SEPARATOR.'theme.php';
-		Check::FileIsReadable($currentThemeFilePath);
-		require ($currentThemeFilePath);
+		foreach (Config::getInstalledThemes() as $themeName=>$themeClass)
+		{
+			if(strtolower($themeName) === strtolower($currentThemeName))
+			{
+				self::$currentTheme = new $themeClass();
+				break;
+			}
+		}
 
-		// Define theme paths
-		$themePath = substr(THEMES.$currentThemeName.SEPARATOR, 1);
-		define('THEME_CSS', $themePath.'css'.SEPARATOR);
-		define('THEME_SCRIPTS', $themePath.'scripts'.SEPARATOR);
-		define('THEME_IMAGES', $themePath.'images'.SEPARATOR);
-
-		$currentThemeName = 'Spherus\\Themes\\'.$currentThemeName.'Theme';
-		self::$currentTheme = new $currentThemeName();
+		if(self::$currentTheme === null)
+		{
+			throw new SpherusException(printf(EXCEPTION_THEME_NOT_FOUND, $currentThemeName));
+		}
 
 		unset($currentThemeName);
-		unset($currentThemeFilePath);
-		unset($themePath);
 	}
 
 	/**

@@ -30,7 +30,7 @@
 		 *
 		 * @var string
 		 */
-		private static $defaultTheme = 'default';
+		private static $defaultTheme = 'standard';
 
 		/**
 		 * Defines the default application layout.

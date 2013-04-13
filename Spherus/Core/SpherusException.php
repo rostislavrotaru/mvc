@@ -41,6 +41,7 @@
 	define('EXCEPTION_EMPTY', 'Empty value provided');
 	define('EXCEPTION_ACCESS_DENIED', 'Access to this resource is denied');
 	define('EXCEPTION_MODULE_NOT_FOUND', 'The "%s" module not found');
+	define('EXCEPTION_THEME_NOT_FOUND', 'The "%s" theme not found');
 	define('EXCEPTION_LAYOUT_NOT_FOUND', 'The "%s" layout not found');
 	define('EXCEPTION_HELPER_NOT_FOUND', 'The "%s" helper not found');
 	define('EXCEPTION_FILE_NOT_READABLE', 'The "%s" file is not readable. Please check file system permissions');

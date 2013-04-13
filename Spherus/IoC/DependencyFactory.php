@@ -52,7 +52,7 @@
 		{
 			foreach(self::$dependencies as $dependency)
 			{
-				if($dependency->getInterface() !== $interface)
+				if(strtolower($dependency->getInterface()) !== strtolower($interface))
 				{ 
 					continue;
 				}
@@ -63,7 +63,7 @@
 				}
 				
 				$dependencyModule = $dependency->getModule();
-				if(isset($dependencyModule) and $dependencyModule->getName() === $module)
+				if(isset($dependencyModule) and strtolower($dependencyModule->getName()) === strtolower($module))
 				{
 					return $dependency;
 				}

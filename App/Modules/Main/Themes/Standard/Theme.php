@@ -1,10 +1,10 @@
 <?php
 
-	namespace Spherus\Modules\Main\Themes;
+	namespace App\Modules\Main\Themes\Standard;
 
 	use Spherus\Interfaces\ITheme;
 
-	class DefaultTheme implements ITheme
+	class Theme implements ITheme
 	{
 
 		public function getLayoutsPath()

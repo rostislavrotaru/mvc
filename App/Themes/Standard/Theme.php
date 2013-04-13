@@ -14,7 +14,7 @@
 		 *
 		 * @var string
 		 */
-		private $name = 'default';
+		private $name = 'Standard';
 
 		/* PROPERTIES */
 

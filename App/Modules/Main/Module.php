@@ -26,7 +26,16 @@
 		 */
 		private function RegisterDependencies()
 		{
-			IoC::Register(new Dependency('home', 'App\Modules\Main\Controllers\HomeController', Workbench::GetModuleByName('main')));
+			IoC::Register(new Dependency('Home', 'App\Modules\Main\Controllers\HomeController', Workbench::GetModuleByName('Main')));
 		}
+	
+		/* (non-PHPdoc)
+		 * @see \Spherus\Interfaces\IModule::GetThemesNamespace()
+		 */
+		public function GetThemesNamespace() 
+		{
+			return __NAMESPACE__.'\\Themes';
+		}
+
 		
 	}

@@ -25,4 +25,9 @@
          * Permits to write custom functionality when module is loaded
          */
         function Run();
+        
+        /**
+         * Return the module themes namenspace
+         */
+        function GetThemesNamespace();
     }

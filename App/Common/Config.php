@@ -23,7 +23,7 @@
 		 */
 		private static $installedModules = array
 		(
-			'main' => 'App\Modules\Main\Module'
+			'Main' => 'App\Modules\Main\Module'
 		);
 		
 		/**
@@ -33,7 +33,7 @@
 		 */
 		private static $installedThemes = array
 		(
-			'standard' => 'App\Themes\Standard\Theme'
+			'Standard' => 'App\Themes\Standard\Theme'
 		);
 
 		
@@ -47,6 +47,16 @@
 		public static function getInstalledModules()
 		{
 			return self::$installedModules;
+		}
+		
+		/**
+		 * Gets installed themes array
+		 *
+		 * @var array
+		 */
+		public static function getInstalledThemes()
+		{
+			return self::$installedThemes;
 		}
 
 		/* PUBLIC METHODS */
