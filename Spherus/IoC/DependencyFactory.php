@@ -179,7 +179,7 @@
 		
 			if (!$constructor = $reflectionClass->getConstructor())
 			{
-				return $reflectionClass->newInstanceArgs(array());
+				return $reflectionClass->isInterface() ? self::Resolve($reflectionClass->getName()) : $reflectionClass->newInstance();
 			}
 		
 			$parameterObjects = [];
