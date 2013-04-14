@@ -12,7 +12,8 @@
 	
 	use Spherus\Data\Engine\SqlDatabaseEngine\Base\SqlEntity;
 	use Spherus\Data\Engine\SqlDatabaseEngine\Enums\SqlEntityType;
-		
+	use Spherus\Data\Engine\SqlDatabaseEngine\Compiler\ISqlCompiler;
+			
 	/**
      * Class that represents a sql table entity
      *
@@ -104,9 +105,9 @@
 		/**
 		 * Accepts visitor for the current sql object.
 		 * 
-		 * @param SqlCompiler $visitor The visitor as SqlCompiler.
+		 * @param ISqlCompiler $visitor The visitor as SqlCompiler.
 		 */
-		public function AcceptVisitor($visitor)
+		public function AcceptVisitor(ISqlCompiler $visitor)
 		{
 			$visitor->VisitTable($this);
 		}

@@ -67,6 +67,7 @@
 		
 		/**
 		 * @return SqlTable The parent sql table
+		 * @var SqlTable
 		 */
 		public function getSqlTable() 
 		{
@@ -79,7 +80,7 @@
 		/**
 		 * Accepts visitor for the current sql object.
 		 * 
-		 * @param SqlCompiler $visitor The visitor as SqlCompiler.
+		 * @param ISqlCompiler $visitor The visitor as SqlCompiler.
 		 */
 		public function AcceptVisitor(ISqlCompiler $visitor)
 		{
