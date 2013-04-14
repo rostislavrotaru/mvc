@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Data\Engine\SqlDatabaseEngine\Expressions;
+	namespace Spherus\Data\Engine\SqlDatabaseEngine\Base;
 	
 	use Spherus\Data\Engine\SqlDatabaseEngine\Base\SqlEntity;
 	use Spherus\Data\Engine\SqlDatabaseEngine\Enums\SqlEntityType;

@@ -17,5 +17,6 @@
 			
 			/* @var $databaseEngine ISqlDatabaseEngine */
 			$databaseEngine = IoC::Resolve('Spherus\Data\Engine\SqlDatabaseEngine\ISqlDatabaseEngine');
+			
 		}	
 	}
