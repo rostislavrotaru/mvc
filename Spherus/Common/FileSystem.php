@@ -15,7 +15,7 @@ namespace Spherus\Common;
  *
  * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
  * @author Sergey Calugher (SlKelevro@gmail.com)
- * @package spherus.core
+ * @package spherus.common
  */
 class FileSystem
 {

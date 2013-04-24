@@ -33,6 +33,8 @@
 	}
 
 	// Exception constants
+	define('EXCEPTION_MISSING_EXTENSION', 'The required extension not found: "%s". Please install it and retry.');
+	define('EXCEPTION_FAILED_ARCHIVE_EXTRACTION', 'Failed to extract archive: "%s".');
 	define('EXCEPTION_NULL', 'Null value reference');
 	define('EXCEPTION_NULL_OR_EMPTY', 'Null or empty value provided');
 	define('EXCEPTION_INVALID_ARRAY', 'Given value is not an array value');

@@ -165,4 +165,19 @@
 			
 			return true;
 		}
+	
+		/**
+		 * Checks if php extension is loaded.
+		 * 
+		 * @param string $phpExtensionName The name of php extension.
+		 * @throws SpherusException When php extension is not loaded
+		 */
+		public static function PhpExtensionIsLoaded($phpExtensionName)
+		{
+			Check::IsNullOrEmpty($phpExtensionName);
+			if(!extension_loaded($phpExtensionName))
+			{
+				throw new SpherusException(printf(EXCEPTION_MISSING_EXTENSION, $phpExtensionName));
+			}
+		}
 	}
