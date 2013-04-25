@@ -26,20 +26,13 @@ class Session
 	/* FIELDS */
 
 	/**
-	 * Defines the session content.
-	 * Filtered by $sessionName variable
-	 *
-	 * @var array
-	 */
-	private static $content = null;
-
-	/**
 	 * Defines the session name
 	 *
 	 * @var string
 	 */
 	private static $sessionName = 'spherus';
 
+	
 	/* PUBLIC FUNCTIONS */
 
 	/**
@@ -50,15 +43,25 @@ class Session
 	 */
 	public static function GetValue($key)
 	{
-		if(isset(self::$content))
+		if(isset($_SESSION[self::$sessionName]) and isset($_SESSION[self::$sessionName][$key]))
 		{
-			if(isset(self::$content[$key]))
-			{
-				return self::$content[$key];
-			}
+			return $_SESSION[self::$sessionName][$key];
 		}
 
 		return null;
+	}
+	
+	/**
+	 * Unsets session value
+	 *
+	 * @param mixed $key The session key to search
+	 */
+	public static function UnsetValue($key)
+	{
+		if(isset($_SESSION[self::$sessionName]) and isset($_SESSION[self::$sessionName][$key]))
+		{
+			unset($_SESSION[self::$sessionName][$key]);
+		}
 	}
 
 	/**
@@ -67,19 +70,16 @@ class Session
 	 * @param string $key The session key.
 	 * @param mixed $value The session value to set. If $value parameter is an object - serialized object will be stored.
 	 * @throws SpherusException When $key parameter is null or empty.
-	 * @throws SpherusException When $value parameter is null or empty.
 	 */
 	public static function SetValue($key, $value)
 	{
 		Check::IsNullOrEmpty($key);
-		Check::IsNullOrEmpty($value);
 
 		if(is_object($value))
 		{
 			$value = serialize($value);
 		}
 
-		self::$content[$key] = $value;
 		$_SESSION[self::$sessionName][$key] = $value;
 	}
 
@@ -88,7 +88,6 @@ class Session
 	 */
 	public static function Clear()
 	{
-		self::$content = null;
 		unset($_SESSION[self::$sessionName]);
 	}
 
@@ -97,12 +96,10 @@ class Session
 	 */
 	public static function Start()
 	{
-		if(session_start())
+		if(!session_start())
 		{
-			if(isset($_SESSION[self::$sessionName]))
-			{
-				self::$content = $_SESSION[self::$sessionName];
-			}
+			throw new SpherusException(EXCEPTION_SESSION_START_FAILURE);
 		}
 	}
+
 }
