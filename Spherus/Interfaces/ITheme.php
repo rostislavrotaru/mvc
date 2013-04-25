@@ -26,33 +26,33 @@
          *
          * @return string
          */
-        public function getName ();
+        public function getName();
 
         /**
          * Gets the path of CSS files
          *
          * @return string
          */
-        public function getCssPath ();
+        public function getCssPath();
 
         /**
          * Gets the path of image files
          *
          * @return string
          */
-        public function getImagesPath ();
+        public function getImagesPath();
 
         /**
          * Gets the path of layout files
          *
          * @return string
          */
-        public function getLayoutsPath ();
+        public function getLayoutsPath();
 
         /**
          * Gets the path of script files
          *
          * @return string
          */
-        public function getScriptsPath ();
+        public function getScriptsPath();
     }
