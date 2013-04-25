@@ -25,7 +25,7 @@ class Autoloader
 	 *
 	 * @var Array
 	 */
-	private static $includePaths = array();
+	private static $includePaths = [];
 
 
 	/* PROPERTIES */
@@ -70,7 +70,7 @@ class Autoloader
 			$fileName = ROOT.str_ireplace('\\', '/', $className).'.php';
 			if(file_exists($fileName))
 			{
-				return require (ROOT.str_ireplace('\\', '/', $className).'.php');
+				return require(ROOT.str_ireplace('\\', '/', $className).'.php');
 			}
 			return false;
 		}
@@ -104,16 +104,6 @@ class Autoloader
 	public static function RegisterAutoloader($autoloadFunction, $throwException = true, $prepend = false)
 	{
 		return spl_autoload_register($autoloadFunction, $throwException, $prepend);
-	}
-
-	/**
-	 * Unregisters default spherus autoloader.
-	 *
-	 * @return boolean TRUE on success or FALSE on failure.
-	 */
-	public static function UnregisterDefaultAutoloader()
-	{
-		return self::UnregisterAutoloader(array('Spherus\Core\Autoloader','Autoload'));
 	}
 
 	/**
