@@ -63,7 +63,7 @@ class Autoloader
 					return require_once($classFile);
 				}
 			}
-			return false;
+			throw new SpherusException(printf(EXCEPTION_FAILED_LOAD_CLASS, $className));
 		}
 		else // Class have namespace
 		{
@@ -72,7 +72,7 @@ class Autoloader
 			{
 				return require(ROOT.str_ireplace('\\', '/', $className).'.php');
 			}
-			return false;
+			throw new SpherusException(printf(EXCEPTION_FAILED_LOAD_CLASS, $className));
 		}
 	}
 
