@@ -39,7 +39,7 @@ class Zip
 		Check::FileIsReadable($fileName);
 		
 		$archivedFile = new \ZipArchive();
-		if($archivedFile->open($fileName, \ZIPARCHIVE::CREATE | \ZIPARCHIVE::OVERWRITE) === true)
+		if($archivedFile->open($fileName, \ZIPARCHIVE::CREATE) === true)
 		{
 			if(!isset($destination))
 			{
@@ -48,7 +48,9 @@ class Zip
 			$archivedFile->extractTo($destination);
 			$archivedFile->close();
 		}
-		
-		throw new SpherusException(printf(EXCEPTION_FAILED_ARCHIVE_EXTRACTION, $fileName));
+		else 
+		{
+			throw new SpherusException(printf(EXCEPTION_FAILED_ARCHIVE_EXTRACTION, $fileName));
+		}
 	}
 }
