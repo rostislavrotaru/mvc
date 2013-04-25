@@ -21,8 +21,25 @@ use Spherus\HttpContext\Session;
 use Spherus\Routing\RouteManager;
 use App\Common\Config;
 
+//*****************************************************************
+// Root path
+define('ROOT', __DIR__.'/../');
+
+// Directory separator
+define('SEPARATOR', '/');
+
+// Application modules path
+define('MODULES', 'APP'.SEPARATOR.'Modules');
+
+// Public application path
+define('APP', ROOT.SEPARATOR.'App');
+
+// Application themes path
+define('THEMES', APP.'themes'.SEPARATOR);
+
+//*****************************************************************
+
 // Base require files
-require ('Paths.php');
 require ('Autoloader.php');
 
 // Starts session
