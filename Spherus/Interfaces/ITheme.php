@@ -9,7 +9,7 @@
 	* @since 3.0
 	*/
 	namespace Spherus\Interfaces;
-
+		
     /**
      * Defines interface for application themes
      *
@@ -19,40 +19,58 @@
     interface ITheme
     {
 
-        // Should be implemeted in theme.php file for each module
-
+    	/* PROPERTIES */
+    	
+    	/**
+    	 * Gets the child theme object
+    	 *
+    	 * @return ITheme
+    	 */
+    	public function getChildTheme();
+    	
+    	/**
+    	 * Sets the child theme object
+    	 * 
+    	 * @param ITheme $childTheme The child theme object to set.
+    	 */
+    	public function setChildTheme($childTheme);
+    	
+    	
+    	/* METHODS */
+    	
         /**
          * Gets the name of theme
          *
          * @return string
          */
-        public function getName();
+        public function GetName();
 
         /**
          * Gets the path of CSS files
          *
          * @return string
          */
-        public function getCssPath();
+        public function GetCssPath();
 
         /**
          * Gets the path of image files
          *
          * @return string
          */
-        public function getImagesPath();
+        public function GetImagesPath();
 
         /**
          * Gets the path of layout files
          *
          * @return string
          */
-        public function getLayoutsPath();
+        public function GetLayoutsPath();
 
         /**
          * Gets the path of script files
          *
          * @return string
          */
-        public function getScriptsPath();
+        public function GetScriptsPath();
+    
     }
