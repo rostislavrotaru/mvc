@@ -21,6 +21,18 @@ class FileSystem
 {
 
 	/* PUBLIC FUNCTIONS */
+	
+	/**
+	 * Check if file exists
+	 *
+	 * @param string $fileName The path and name of file
+	 * @return boolean True if file exists, otherwise False
+	 */
+	public static function FileExists($fileName)
+	{
+		$fileName = str_ireplace('\\', '/', $fileName);
+		return file_exists($fileName);
+	}
 
 	/**
 	 * Lists directory content, including folder and files
@@ -33,7 +45,6 @@ class FileSystem
 	{
 		return self::ReadDirectory($path, $includeHiddenFiles, true, true);
 	}
-
 
 	/**
 	 * Lists directory folders
