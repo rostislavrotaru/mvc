@@ -2,9 +2,10 @@
 
 	namespace App\Themes\Standard;
 
+	use Spherus\Core\Base\ThemeBase;
 	use Spherus\Interfaces\ITheme;
-
-	class Theme implements ITheme
+		
+	class Theme extends ThemeBase
 	{
 
 		/* FIELDS */
@@ -15,8 +16,31 @@
 		 * @var string
 		 */
 		private $name = 'Standard';
+		
+		/**
+		 * Defines the child theme object
+		 * @var ITheme
+		 */
+		private $childTheme = null;
 
+		
 		/* PROPERTIES */
+		
+		/* (non-PHPdoc)
+		 * @see \Spherus\Interfaces\ITheme::getChildTheme()
+		*/
+		public function getChildTheme()
+		{
+			return $this->childTheme;
+		}
+			
+		/* (non-PHPdoc)
+		 * @see \Spherus\Interfaces\ITheme::setChildTheme()
+		*/
+		public function setChildTheme($childTheme)
+		{
+			$this->childTheme = $childTheme;
+		}
 
 		/* (non-PHPdoc)
 		 * @see \Spherus\Interfaces\ITheme::getName()
@@ -31,7 +55,7 @@
          */
 		public function getCssPath()
 		{
-			return THEMES.$this->name.SEPARATOR.'css';
+			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
 		}
 
 		/*
@@ -39,7 +63,7 @@
          */
 		public function getImagesPath()
 		{
-			return THEMES.$this->name.SEPARATOR.'images';
+			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
 		}
 
 		/*
@@ -47,7 +71,7 @@
          */
 		public function getLayoutsPath()
 		{
-			return THEMES.$this->name.SEPARATOR.'layouts';
+			return __DIR__.SEPARATOR.'Layouts';
 		}
 
 		/*
@@ -55,6 +79,6 @@
          */
 		public function getScriptsPath()
 		{
-			return THEMES.$this->name.SEPARATOR.'scripts';
+			return '/App/Themes/'.$this->name.SEPARATOR.'scripts';
 		}
 	}

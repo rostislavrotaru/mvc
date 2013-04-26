@@ -22,20 +22,20 @@
 		/* FIELDS */
 
 		/**
-		 * Defines the default application theme.
+		 * Defines the default application theme name.
 		 * Can be overwritten in Application Configuration file.
 		 *
 		 * @var string
 		 */
-		private static $defaultTheme = 'standard';
+		private static $defaultThemeName = 'Standard';
 
 		/**
-		 * Defines the default application layout.
+		 * Defines the default application layout name.
 		 * Can be overwritten in Application Configuration file.
 		 *
 		 * @var string
 		 */
-		private static $defaultLayout = 'default';
+		private static $defaultLayoutName = 'Default';
 
 		/**
 		 * Defines defaults for routing if not specified.
@@ -59,44 +59,44 @@
 		 *
 		 * @return string
 		 */
-		public static function getDefaultTheme()
+		public static function getDefaultThemeName()
 		{
-			return self::$defaultTheme;
+			return self::$defaultThemeName;
 		}
 
 		/**
 		 * Sets the default application theme name.
 		 *
-		 * @param string The default theme name
-		 * @throws SpherusException When $defaultTheme parameter is null or
+		 * @param string $defaultThemeName The default theme name
+		 * @throws SpherusException When $defaultThemeName parameter is null or
 		 *         empty.
 		 */
-		public static function setDefaultTheme($defaultTheme)
+		public static function setDefaultThemeName($defaultThemeName)
 		{
-			Check::IsNullOrEmpty($defaultTheme);
-			self::$defaultTheme = $defaultTheme;
+			Check::IsNullOrEmpty($defaultThemeName);
+			self::$defaultThemeName = $defaultThemeName;
 		}
 
 		/**
-		 * Gets the default application layout.
+		 * Gets the default application layout name.
 		 *
 		 * @return string
 		 */
-		public static function getDefaultLayout()
+		public static function getDefaultLayoutName()
 		{
-			return self::$defaultLayout;
+			return self::$defaultLayoutName;
 		}
 
 		/**
 		 * Sets the default application layout.
 		 *
-		 * @param string The default layout name
-		 * @throws SpherusException When $defaultLayout parameter is null or
+		 * @param string $defaultLayoutName The default layout name
+		 * @throws SpherusException When $defaultLayoutName parameter is null or
 		 *         empty.
 		 */
-		public static function setDefaultLayout($defaultLayout)
+		public static function setDefaultLayoutName($defaultLayoutName)
 		{
-			self::$defaultLayout = $defaultLayout;
+			self::$defaultLayoutName = $defaultLayoutName;
 		}
 
 		/**
@@ -117,7 +117,7 @@
 		 */
 		public static function Initialize()
 		{
-			self::RegisterIoCDependencies();
+			
 		}
 
 		/**
@@ -134,14 +134,6 @@
 			Check::IsNull(self::$routingDefaults);
 
 			self::$routingDefaults[$key] = $value;
-		}
-	
-		
-		/* PUBLIC METHODS */
-		
-		private static function RegisterIoCDependencies()
-		{
-			
 		}
 	
 	}

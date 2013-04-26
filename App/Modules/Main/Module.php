@@ -2,17 +2,17 @@
 
 	namespace App\Modules\Main;
 
-	use Spherus\Interfaces\IModule;
 	use Spherus\IoC\IoC;
 	use Spherus\IoC\Dependency;
 	use Spherus\Core\Workbench;
-							
-	class Module implements IModule
+	use Spherus\Core\Base\ModuleBase;
+								
+	class Module extends ModuleBase
 	{
 
-	    /**
-	     * Permits to write custom functionality when module is loaded
-	     */
+	    /* (non-PHPdoc)
+	 	* @see \Spherus\Core\Base\ModuleBase::Run()
+	 	*/
 	    public function Run()
 	    {
 	    	$this->RegisterDependencies();
@@ -28,14 +28,5 @@
 		{
 			IoC::Register(new Dependency('HomeController', 'App\Modules\Main\Controllers\HomeController', Workbench::GetModuleByName('Main')));
 		}
-	
-		/* (non-PHPdoc)
-		 * @see \Spherus\Interfaces\IModule::GetThemesNamespace()
-		 */
-		public function GetThemesNamespace() 
-		{
-			return __NAMESPACE__.'\\Themes';
-		}
-
-		
+					
 	}

@@ -21,23 +21,18 @@ use Spherus\HttpContext\Session;
 use Spherus\Routing\RouteManager;
 use App\Common\Config;
 
-//*****************************************************************
+//PATHS*****************************************************************
+
 // Root path
 define('ROOT', __DIR__.'/../');
 
 // Directory separator
-define('SEPARATOR', '/');
+define('SEPARATOR', DIRECTORY_SEPARATOR);
 
 // Application modules path
-define('MODULES', 'APP'.SEPARATOR.'Modules');
+define('MODULES', ROOT.SEPARATOR.'App'.SEPARATOR.'Modules'.SEPARATOR);
 
-// Public application path
-define('APP', ROOT.SEPARATOR.'App');
-
-// Application themes path
-define('THEMES', APP.'themes'.SEPARATOR);
-
-//*****************************************************************
+//**********************************************************************
 
 // Base require files
 require ('Autoloader.php');
@@ -46,10 +41,9 @@ require ('Autoloader.php');
 Session::Start();
 
 // Load application configuration file
-// Throws exception if not found
 Config::Initialize();
 
-// Initialize route handler
+// Initialize route manager
 RouteManager::Initialize();
 
 // Initialize http context

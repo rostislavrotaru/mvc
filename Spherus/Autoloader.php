@@ -48,7 +48,6 @@ class Autoloader
 	 *
 	 * @param string $className The class name.
 	 * @return boolean Whether the class has been loaded successfully
-	 * @throws SpherusException When class to load not found.
 	 */
 	public static function Autoload($className)
 	{
@@ -63,7 +62,6 @@ class Autoloader
 					return require_once($classFile);
 				}
 			}
-			throw new SpherusException(printf(EXCEPTION_FAILED_LOAD_CLASS, $className));
 		}
 		else // Class have namespace
 		{
@@ -72,8 +70,9 @@ class Autoloader
 			{
 				return require(ROOT.str_ireplace('\\', '/', $className).'.php');
 			}
-			throw new SpherusException(printf(EXCEPTION_FAILED_LOAD_CLASS, $className));
 		}
+		
+		return false;
 	}
 
 	/**

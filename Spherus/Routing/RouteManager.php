@@ -39,6 +39,7 @@ class RouteManager
 	 */
 	private static $router = null;
 
+	
 	/* PROPERTIES */
 
 	/**
@@ -61,6 +62,7 @@ class RouteManager
 		return self::$registeredRoutes;
 	}
 
+	
 	/* PUBLIC FUNCTIONS */
 
 	/**

@@ -18,6 +18,9 @@ use Spherus\Routing\RouteManager;
 use Spherus\Core\Base\ModuleBase;
 use Spherus\Core\Base\ControllerBase;
 use Spherus\IoC\IoC;
+use Spherus\Interfaces\ITheme;
+use Spherus\Common\FileSystem;
+use Spherus\Core\Base\ThemeBase;
 
 /**
  * Class that represents the framework workbench
@@ -31,30 +34,30 @@ class Workbench
 	/* FIELDS */
 
 	/**
-	 * Defines an array of context modules
+	 * Defines an array of Workbench ModuleBase objects
 	 *
 	 * @var array
 	 */
 	private static $modules = [];
 
 	/**
-	 * Defines the context current controller object
+	 * Defines the Workbench current controller object
 	 *
 	 * @var ControllerBase
 	 */
 	private static $currentController = null;
 
 	/**
-	 * Defines the context current theme object
+	 * Defines the Workbench current theme object
 	 *
-	 * @var string
+	 * @var ITheme
 	 */
 	private static $currentTheme = null;
 
 	/* PROPERTIES */
 
 	/**
-	 * Gets array of context modules
+	 * Gets array of loaded ModuleBase objects
 	 *
 	 * @return array
 	 */
@@ -64,7 +67,7 @@ class Workbench
 	}
 
 	/**
-	 * Gets the context current controller object
+	 * Gets the Workbench current controller object
 	 *
 	 * @return ControllerBase
 	 */
@@ -74,9 +77,9 @@ class Workbench
 	}
 
 	/**
-	 * Sets the context current controller
+	 * Sets the Workbench current controller object
 	 *
-	 * @param Spherus\Core\ControllerBase $controller The controller object to set.
+	 * @param ControllerBase $controller The controller object to set.
 	 */
 	public static function setCurrentController($controller)
 	{
@@ -84,9 +87,9 @@ class Workbench
 	}
 
 	/**
-	 * Gets the current theme
+	 * Gets the current theme object
 	 *
-	 * @return Spherus\Interfaces\ITheme
+	 * @return ThemeBase
 	 */
 	public static function getCurrentTheme()
 	{
@@ -103,7 +106,7 @@ class Workbench
 		return self::GetModuleByName(HttpContext::getParsedUrl()->getModuleName());
 	}
 
-	/* METHODS */
+	/* PUBLIC FUNCTIONS */
 
 	/**
 	 * Initialize context
@@ -123,18 +126,54 @@ class Workbench
 	 */
 	public static function LoadModules()
 	{
-		foreach(Config::getInstalledModules() as $moduleName=>$moduleClass)
+		foreach(Config::getInstalledModuleNames() as $moduleName=>$moduleNamespace)
 		{
-			$moduleObject = new $moduleClass;
-			Check::IsInstanceOf($moduleObject, 'Spherus\\Interfaces\\IModule');
+			$moduleClass = $moduleNamespace.'\Module';
+			$moduleObject = new $moduleClass($moduleName, $moduleNamespace);
+			Check::IsInstanceOf($moduleObject, 'Spherus\Core\Base\ModuleBase');
 			
-			self::AddModule(new ModuleBase($moduleName, $moduleClass, $moduleObject));
+			self::AddModule($moduleObject);
 			$moduleObject->Run();
 			
 			unset($moduleObject);
 		}
 	}
 
+	/**
+	 * Loads controller according to the given ParsedUrl
+	 *
+	 * @throws SpherusException When controller is not found
+	 */
+	public static function LoadController()
+	{
+		$parsedUrl = HttpContext::getParsedUrl();
+		$module = self::GetModuleByName($parsedUrl->getModuleName());
+		if(!isset($module))
+		{
+			throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
+		}
+	
+		$controllerName = ucfirst(strtolower($parsedUrl->getControllerName())).'Controller';
+		/* @var $controllerObject ControllerBase */
+		$controllerObject = IoC::Resolve($controllerName, $parsedUrl->getModuleName());
+	
+		$layout = $controllerObject->getLayout();
+		if(!isset($layout))
+		{
+			$controllerObject->setLayout(Config::getDefaultLayoutName());
+		}
+	
+		$controllerObject->BeforeLoad();
+	
+		self::setCurrentController($controllerObject);
+	
+		unset($controllerName);
+		unset($controllerObject);
+		unset($layout);
+		unset($parsedUrl);
+		unset($module);
+	}
+	
 	/**
 	 * Gets module object by its name
 	 *
@@ -155,30 +194,38 @@ class Workbench
 	}
 
 	/**
-	 * Loads controller according to the given ParsedUrl
+	 * Loads theme for application.
+	 * If not found - the default theme from configuration file will be
+	 * used.
 	 *
-	 * @throws SpherusException When controller is not found
+	 * @throws SpherusException When current theme cannot be found.
 	 */
-	public static function LoadController()
+	public static function LoadTheme()
 	{
-		$parsedUrl = HttpContext::getParsedUrl();
-		$moduleBase = self::GetModuleByName($parsedUrl->getModuleName());	
-		
-		if(!isset($moduleBase))
+		$currentThemeName = Session::GetValue('theme');
+		if(!isset($currentThemeName))
 		{
-			throw new SpherusException(sprintf(EXCEPTION_MODULE_NOT_FOUND, $parsedUrl->getModuleName()));
+			$currentThemeName = Config::getDefaultThemeName();
+			Session::SetValue('theme', $currentThemeName);
 		}
-		
-		$controllerName = strtolower($parsedUrl->getControllerName()).'Controller';
-		$controllerObject = IoC::Resolve($controllerName, $parsedUrl->getModuleName());
-		
-		self::LoadControllerAttributes($controllerObject);
-		$controllerObject->BeforeLoad();
-
-		self::setCurrentController($controllerObject);
-		
-		unset($parsedUrl);
-		unset($moduleBase);
+	
+		foreach (Config::getInstalledThemesNames() as $themeName=>$themeClass)
+		{
+			if(strtolower($themeName) === strtolower($currentThemeName))
+			{
+				$themeClass .= '\Theme';
+				self::$currentTheme = new $themeClass();
+				self::IncludeModuleTheme();
+				break;
+			}
+		}
+	
+		if(self::$currentTheme === null)
+		{
+			throw new SpherusException(printf(EXCEPTION_THEME_NOT_FOUND, $currentThemeName));
+		}
+	
+		unset($currentThemeName);
 	}
 
 	/**
@@ -196,23 +243,19 @@ class Workbench
 		}
 		else
 		{
-			$rrrr  = HttpContext::getParsedUrl();
 			throw new SpherusException(
 					sprintf(EXCEPTION_NO_CONTROLLER_ACTION_METHOD, $action, HttpContext::getParsedUrl()->getControllerName(),
 							HttpContext::getParsedUrl()->getModuleName()));
 		}
 
-		if(!in_array($action, self::$currentController->noViewControllers))
+		if(self::$currentController->getNoView() === false)
 		{
-			
-
 			self::$currentController->BeforeAction();
-			self::$currentController->IncludeHelpers();
-
-			if(isset(self::$currentController->layout))
+			$layoutName = self::$currentController->getLayout(); 
+			if(isset($layoutName))
 			{
 				ob_start();
-				if(self::$currentController->useIocForViews === true)
+				if(self::$currentController->getUseIoCForView() === true)
 				{
 					$parsedUrl = HttpContext::getParsedUrl();
 					require(IoC::Resolve($parsedUrl->getModuleName().$parsedUrl->getControllerName().$parsedUrl->getActionName().'View'));
@@ -230,9 +273,8 @@ class Workbench
 				HttpContext::setPageContent(ob_get_contents());
 				ob_end_clean();
 
-				// Search layout in app first, then in current controller
-				// module
-				$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
+				// Search layout in current module theme first, common themes folder
+				$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->getLayout().'.php';
 
 				if(file_exists($layoutFile))
 				{
@@ -245,12 +287,8 @@ class Workbench
 				}
 				else
 				{
-					$themeNamespace = self::getCurrentModule()->getInstance()->GetThemesNamespace().'\\'.self::$currentTheme->getName().'\\Theme';
-					$moduleThemeObject = new $themeNamespace;
-
-					unset($themeNamespace);
-
-					$layoutFile = $moduleThemeObject->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
+					//Search layout in 
+					$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
 					if(file_exists($layoutFile))
 					{
 						Check::FileIsReadable($layoutFile);
@@ -278,56 +316,27 @@ class Workbench
 			}
 
 			self::getCurrentController()->AfterAction();
+			
 			unset($fileName);
 			unset($layoutFile);
+			unset($layoutName);
 		}
+		
 		unset($action);
 	}
 
+	
+	/* PRIVATE FUNCTIONS */
+	
 	/**
-	 * Loads theme for application.
-	 * If not found - the default theme from configuration file will be
-	 * used.
+	 * Includes module theme as a child of module theme if found. 
 	 */
-	public static function LoadTheme()
+	private static function IncludeModuleTheme()
 	{
-		$currentThemeName = Session::GetValue('theme');
-		if(!isset($currentThemeName))
+		$childThemeNamespace = self::getCurrentModule()->getNamespace().'\Themes\\'.self::$currentTheme->GetName().'\Theme';
+		if(FileSystem::FileExists($childThemeNamespace.'.php'))
 		{
-			$currentThemeName = Config::getDefaultTheme();
-			Session::SetValue('theme', $currentThemeName);
-		}
-
-		foreach (Config::getInstalledThemes() as $themeName=>$themeClass)
-		{
-			if(strtolower($themeName) === strtolower($currentThemeName))
-			{
-				self::$currentTheme = new $themeClass();
-				break;
-			}
-		}
-
-		if(self::$currentTheme === null)
-		{
-			throw new SpherusException(printf(EXCEPTION_THEME_NOT_FOUND, $currentThemeName));
-		}
-
-		unset($currentThemeName);
-	}
-
-	/**
-	 * Loads controller attributes (layouts, helpers etc).
-	 *
-	 * @param ControllerBase $controller The controller object to parse.
-	 * @throws SpherusException When $controllerObject parameter is null or
-	 *         empty.
-	 */
-	private static function LoadControllerAttributes($controller)
-	{
-		Check::IsNullOrEmpty($controller);
-		if(!isset($controller->layout))
-		{
-			$controller->layout = Config::getDefaultLayout();
+			self::$currentTheme->setChildTheme(new $childThemeNamespace);
 		}
 	}
 
@@ -342,7 +351,7 @@ class Workbench
 	/**
 	 * Add an module to the modules collection
 	 *
-	 * @param Spherus\Interfaces\Imodule $module The module to add
+	 * @param ModuleBase $module The module to add
 	 * @throws SpherusException When $module parameter is null or empty
 	 * @throws SpherusException When module contains a null or empty name
 	 * @throws SpherusException When module collection already contains a

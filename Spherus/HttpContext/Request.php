@@ -87,6 +87,7 @@ class Request
 	 */
 	private static $cookies = array();
 
+	
 	/* PROPERTIES */
 
 	/**
@@ -159,6 +160,7 @@ class Request
 		return self::$urlReferrer;
 	}
 
+	
 	/* PRIVATE METHODS */
 
 	/**
@@ -223,6 +225,7 @@ class Request
 		self::$files = $_FILES;
 	}
 
+	
 	/* PUBLIC METHODS */
 
 	/**

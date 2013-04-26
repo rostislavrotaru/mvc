@@ -10,6 +10,8 @@
  */
 namespace Spherus\HttpContext;
 
+use Spherus\HttpContext\ParsedUrl;
+
 /**
  * Class that represents the http context object
  *
@@ -29,6 +31,7 @@ class HttpContext
 		Request::Initialize();
 		self::InitializeVariables();
 	}
+	
 
 	/* FIELDS */
 
@@ -54,9 +57,9 @@ class HttpContext
 	private static $pageContent = null;
 
 	/**
-	 * Defines RouteHandler url parsing result
+	 * Defines RouteHandler url parsing result object
 	 *
-	 * @var Spherus\HttpContext\ParsedUrl
+	 * @var ParsedUrl
 	 */
 	private static $parsedUrl = null;
 
@@ -84,9 +87,10 @@ class HttpContext
 	}
 
 	/**
-	 * Gets RouteHandler url parsing result
+	 * Gets RouteHandler url parsing result object
 	 *
 	 * @return ParsedUrl
+	 * @var ParsedUrl
 	 */
 	public static function getParsedUrl()
 	{

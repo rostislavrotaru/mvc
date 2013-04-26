@@ -14,6 +14,7 @@
 	 */
 	class Config extends SpherusConfig
 	{
+		
 		/* FIELDS */
 		
 		/**
@@ -21,44 +22,45 @@
 		 *
 		 * @var array
 		 */
-		private static $installedModules = array
+		private static $installedModuleNames = array
 		(
-			'Main' => 'App\Modules\Main\Module'
+			'Main' => 'App\Modules\Main'
 		);
 		
 		/**
-		 * Defines installed themes array
+		 * Defines installed theme names array
 		 *
 		 * @var array
 		 */
-		private static $installedThemes = array
+		private static $installedThemesNames = array
 		(
-			'Standard' => 'App\Themes\Standard\Theme'
+			'Standard' => 'App\Themes\Standard'
 		);
 
 		
 		/* PROPERTIES */
 		
 		/**
-		 * Gets installed modules array
+		 * Gets the list of installed module names
 		 *
-		 * @var array
+		 * @return array
 		 */
-		public static function getInstalledModules()
+		public static function getInstalledModuleNames()
 		{
-			return self::$installedModules;
+			return self::$installedModuleNames;
 		}
 		
 		/**
-		 * Gets installed themes array
+		 * Gets the list of installed theme names
 		 *
 		 * @var array
 		 */
-		public static function getInstalledThemes()
+		public static function getInstalledThemesNames()
 		{
-			return self::$installedThemes;
+			return self::$installedThemesNames;
 		}
 
+		
 		/* PUBLIC METHODS */
 
 		/**
@@ -66,13 +68,11 @@
 		 */
 		public static function Initialize()
 		{
-			parent::Initialize();
-			
 			self::SetIniDirectives();
 			self::AddRoutes();
-			
 		}
 
+		
 		/* PRIVATE METHODS */
 
 		/**

@@ -108,7 +108,7 @@
 				throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_EXISTS, $fileName));
 			}
 		}
-
+		
 		/**
 		 * Check if file is readable
 		 *

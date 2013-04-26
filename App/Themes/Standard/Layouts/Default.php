@@ -1,13 +1,21 @@
 <?php
 use Spherus\HttpContext\HttpContext;
 use Spherus\Helpers\HtmlHelper;
+use Spherus\Core\Workbench;
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <?php
-echo HtmlHelper::Css(THEME_CSS . 'cssser');
-echo HtmlHelper::Css(THEME_CSS . 'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'cssser');
 ?>
 </head>
 <body>

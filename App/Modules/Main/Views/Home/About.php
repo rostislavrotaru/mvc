@@ -1,7 +1,6 @@
 <?php
 use Spherus\Core\Workbench;
-
+echo ('Current layout: ' . Workbench::getCurrentController()->getLayout() . '<br />');
 echo ('about view<br />');
-echo ('Current layout: ' . Workbench::getCurrentController()->layout . '<br />');
 ?>
 <a href="/">index</a>
