@@ -13,9 +13,10 @@
 		 * Defines the child theme object
 		 * @var ITheme
 		 */
-		private $childTheme = null;
+		private $childTheme = 'Standard';
 		
 		
+		/* PROPERTIES */
 		/* PROPERTIES */
 		
 		/* (non-PHPdoc)
@@ -34,47 +35,44 @@
 			$this->childTheme = $childTheme;
 		}
 		
+		/* (non-PHPdoc)
+		 * @see \Spherus\Interfaces\ITheme::getName()
+		*/
+		public function getName()
+		{
+			return $this->name;
+		}
 		
-		/* METHODS */
+		/*
+		 * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getCssPath()
+		*/
+		public function getCssPath()
+		{
+			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
+		}
 		
-		/* (non-PHPdoc)
-		 * @see \Spherus\Interfaces\ITheme::GetName()
-		 */
-		public function GetName() 
+		/*
+		 * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getImagesPath()
+		*/
+		public function getImagesPath()
 		{
-			// TODO Auto-generated method stub
+			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
 		}
-	
-		/* (non-PHPdoc)
-		 * @see \Spherus\Interfaces\ITheme::GetCssPath()
-		 */
-		public function GetCssPath() 
+		
+		/*
+		 * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getLayoutsPath()
+		*/
+		public function getLayoutsPath()
 		{
-			// TODO Auto-generated method stub
+			return __DIR__.SEPARATOR.'Layouts';
 		}
-	
-		/* (non-PHPdoc)
-		 * @see \Spherus\Interfaces\ITheme::GetImagesPath()
-		 */
-		public function GetImagesPath() 
+		
+		/*
+		 * (non-PHPdoc) @see \Spherus\Interfaces\ITheme::getScriptsPath()
+		*/
+		public function getScriptsPath()
 		{
-			// TODO Auto-generated method stub
-		}
-	
-		/* (non-PHPdoc)
-		 * @see \Spherus\Interfaces\ITheme::GetLayoutsPath()
-		 */
-		public function GetLayoutsPath()
-		{
-			// TODO Auto-generated method stub
-		}
-	
-		/* (non-PHPdoc)
-		 * @see \Spherus\Interfaces\ITheme::GetScriptsPath()
-		 */
-		public function GetScriptsPath() 
-		{
-			// TODO Auto-generated method stub
+			return '/App/Themes/'.$this->name.SEPARATOR.'scripts';
 		}
 		
 	}

@@ -18,7 +18,6 @@ use Spherus\Routing\RouteManager;
 use Spherus\Core\Base\ModuleBase;
 use Spherus\Core\Base\ControllerBase;
 use Spherus\IoC\IoC;
-use Spherus\Interfaces\ITheme;
 use Spherus\Common\FileSystem;
 use Spherus\Core\Base\ThemeBase;
 
@@ -50,7 +49,7 @@ class Workbench
 	/**
 	 * Defines the Workbench current theme object
 	 *
-	 * @var ITheme
+	 * @var ThemeBase
 	 */
 	private static $currentTheme = null;
 
@@ -265,7 +264,6 @@ class Workbench
 				{
 					$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
 					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
-					
 					Check::FileExists($fileName);
 					require($fileName);
 				}
@@ -274,9 +272,19 @@ class Workbench
 				ob_end_clean();
 
 				// Search layout in current module theme first, common themes folder
-				$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->getLayout().'.php';
+				$moduleTheme = self::$currentTheme->getChildTheme();
+				$layoutFile = null;
+				if(isset($moduleTheme))
+				{
+					$layoutFile = $moduleTheme->getLayoutsPath().SEPARATOR.self::$currentController->getLayout().'.php';
+				}
 
-				if(file_exists($layoutFile))
+				if(!FileSystem::FileExists($layoutFile))
+				{
+					$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->getLayout().'.php';
+				}
+
+				if(FileSystem::FileExists($layoutFile))
 				{
 					Check::FileIsReadable($layoutFile);
 					ob_start();
@@ -287,23 +295,7 @@ class Workbench
 				}
 				else
 				{
-					//Search layout in 
-					$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->layout.'.php';
-					if(file_exists($layoutFile))
-					{
-						Check::FileIsReadable($layoutFile);
-						ob_start();
-						require ($layoutFile);
-						HttpContext::setPageContent(ob_get_contents());
-						ob_end_clean();
-						self::ProcessPageContent();
-					}
-					else
-					{
-						throw new SpherusException(sprintf(EXCEPTION_LAYOUT_NOT_FOUND, self::$currentController->layout));
-					}
-
-					unset($moduleThemeObject);
+					throw new SpherusException(sprintf(EXCEPTION_LAYOUT_NOT_FOUND, self::$currentController->getLayout()));
 				}
 			}
 			else

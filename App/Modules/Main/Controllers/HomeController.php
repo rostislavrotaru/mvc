@@ -13,6 +13,6 @@
 
 		public function about()
 		{
-			 //$this->layout = 'site';
+			 $this->setLayout('site');
 		}
 	}

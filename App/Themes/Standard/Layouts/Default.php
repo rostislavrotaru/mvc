@@ -8,17 +8,11 @@ use Spherus\Core\Workbench;
 <head>
 <?php
 echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
 echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'cssser');
 ?>
 </head>
 <body>
+this is layout from global theme
 <?php echo HttpContext::getPageContent();?>
 </body>
 </html>
