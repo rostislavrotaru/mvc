@@ -34,6 +34,7 @@
 
 	// Exception constants
 	define('EXCEPTION_SESSION_START_FAILURE', 'Failed to start session.');
+	define('EXCEPTION_COMPONENT_ALREADY_LOADED', 'The component with name "%s" is already loaded.');
 	define('EXCEPTION_FAILED_LOAD_CLASS', 'Failed to load the class "%s".');
 	define('EXCEPTION_MISSING_EXTENSION', 'The required extension not found: "%s". Please install it and retry.');
 	define('EXCEPTION_FAILED_ARCHIVE_EXTRACTION', 'Failed to extract archive: "%s".');
