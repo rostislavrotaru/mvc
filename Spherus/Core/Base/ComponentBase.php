@@ -19,4 +19,36 @@
 	abstract class ComponentBase
 	{
 		
+		/* FIELDS */
+		
+		/**
+		 * Defines the component name.
+		 * 
+		 * @var string
+		 */
+		private $name = null;
+		
+		
+		/* PROPERTIES */
+	
+		/**
+		 * Gets the component name.
+		 * 
+		 * @var string
+		 */
+		public function getName()
+		{
+			return $this->name;
+		}
+	
+		/**
+		 * Sets the component name.
+		 * 
+		 * @param string $name The component name
+		 */
+		public function setName($name)
+		{
+			$this->name = $name;
+		}
+
 	}
