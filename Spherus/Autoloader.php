@@ -8,7 +8,7 @@
  * @link http://spherus.net
  * @since 3.0
  */
-namespace Spherus\Core;
+namespace Spherus;
 
 /**
  * Class with autoloading functinality
@@ -117,4 +117,4 @@ class Autoloader
 	}
 }
 
-spl_autoload_register(array('Spherus\Core\Autoloader','Autoload'));
+spl_autoload_register(array('Spherus\Autoloader','Autoload'));
