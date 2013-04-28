@@ -45,6 +45,12 @@
 		 */
 		private $useIoCForView = false;
 		
+		/**
+		 * Defines the controller page title
+		 * @var string
+		 */
+		private $pageTitle = null; 
+		
 		
 		/* PROPERTIES */
 		
@@ -108,6 +114,26 @@
 		public function setUseIoCForView($useIoCForView)
 		{
 			$this->useIoCForView = (boolean)$useIoCForView;
+		}
+		
+		/**
+		 * Gets the page title
+		 *
+		 * @var string
+		 */
+		public function getPageTitle()
+		{
+			return $this->pageTitle;
+		}
+		
+		/**
+		 * Sets the page title
+		 *
+		 * @param string $pageTitle The page title to set
+		 */
+		public function setPageTitle($pageTitle)
+		{
+			$this->pageTitle = $pageTitle;
 		}
 		
 		
