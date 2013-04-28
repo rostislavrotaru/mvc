@@ -48,7 +48,25 @@
 		 */
 		private $dependingComponents = []; 
 		
+		/**
+		 * Determine the ComponentBase version.
+		 * @var string
+		 */
+		private $version = null; 
 		
+		/**
+		 * Determine the ComponentBase author.
+		 * @var string
+		 */
+		private $author = null;
+		
+		/**
+		 * Determine the ComponentBase description.
+		 * @var string
+		 */
+		private $description = null;
+		
+
 		/* PROPERTIES */
 	
 		/**
@@ -83,7 +101,6 @@
 			return $this->dependingComponents;
 		}
 	
-		
 		/**
 		 * Gets an array of depending ComponentBase objects.
 		 * 
@@ -94,6 +111,63 @@
 			$this->dependingComponents = $dependingComponents;
 		}
 
+		/**
+		 * Gets the ComponentBase version.
+		 * @return string
+		 */
+		public function getVersion()
+		{
+			return $this->version;
+		}
+		
+		/**
+		 * Sets the ComponentBase version.
+		 * 
+		 * @param string $version The version of ComponentBase to set.
+		 */
+		public function setVersion($version)
+		{
+			$this->version = $version;
+		}
+		
+		/**
+		 * Gets the ComponentBase author.
+		 * @return string
+		 */
+		public function getAuthor()
+		{
+			return $this->author;
+		}
+		
+		/**
+		 * Sets the ComponentBase author.
+		 *
+		 * @param string $author The author of ComponentBase to set.
+		 */
+		public function setAuthor($author)
+		{
+			$this->author = $author;
+		}
+		
+		/**
+		 * Gets the ComponentBase description.
+		 * @return string
+		 */
+		public function getDescription()
+		{
+			return $this->description;
+		}
+		
+		/**
+		 * Sets the ComponentBase description.
+		 *
+		 * @param string $description The description of ComponentBase to set.
+		 */
+		public function setDescription($description)
+		{
+			$this->description = $description;
+		}
+		
 
 		/* PUBLIC FUNCTIONS */
 		
@@ -106,6 +180,7 @@
 		public function AddDependingComponent(ComponentBase $dependingComponent)
 		{
 			Check::IsNullOrEmpty($dependingComponent);
+			
 			if($this->GetDependingComponentByName($dependingComponent->getName()) == null)
 			{
 				$this->dependingComponents[] = $dependingComponent;
