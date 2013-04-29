@@ -13,7 +13,7 @@
 		
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
-	use Spherus\Core\Autoloader;
+	use Spherus\Autoloader;
 			
 	/**
 	 * Class that represents a dependencies factory
