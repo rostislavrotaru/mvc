@@ -12,6 +12,7 @@ namespace Spherus\HttpContext;
 
 use Spherus\Core\SpherusException;
 use Spherus\Core\Check;
+use Spherus\Routing\Route;
 
 /**
  * Class that represents http context parsed url
@@ -31,7 +32,8 @@ class ParsedUrl
 	 * @param string $controllerName The ParsedUrl controller name
 	 * @param string $actionName The ParsedUrl action name
 	 * @param array $parameters The ParsedUrl parameters array
-	 * @param Spherus\Core\Route $route The ParsedUrl Route
+	 * @param Route $route The ParsedUrl Route
+	 * @param string $query The ParsedUrl query parameters
 	 *
 	 * @throws SpherusException When $moduleName parameter is null or empty
 	 * @throws SpherusException When $controllerName parameter is null or empty
@@ -39,7 +41,7 @@ class ParsedUrl
 	 * @throws SpherusException When $parameters parameter is null
 	 * @throws SpherusException When $route parameter is null or empty
 	 */
-	public function __construct($moduleName, $controllerName, $actionName, $parameters, $route)
+	public function __construct($moduleName, $controllerName, $actionName, $parameters, $route, $query = null)
 	{
 		Check::IsNullOrEmpty($moduleName);
 		Check::IsNullOrEmpty($controllerName);
@@ -52,6 +54,7 @@ class ParsedUrl
 		$this->actionName = $actionName;
 		$this->parameters = $parameters;
 		$this->route = $route;
+		$this->query = $query;
 	}
 
 	/* FIELDS */
@@ -87,9 +90,16 @@ class ParsedUrl
 	/**
 	 * Defines the ParsedUrl object Route
 	 *
-	 * @var Spherus\Routing\Route
+	 * @var Route
 	 */
 	private $route = null;
+	
+	/**
+	 * Defines the ParsedUrl query parameters
+	 *
+	 * @var string
+	 */
+	private $query = null; 
 
 	/* PROPERTIES */
 
@@ -142,4 +152,15 @@ class ParsedUrl
 	{
 		return $this->route;
 	}
+
+	/**
+	 * Gets parsed url query
+	 *
+	 * @return string
+	 */
+	public function getQuery()
+	{
+		return $this->query;
+	}
+
 }

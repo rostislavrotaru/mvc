@@ -52,7 +52,7 @@ class DefaultRouter implements IRouter
 		$registeredRoutes = RouteManager::getRegisteredRoutes();
 		Check::IsNullOrEmpty($registeredRoutes);
 
-		$splittedUrl = preg_split('/\//', Request::getCurrentUrl(), null, PREG_SPLIT_NO_EMPTY);
+		$splittedUrl = preg_split('/\//', parse_url(Request::getCurrentUrl())['path'], null, PREG_SPLIT_NO_EMPTY);
 
 		foreach($registeredRoutes as $route)
 		{
@@ -194,7 +194,9 @@ class DefaultRouter implements IRouter
 		unset($counter);
 		unset($predefinedParameterDifferences);
 		
-		return new ParsedUrl($this->result[':module'], $this->result[':controller'], $this->result[':action'], $this->parameters, $this->currentRoute);
+		$query = isset(parse_url(Request::getCurrentUrl())['query']) ? parse_url(Request::getCurrentUrl())['query'] : null;
+		
+		return new ParsedUrl($this->result[':module'], $this->result[':controller'], $this->result[':action'], $this->parameters, $this->currentRoute, $query);
 	}
 	
 	/**
