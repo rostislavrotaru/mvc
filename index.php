@@ -10,5 +10,4 @@ include 'Spherus/Autoloader.php';
 
 use Spherus\Components\Data\Component;
 $component = new Component();
-$component->setName('DataEngine');
-echo $component->getName();
+echo $component->getDescription();
