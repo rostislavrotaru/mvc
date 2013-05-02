@@ -1,7 +1,7 @@
 <?php
 
 //****************************************************
-//Replace here the path that framework is located
+//Replace here the path that the framework is located
 set_include_path('/Volumes/DATA/Programming/SPHERUS');
 define('ROOT', __DIR__.'/../');
 include 'Spherus/Autoloader.php';

@@ -34,6 +34,9 @@
 		
 		/* PRIVATE FUNCTIONS */
 		
+		/**
+		 * Sets component Author, Description, Name and other attributes.
+		 */
 		private function SetComponentAttributes()
 		{
 			$this->setAuthor('SPHERUS');
