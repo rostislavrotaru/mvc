@@ -22,16 +22,6 @@
 	abstract class ComponentBase
 	{
 		
-		/**
-		 * Initializes a new instance of ComponentBase class
-		 * 
-		 * @param string $name The name of component
-		 */
-		public function __construct($name)
-		{
-			$this->setName($name);
-		}
-		
 		/* FIELDS */
 		
 		/**

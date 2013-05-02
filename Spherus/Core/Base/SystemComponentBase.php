@@ -18,12 +18,5 @@
 	 */
 	abstract class SystemComponentBase extends ComponentBase
 	{
-		/* CONSTRUCTOR */
-		
-		/**
-		 * Initializes a new instance of SystemComponentBase class
-		 *
-		 * @param string $name The name of component
-		 */
-		public abstract function __construct($name);
+
 	}

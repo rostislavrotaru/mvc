@@ -117,4 +117,5 @@ class Autoloader
 	}
 }
 
-spl_autoload_register(array('Spherus\Autoloader','Autoload'));
+spl_autoload_extensions(".php");
+spl_autoload_register();
