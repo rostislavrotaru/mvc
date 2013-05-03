@@ -16,7 +16,7 @@
 	 * Class that represents data engine component for SPHERUS Framework
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-	 * @package spherus.components
+	 * @package spherus.components.data
 	 */
 	class Component extends SystemComponentBase
 	{
