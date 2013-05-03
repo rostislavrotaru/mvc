@@ -11,7 +11,7 @@
 	namespace Spherus\Components\Data\Base;
 	
 	/**
-	 * Class that represents data engine database
+	 * Class that represents a database
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.components.data

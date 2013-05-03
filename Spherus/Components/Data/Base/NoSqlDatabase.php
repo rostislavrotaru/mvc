@@ -11,12 +11,12 @@
 	namespace Spherus\Components\Data\Base;
 	
 	/**
-	 * Class that represents data engine sql database
+	 * Class that represents a nosql database
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.components.data
 	 */
-	abstract class SqlDatabase extends Database
+	abstract class NoSqlDatabase extends Database
 	{
 		
 	}
