@@ -15,7 +15,7 @@
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.core
 	 */
-	namespace Spherus\Core;
+	namespace Spherus\Core\Enums;
 
 	interface RequestType
 	{
