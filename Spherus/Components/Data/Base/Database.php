@@ -19,4 +19,33 @@
 	abstract class Database
 	{
 		
+		/* FIELDS */
+		
+		/**
+		 * Defines the database connection string
+		 * @var string
+		 */
+		private $connectionString = null;
+		
+		
+		/* PROPERTIES */
+	
+		/**
+		 * Gets the database connection string.
+		 * @var string
+		 */
+		public function getConnectionString()
+		{
+			return $this->connectionString;
+		}
+	
+		/**
+		 * Sets the database connection string.
+		 * @param string $connectionString The connection string to set.
+		 */
+		public function setConnectionString($connectionString)
+		{
+			$this->connectionString = $connectionString;
+		}
+
 	}
