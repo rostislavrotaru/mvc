@@ -15,7 +15,7 @@
 		 *
 		 * @var string
 		 */
-		private $name = 'Standard';
+		private $name = 'standard';
 		
 		/**
 		 * Defines the child theme object
@@ -55,7 +55,7 @@
          */
 		public function getCssPath()
 		{
-			return strtolower('../Themes/'.$this->name.'/Css');
+			return '/themes/'.$this->name.'/css';
 		}
 
 		/*

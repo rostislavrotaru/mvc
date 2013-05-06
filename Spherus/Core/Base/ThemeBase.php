@@ -75,7 +75,7 @@
          */
 		public function GetCssPath()
 		{
-			return '/App/Themes/'.$this->name.'/Css';
+			return '../app/../themes/'.$this->name.'/css';
 		}
 		
 		/**

@@ -21,7 +21,6 @@ use Spherus\HttpContext\Session;
 use Spherus\Routing\RouteManager;
 use App\Common\Config;
 
-
 // Base require files
 require ('Autoloader.php');
 

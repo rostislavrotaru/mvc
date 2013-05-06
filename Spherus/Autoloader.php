@@ -68,7 +68,7 @@ class Autoloader
 			$fileName = ROOT.str_ireplace('\\', '/', $className).'.php';
 			if(file_exists($fileName))
 			{
-				return require(ROOT.str_ireplace('\\', '/', $className).'.php');
+				return require($fileName);
 			}
 		}
 		
@@ -117,5 +117,6 @@ class Autoloader
 	}
 }
 
-//spl_autoload_extensions(".php");
+spl_autoload_extensions('.php');
+spl_autoload_register();
 spl_autoload_register(array('Spherus\Autoloader', 'Autoload'));
