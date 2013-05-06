@@ -11,7 +11,8 @@
 	namespace Spherus\Components\Data\Providers;
 	
 	use Spherus\Components\Data\Component\Base\SqlDatabase;
-	
+	use Spherus\Core\SpherusException;
+		
 	/**
 	 * Class that represents a MySql database
 	 *
@@ -29,12 +30,12 @@
 		{
 			try
 			{
-				$connectionString = $this->databaseConfig['provider'].':host='.$this->databaseConfig['host'].'; port='.$this->databaseConfig['port'].'; dbname='.$this->databaseConfig['name'];
-				return new \PDO($connectionString, $this->databaseConfig['user'], $this->databaseConfig['password']);
+				$connectionString = 'mysql:host='.$this->config->getHost().'; port='.$this->config->getPort().'; dbname='.$this->config->getDatabaseName();
+				return new \PDO($connectionString, $this->config->getUserName(), $this->config->getUserPassword(), $this->config->getOptions());
 			}
 			catch (\Exception $e)
 			{
-				throw new DataEngineException($e->getMessage());
+				throw new SpherusException($e->getMessage(), $e->getCode(), $e);
 			}
 		}
 	}

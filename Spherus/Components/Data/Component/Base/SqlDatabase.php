@@ -12,9 +12,10 @@
 	
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
-	use Spherus\Components\Data\DatabaseParameter;
-	use Spherus\Components\Data\DatabaseParameterType;
-		
+	use Spherus\Components\Data\Component\DatabaseParameter;
+	use Spherus\Components\Data\Component\DatabaseParameterType;
+	use Spherus\Components\Data\Component\DatabaseConfig;
+			
 				/**
 	 * Class that represents a sql database
 	 *
@@ -23,6 +24,20 @@
 	 */
 	abstract class SqlDatabase extends Database
 	{
+		
+		/* CONSTRUCTOR */
+		
+		/**
+		 * Initializes a new instance of SqlDatabase class.
+		 * 
+		 * @param DatabaseConfig $config The database configuration file.
+		 * @throws SpherusException When $config file is null or empty.
+		 */
+		public function __construct(DatabaseConfig $config)
+		{
+			Check::IsNullOrEmpty($config);
+			$this->config = $config;
+		}
 		
 		/* FIELDS */
 		
@@ -39,6 +54,12 @@
 		 * @var boolean
 		 */
 		protected $connected = false;
+		
+		/**
+		 * Defines the database configuration object.
+		 * @var DatabaseConfig
+		 */
+		protected $config = null; 
 		
 		
 		/* PUBLIC METHODS */
