@@ -26,7 +26,7 @@
 		 */
 		private function RegisterDependencies()
 		{
-			IoC::Register(new Dependency('HomeController', 'App\Modules\Main\Controllers\HomeController', Workbench::GetModuleByName('Main')));
+			IoC::Register(new Dependency('HomeController', 'App\Modules\Main\Secured\Controllers\HomeController', Workbench::GetModuleByName('Main')));
 		}
 					
 	}

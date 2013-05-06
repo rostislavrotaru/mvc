@@ -1,6 +1,6 @@
 <?php
 
-	namespace App\Modules\Main\Services;
+	namespace App\Modules\Main\Secured\Services;
 
 	use Spherus\IoC\IoC;
 	use Spherus\IoC\Dependency;

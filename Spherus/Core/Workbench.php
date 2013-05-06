@@ -262,7 +262,7 @@ class Workbench
 				}
 				else 
 				{
-					$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'views'.SEPARATOR.
+					$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'Secured'.SEPARATOR.'views'.SEPARATOR.
 					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
 					Check::FileExists($fileName);
 					require($fileName);

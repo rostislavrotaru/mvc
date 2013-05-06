@@ -1,6 +1,6 @@
 <?php
 
-	namespace App\Modules\Main\Controllers;
+	namespace App\Modules\Main\Secured\Controllers;
 
 	use Spherus\Core\Base\ControllerBase;
 	
