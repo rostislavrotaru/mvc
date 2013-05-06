@@ -7,8 +7,8 @@ use Spherus\Core\Workbench;
 <html>
 <head>
 <?php
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'style');
-echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().SEPARATOR.'cssser');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().'/style');
+echo HtmlHelper::Css(Workbench::getCurrentTheme()->getCssPath().'/cssser');
 ?>
 </head>
 <body>

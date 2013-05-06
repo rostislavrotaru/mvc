@@ -15,4 +15,15 @@
  * @author Rostislav Rotaru
  * @package spherus
  */
+
+//PATHS*****************************************************************
+
+// Root path
+define('ROOT', __DIR__.'/../');
+
+// Application modules path
+define('MODULES', __DIR__.'/Modules/');
+
+//**********************************************************************
+
 require (__DIR__.'/../Spherus/Boot.php');

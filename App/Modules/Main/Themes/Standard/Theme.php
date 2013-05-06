@@ -17,7 +17,6 @@
 		
 		
 		/* PROPERTIES */
-		/* PROPERTIES */
 		
 		/* (non-PHPdoc)
 		 * @see \Spherus\Interfaces\ITheme::getChildTheme()
@@ -48,7 +47,7 @@
 		*/
 		public function getCssPath()
 		{
-			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
+			return '/Css';
 		}
 		
 		/*
@@ -56,7 +55,7 @@
 		*/
 		public function getImagesPath()
 		{
-			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
+			return '/App/Themes/'.$this->name.'/Css';
 		}
 		
 		/*
@@ -64,7 +63,7 @@
 		*/
 		public function getLayoutsPath()
 		{
-			return __DIR__.SEPARATOR.'Layouts';
+			return __DIR__.'/Layouts';
 		}
 		
 		/*
@@ -72,7 +71,7 @@
 		*/
 		public function getScriptsPath()
 		{
-			return '/App/Themes/'.$this->name.SEPARATOR.'scripts';
+			return '/App/Themes/'.$this->name.'/scripts';
 		}
 		
 	}

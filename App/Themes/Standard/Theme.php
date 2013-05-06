@@ -55,7 +55,7 @@
          */
 		public function getCssPath()
 		{
-			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
+			return strtolower('../Themes/'.$this->name.'/Css');
 		}
 
 		/*
@@ -63,7 +63,7 @@
          */
 		public function getImagesPath()
 		{
-			return '/App/Themes/'.$this->name.SEPARATOR.'Css';
+			return '/App/Themes/'.$this->name.'/Css';
 		}
 
 		/*
@@ -71,7 +71,7 @@
          */
 		public function getLayoutsPath()
 		{
-			return __DIR__.SEPARATOR.'Layouts';
+			return __DIR__.'/Layouts';
 		}
 
 		/*
@@ -79,6 +79,6 @@
          */
 		public function getScriptsPath()
 		{
-			return '/App/Themes/'.$this->name.SEPARATOR.'scripts';
+			return '/App/Themes/'.$this->name.'/scripts';
 		}
 	}

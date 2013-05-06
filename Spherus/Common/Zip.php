@@ -43,7 +43,7 @@ class Zip
 		{
 			if(!isset($destination))
 			{
-				$destination = pathinfo($fileName, PATHINFO_DIRNAME).DIRECTORY_SEPARATOR.pathinfo($fileName, PATHINFO_FILENAME);
+				$destination = pathinfo($fileName, PATHINFO_DIRNAME).'/'.pathinfo($fileName, PATHINFO_FILENAME);
 			}
 			$archivedFile->extractTo($destination);
 			$archivedFile->close();

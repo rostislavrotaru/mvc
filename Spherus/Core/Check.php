@@ -10,6 +10,7 @@
 	 */
 	namespace Spherus\Core;
 
+	use Spherus\Common\FileSystem;
 	/**
 	 * Class that represents functionality for various checks
 	 *
@@ -103,7 +104,7 @@
 		 */
 		public static function FileExists($fileName)
 		{
-			if(!file_exists($fileName))
+			if(!FileSystem::FileExists($fileName))
 			{
 				throw new SpherusException(sprintf(EXCEPTION_FILE_NOT_EXISTS, $fileName));
 			}

@@ -262,8 +262,7 @@ class Workbench
 				}
 				else 
 				{
-					$fileName = MODULES.SEPARATOR.HttpContext::getParsedUrl()->getModuleName().SEPARATOR.'Secured'.SEPARATOR.'views'.SEPARATOR.
-					HttpContext::getParsedUrl()->getControllerName().SEPARATOR.$action.'.php';
+					$fileName = MODULES.HttpContext::getParsedUrl()->getModuleName().'/Secured/views/'.HttpContext::getParsedUrl()->getControllerName().'/'.$action.'.php';
 					Check::FileExists($fileName);
 					require($fileName);
 				}
@@ -276,12 +275,12 @@ class Workbench
 				$layoutFile = null;
 				if(isset($moduleTheme))
 				{
-					$layoutFile = $moduleTheme->getLayoutsPath().SEPARATOR.self::$currentController->getLayout().'.php';
+					$layoutFile = $moduleTheme->getLayoutsPath().'/'.self::$currentController->getLayout().'.php';
 				}
 
 				if(!FileSystem::FileExists($layoutFile))
 				{
-					$layoutFile = self::$currentTheme->getLayoutsPath().SEPARATOR.self::$currentController->getLayout().'.php';
+					$layoutFile = self::$currentTheme->getLayoutsPath().'/'.self::$currentController->getLayout().'.php';
 				}
 
 				if(FileSystem::FileExists($layoutFile))
@@ -326,7 +325,7 @@ class Workbench
 	private static function IncludeModuleTheme()
 	{
 		$childThemeNamespace = self::getCurrentModule()->getNamespace().'\Themes\\'.self::$currentTheme->GetName().'\Theme';
-		if(FileSystem::FileExists($childThemeNamespace.'.php'))
+		if(FileSystem::FileExists(ROOT.$childThemeNamespace.'.php'))
 		{
 			self::$currentTheme->setChildTheme(new $childThemeNamespace);
 		}
