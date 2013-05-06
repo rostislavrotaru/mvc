@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\Data\Base;
+	namespace Spherus\Components\Data\Component\Base;
 	
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
@@ -226,7 +226,7 @@
 		 *
 		 * @return \PDO
 		 */
-		protected abstract function CreatePdoConnection();
+		public abstract function CreatePdoConnection();
 		
 		/**
 		 * If in database parameters array found out one - set the out values.

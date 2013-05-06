@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\Data\Base;
+	namespace Spherus\Components\Data\Component\Base;
 	
 	/**
 	 * Class that represents a database

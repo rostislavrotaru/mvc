@@ -8,6 +8,7 @@ include 'Spherus/Autoloader.php';
 //****************************************************
 
 
+
 use Spherus\Components\Data\Component;
 $component = new Component();
 echo $component->getDescription();

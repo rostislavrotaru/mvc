@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\Data;
+	namespace Spherus\Components\Data\Component;
 	
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;

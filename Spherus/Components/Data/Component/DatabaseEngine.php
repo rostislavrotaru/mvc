@@ -8,15 +8,16 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\Data\Base;
+	namespace Spherus\Components\Data\Component;
 	
+		
 	/**
-	 * Class that represents a nosql database
+	 * Class that represents a database engine
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.components.data
 	 */
-	abstract class NoSqlDatabase extends Database
+	class DatabaseEngine
 	{
 		
 	}
