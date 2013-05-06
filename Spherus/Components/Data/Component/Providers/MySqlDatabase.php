@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\Data\Providers;
+	namespace Spherus\Components\Data\Component\Providers;
 	
 	use Spherus\Components\Data\Component\Base\SqlDatabase;
 	use Spherus\Core\SpherusException;
