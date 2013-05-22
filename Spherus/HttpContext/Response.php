@@ -14,7 +14,7 @@
     use Spherus\Core\Check;
     use Spherus\Routing\RouteManager;
     use Spherus\Routing\Route;
-    use Spherus\Core\ResponseStatusType;
+    use Spherus\Core\Enums\ResponseStatusType;
 
     /**
      * Class that represents the http response object
@@ -30,7 +30,7 @@
         /**
          * Defines the HTTP response status.
          *
-         * @var Spherus\Core\ResponseStatusType
+         * @var ResponseStatusType
          */
         private static $status = ResponseStatusType::OK;
 
@@ -39,7 +39,7 @@
         /**
          * Gets the HTTP response status.
          *
-         * @return Spherus\Core\ResponseStatusType
+         * @return ResponseStatusType
          */
         public static function getStatus ()
         {
@@ -76,7 +76,7 @@
         /**
          * Sends header response status
          *
-         * @param Spherus\Core\ResponseStatusType $responseStatusType
+         * @param ResponseStatusType $responseStatusType
          *            The response status to send
          */
         public static function SendHeaderResponseStatus ($responseStatusType)

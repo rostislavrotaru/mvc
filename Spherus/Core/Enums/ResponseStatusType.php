@@ -17,7 +17,7 @@
 	 */
 	namespace Spherus\Core\Enums;
 
-	interface ResponseStatusType
+	class ResponseStatusType extends Enum
 	{
 		// Information
 		const _Continue = 100;
