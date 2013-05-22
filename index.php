@@ -7,7 +7,10 @@ include 'Spherus/Autoloader.php';
 //****************************************************
 
 
-use Spherus\Components\Data\Component;
+use Spherus\Components\Query\Component;
 
 $component = new Component();
 echo $component->getDescription();
+echo('<pre>');
+var_dump($component->getDependingComponents());
+echo('</pre>');

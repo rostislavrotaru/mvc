@@ -11,12 +11,12 @@
 	namespace Spherus\Components\Query;
 
 	use Spherus\Core\Base\SystemComponentBase;
-	
+		
 	/**
-	 * Class that represents data engine component for SPHERUS Framework
+	 * Class that represents query component for SPHERUS Framework
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-	 * @package spherus.components.data
+	 * @package spherus.components.query
 	 */
 	class Component extends SystemComponentBase
 	{
@@ -44,5 +44,6 @@
 			$this->setDescription('Sql query generator component for framework');
 			$this->setName('Query');
 			$this->setVersion('1.0.0');
+			$this->AddDependingComponent(new \Spherus\Components\Data\Component());
 		}
 	}
