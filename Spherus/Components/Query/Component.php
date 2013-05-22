@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\Data;
+	namespace Spherus\Components\Query;
 
 	use Spherus\Core\Base\SystemComponentBase;
 	
@@ -41,8 +41,8 @@
 		private function SetComponentAttributes()
 		{
 			$this->setAuthor('SPHERUS');
-			$this->setDescription('Data engine component for framework');
-			$this->setName('Data');
+			$this->setDescription('Sql query generator component for framework');
+			$this->setName('Query');
 			$this->setVersion('1.0.0');
 		}
 	}
