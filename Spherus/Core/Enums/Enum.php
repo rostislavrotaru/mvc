@@ -9,17 +9,17 @@
 	 * @since 3.0
 	 */
 
+	namespace Spherus\Core\Enums;
+
+	use Spherus\Core\Check;
+	use Spherus\Core\SpherusException;
+	
 	/**
 	 * Interface that represents the RequestType enum implementation
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.core
 	 */
-	namespace Spherus\Core\Enums;
-
-	use Spherus\Core\Check;
-	use Spherus\Core\SpherusException;
-	
 	abstract class Enum
 	{
 	    
