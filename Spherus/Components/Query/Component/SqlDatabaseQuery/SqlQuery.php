@@ -13,7 +13,7 @@
 	use Spherus\Core\Check;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
 									
-								/**
+	/**
      * Class that represents the sql database engine
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
