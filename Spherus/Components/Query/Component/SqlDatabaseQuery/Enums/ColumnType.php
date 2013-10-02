@@ -19,7 +19,7 @@
      * @package spherus.components.query
 	 *
 	 */
-	class Column extends Enum
+	class ColumnType extends Enum
 	{
 		const Entry = 'Entry';
 		const Exit_ = 'Exit';
