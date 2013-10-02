@@ -23,12 +23,21 @@
 		 * Initializes a new instance of SpherusException class
 		 *
 		 * @param string $message The exception message
-		 * @param strinf $code The exception code
+		 * @param long $code The exception code
 		 * @param Exception $internalException The internal exception
 		 */
 		function __construct($message, $code = null, $internalException = null)
 		{
-			parent::__construct($message, $code, $internalException);
+		    if(!is_long($code))
+		    {
+		    	$code = 0;
+		    }
+		    if(!$internalException instanceof \Exception)
+		    {
+		    	$internalException = null;
+		    }
+
+            parent::__construct($message, $code, $internalException);
 		}
 	}
 
