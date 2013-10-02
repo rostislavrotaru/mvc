@@ -27,9 +27,9 @@ class SqlEntity
     /**
     * Initializes a new instance of SqlObject class.
     * 
-    * @param SqlObjectType $objectType The sql type of object
+    * @param string $sqlEntityType The sql type of entity
     */
-    public function __construct(SqlEntityType $sqlEntityType)
+    public function __construct($sqlEntityType)
     {
         $this->sqlEntityType = $sqlEntityType;
     }

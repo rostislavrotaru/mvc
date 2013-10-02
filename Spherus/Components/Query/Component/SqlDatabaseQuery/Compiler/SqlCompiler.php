@@ -11,7 +11,8 @@
 	namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler;
 
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
-				/**
+    use pherus\Components\Query\Component\SqlDatabaseQuery\Enums\ColumnType;
+								/**
      * Class that represents the sql database engine compiler
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
@@ -77,6 +78,16 @@
 		public function VisitLiteral(SqlLiteral $sqlEntity)
 		{
 		    $this->context->AppendText($this->sqlTranslator->TranslateLiteral($sqlEntity));
+		}
+		
+		/**
+		 * Visits column entity
+		 *
+		 * @param SqlColumnExpression $sqlObject The SqlColumnExpression to visit.
+		 */
+		public function VisitColumn($sqlObject)
+		{
+		    $this->context->AppendText($this->translator->TranslateColumn($sqlObject, ColumnType::Entry));
 		}
 
     }

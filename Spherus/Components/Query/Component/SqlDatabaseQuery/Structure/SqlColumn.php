@@ -29,14 +29,16 @@
 		 * Initializes a new instance of SqlColumn object.
 		 * 
 		 * @param string $name The sql column name.
-		 * @param SqlTable $sqlTable The parent sql table object. 
+		 * @param SqlTable $sqlTable The parent sql table object.
+		 * @param string $alias The sql column alias. 
 		 */
-		public function __construct($name, SqlTable $sqlTable = null)
+		public function __construct($name, SqlTable $sqlTable = null, $alias = null)
 		{
 			parent::__construct(SqlEntityType::Column);
 			
 			$this->name = $name;
 			$this->sqlTable = $sqlTable;
+			$this->alias = $alias;
 		}
 		
 		
@@ -54,11 +56,18 @@
 		 */
 		private $name = null;
 		
+		/**
+		 * Determine the alias of sql column.
+		 * @var string
+		 */
+		private $alias = null;
+		
 		
 		/* PROPERTIES */
 	
 		/**
-		 * @return string The name of sql column.
+		 * @return The name of sql column.
+		 * @var string
 		 */
 		public function getName() 
 		{
@@ -74,11 +83,20 @@
 			return $this->sqlTable;
 		}
 	
+		/**
+		 * @return The alias of sql column.
+		 * @var string
+		 */
+		public function getAlis()
+		{
+		    return $this->alias;
+		}
+		
 	
 		/* PUBLIC METHODS */
 		
 		/**
-		 * Accepts visitor for the current sql object.
+		 * Accepts visitor for the current sql entity.
 		 * 
 		 * @param ISqlCompiler $visitor The visitor as SqlCompiler.
 		 */

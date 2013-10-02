@@ -13,7 +13,8 @@
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
-		
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlFactory;
+			
 		/**
      * Class that represents a sql table entity
      *
@@ -110,6 +111,19 @@
 		public function AcceptVisitor(SqlCompiler $visitor)
 		{
 			$visitor->VisitTable($this);
+		}
+		
+		/* PUBLIC METHODS */
+		
+		/**
+		 * Adds column to the sql table.
+		 *
+		 * @param string $name The column name.
+		 * @param string $alias The column alias.
+		 */
+		public function AddColumn($name, $alias = null)
+		{
+		    $this->columns[$name] = SqlFactory::Column($name, $this, $alias);
 		}
 	
 	}

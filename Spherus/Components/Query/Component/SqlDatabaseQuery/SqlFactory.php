@@ -10,6 +10,8 @@
 	 */
 	namespace Spherus\Components\Query\Component\SqlDatabaseQuery;
 					
+	use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlColumn;
+	
 	/**
      * Class that represents the sql database factory
      *
@@ -18,7 +20,21 @@
      */
 	class SqlFactory
 	{
-			
+	    /* COLUMNS */
+	    
+	    /**
+	     * Creates a sql table column.
+	     *
+	     * @param string $name The sql table column name.
+	     * @param SqlTable $sqlTable The parent SqlTable.
+	     * @param string $alias Column alias.
+	     *
+	     * @return SqlColumn Instantiated SqlColumn object
+	     */
+	    public static function Column($name, $sqlTable = null, $alias = null)
+	    {
+	        return new SqlColumn($name, $sqlTable, $alias);
+	    }
 	}
 
 ?>
