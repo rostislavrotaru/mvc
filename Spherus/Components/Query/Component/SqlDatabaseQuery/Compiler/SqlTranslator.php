@@ -10,7 +10,8 @@
 	 */
 	namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler;
 
-    /**
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
+	/**
      * Class that represents the sql database engine compiler
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
@@ -207,7 +208,29 @@
 			return $this->quote.str_replace("'", "''", $string).$this->quote;
 		}
 	
-
+		/**
+		 * Translates literal value expression.
+		 *
+		 * @param SqlLiteral $sqlEntity The SqlLiteral expression to translate.
+		 *
+		 * @return string Translated sql literal expression value.
+		 */
+		public function TranslateLiteral(SqlLiteral $sqlEntity)
+		{
+		    $value = $sqlEntity->getValue();
+		    	
+		    if (is_numeric($value))
+		    {
+		        return $value;
+		    }
+		    elseif (is_string($value))
+		    {
+		        return $this->EncapsulateInQuotes($value);
+		    }
+		    	
+		    return $value;
+		}
+		
 	}
 
 ?>
