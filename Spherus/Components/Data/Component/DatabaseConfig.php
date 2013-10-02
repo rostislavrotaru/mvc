@@ -48,6 +48,7 @@
 			$this->port = $port;
 			$this->databaseName = $databaseName;
 			$this->userName = $userName;
+			$this->userPassword = $userPassword;
 			$this->options = $options;
 		}
 		
