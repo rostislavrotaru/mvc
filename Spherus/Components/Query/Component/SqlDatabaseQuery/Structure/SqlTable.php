@@ -14,7 +14,10 @@
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlFactory;
-			
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlJoinType;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlJoin;
+use Spherus\Core\Check;
+						
 		/**
      * Class that represents a sql table entity
      *
@@ -54,7 +57,7 @@
 		 * Contains collection of sql table columns
 		 * @var array
 		 */
-		public $columns = array();
+		public $columns = [];
 		
 		/**
 		 * Determine the name of sql table.
@@ -100,32 +103,117 @@
 			return $this->join;
 		}
 		
+		/**
+		 * Sets the join object
+		 */
+		public function setJoin(SqlJoin $join)
+		{
+		    $this->join = $join;
+		}
+		
 		
 		/* PUBLIC METHODS */
 	
 		/**
-		 * Accepts visitor for the current sql object.
+		 * Accepts visitor for the current sql entiry.
 		 * 
 		 * @param ISqlCompiler $visitor The visitor as SqlCompiler.
 		 */
 		public function AcceptVisitor(SqlCompiler $visitor)
 		{
-			$visitor->VisitTable($this);
+            if(isset($this->join))
+            {
+                $visitor->VisitJoinedTable($this);
+            }
+            else 
+            {
+                $visitor->VisitTable($this);
+            }
 		}
-		
-		/* PUBLIC METHODS */
 		
 		/**
 		 * Adds column to the sql table.
 		 *
-		 * @param string $name The column name.
-		 * @param string $alias The column alias.
+		 * @param SqlColumn $column The column to add.
 		 */
-		public function AddColumn($name, $alias = null)
+		public function AddColumn(SqlColumn $column)
 		{
-		    $this->columns[$name] = SqlFactory::Column($name, $this, $alias);
+		    Check::IsNullOrEmpty($column);
+		    
+		    $column->setSqlTable($this);
+		    $this->columns[$column->getName()] = $column;
 		}
-	
+		
+		/**
+		* Creates a left join for table.
+		*
+		* @param SqlTable $foreignTable The foreign table or joined table.
+		* @param SqlColumn $column The join column.
+		* @param SqlColumn $foreignColumn The foreign join column.
+		*
+		* @return SqlTable
+		*/
+		public function LeftJoin(SqlTable $foreignTable, SqlColumn $column,  SqlColumn $foreignColumn)
+		{
+		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::LeftJoin);
+		}
+		
+		/**
+		 * Creates a left outer join for table.
+		 *
+		 * @param SqlTable $foreignTable The foreign table or joined table.
+		 * @param SqlColumn $column The join column.
+		 * @param SqlColumn $foreignColumn The foreign join column.
+		 *
+		 * @return SqlTable
+		 */
+		public function LeftOuterJoin(SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn)
+		{
+		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::LeftOuterJoin);
+		}
+		
+		/**
+		 * Creates a right outer join for table.
+		 *
+		 * @param SqlTable $foreignTable The foreign table or joined table.
+		 * @param SqlColumn $column The join column.
+		 * @param SqlColumn $foreignColumn The foreign join column.
+		 *
+		 * @return SqlTable
+		 */
+		public function RightOuterJoin(SqlTable $foreignTable, SqlColumn $column,  SqlColumn$foreignColumn)
+		{
+		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::RightOuterJoin);
+		}
+		
+		/**
+		 * Creates a right join for table.
+		 *
+		 * @param SqlTable $foreignTable The foreign table or joined table.
+		 * @param SqlColumn $column The join column.
+		 * @param SqlColumn $foreignColumn The foreign join column.
+		 *
+		 * @return SqlTable
+		 */
+		public function RightJoin(SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn)
+		{
+		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::RightJoin);
+		}
+		
+		/**
+		 * Creates a inner join for table.
+		 *
+		 * @param SqlTable $foreignTable The foreign table or joined table.
+		 * @param SqlColumn $column The join column.
+		 * @param SqlColumn $foreignColumn The foreign join column.
+		 *
+		 * @return SqlTable
+		 */
+		public function InnerJoin(SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn)
+		{
+		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::InnerJoin);
+		}
+		
 	}
 
 ?>

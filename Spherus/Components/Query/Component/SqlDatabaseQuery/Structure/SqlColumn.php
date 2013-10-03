@@ -62,7 +62,7 @@
 		 */
 		private $alias = null;
 		
-		
+
 		/* PROPERTIES */
 	
 		/**
@@ -81,6 +81,15 @@
 		public function getSqlTable() 
 		{
 			return $this->sqlTable;
+		}
+		
+		/**
+		 * Sets column table
+		 * @param SqlTable $sqlTable The table to set
+		 */
+		public function setSqlTable(SqlTable $sqlTable)
+		{
+		    $this->sqlTable = $sqlTable;
 		}
 	
 		/**

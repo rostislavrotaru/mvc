@@ -28,7 +28,7 @@
 		 * 
 		 * @param SqlEntityType $sqlEntityType The type of sql entity.
 		 */
-		public function __construct(SqlEntityType $sqlEntityType)
+		public function __construct($sqlEntityType)
 		{
 			parent::__construct($sqlEntityType);
 		}
