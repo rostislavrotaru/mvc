@@ -96,17 +96,98 @@
 	    /**
 	     * Creates a sql binary expression.
 	     *
-	     * @param SqlEntityType $objectType The type of sql object.
+	     * @param string $objectType The type of sql object.
 	     * @param SqlExpression $leftExpression The left expression.
 	     * @param SqlExpression $rightExpression The right expression.
 	     *
 	     * @return SqlBinary
 	     */
-	    public static function Binary(SqlEntityType $entityType, SqlExpression $leftExpression, SqlExpression $rightExpression)
+	    public static function Binary($entityType, $leftExpression, $rightExpression)
 	    {
 	        return new SqlBinary($entityType, $leftExpression, $rightExpression);
 	    }
 	
+	    
+	    /* COMPARISON */
+	    
+	    /**
+	     * Creates a Equal expression.
+	     *
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Equal($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::Equal, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates a NotEqual expression.
+	     *
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function NotEqual($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::NotEqual, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates a GreatherThan expression.
+	     *
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function GreatherThan($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::GreaterThan, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates a LessThan expression.
+	     *
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function LessThan($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::LessThan, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates a GreatherThan or equal expression.
+	     *
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function GreatherThanOrEqual($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::GreaterThanOrEqual, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates a LessThan or equal expression.
+	     *
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function LessThanOrEqual($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::LessThanOrEqual, $leftExpression, $rightExpression);
+	    }
+	    
 	}
 
 ?>

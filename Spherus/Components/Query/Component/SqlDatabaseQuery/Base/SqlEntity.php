@@ -8,10 +8,10 @@
 * @link http://spherus.net
 * @since 3.0
 */
-namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Base;
+    namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Base;
 
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
 
 /**
 * Represents any object in Sql expression tree.
@@ -54,6 +54,7 @@ class SqlEntity
         return $this->sqlEntityType;
     }
     
+    
     /* PUBLIC FUNCTIONS */
     
     /**
@@ -64,7 +65,7 @@ class SqlEntity
     */
     public function CheckIsLiteral($expression)
     {
-        if(!is_a($expression, SqlEntity))
+        if(!is_a($expression, 'Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity'))
         {
             return new SqlLiteral($expression);
         }

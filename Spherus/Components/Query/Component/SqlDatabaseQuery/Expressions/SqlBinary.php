@@ -11,7 +11,6 @@
 	namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions;
 					
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlExpression;
-	use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
 		
 	/**
@@ -28,13 +27,13 @@
 		/**
 		 * Initializes a new instance of SqlBinary class.
 		 * 
-		 * @param SqlEntityType $sqlEntityType The type of sql entity.
+		 * @param string $sqlEntityType The type of sql entity.
 		 * @param SqlExpression $leftExpression The left expression.
-		 * @param unknown_type $rightExpression The right expression.
+		 * @param SqlExpression $rightExpression The right expression.
 		 */
-		public function __construct(SqlEntityType $entityType, SqlExpression $leftExpression, SqlExpression $rightExpression)
+		public function __construct($entityType, $leftExpression,  $rightExpression)
 		{
-			parent::__construct($entityType->__toString());
+			parent::__construct($entityType);
 			
 			$this->leftExpression = $this->CheckIsLiteral($leftExpression);
 			$this->rightExpression = $this->CheckIsLiteral($rightExpression);
