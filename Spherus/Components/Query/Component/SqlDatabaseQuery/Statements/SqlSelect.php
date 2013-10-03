@@ -259,7 +259,7 @@
 	     */
 	    public function Skip($skip)
 	    {
-	        $this->$skip = $skip;
+	        $this->skip = $skip;
 	        return $this;
 	    }
 	
