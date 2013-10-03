@@ -13,15 +13,14 @@
 	use Spherus\Core\Enums\Enum;
 	
     /**
-	 * Class that contains column types.
+	 * Class that contains sql order types.
 	 * 
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.query
 	 *
 	 */
-	class ColumnType extends Enum
-	{
-		const Entry = 'Entry';
-		const Exit_ = 'Exit';
-		const Alias = 'Alias';
+    class SqlOrderType extends Enum
+	{	
+    	const Ascending = 'Ascending';
+		const Descending = 'Descending';
 	}

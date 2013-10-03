@@ -96,9 +96,10 @@
 		 * @return The alias of sql column.
 		 * @var string
 		 */
-		public function getAlis()
+		public function getAlias()
 		{
-		    return $this->alias;
+		    $alias = isset($this->alias) ? $this->alias: $this->name;
+		    return $alias;
 		}
 		
 	

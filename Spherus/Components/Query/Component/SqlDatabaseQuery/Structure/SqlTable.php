@@ -92,7 +92,8 @@ use Spherus\Core\Check;
 		 */
 		public function getAlias() 
 		{
-			return $this->alias;
+			$alias = isset($this->alias) ? $this->alias: $this->name;
+		    return $alias;
 		}
 		
 		/**

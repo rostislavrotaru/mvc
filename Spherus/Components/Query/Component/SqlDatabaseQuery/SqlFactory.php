@@ -17,7 +17,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlBinary;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlExpression;
-							
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlOrderType;
+								
 	/**
      * Class that represents the sql database factory
      *
@@ -188,6 +190,21 @@
 	        return self::Binary(SqlEntityType::LessThanOrEqual, $leftExpression, $rightExpression);
 	    }
 	    
+	    
+	    /* SQL ORDER */
+	    
+	    /**
+	     * Creates an ordered expression.
+	     *
+	     * @param SqlExpression $expression The expression partipating in order.
+	     * @param SqlOrderType $sqlOrderType The sql order type. Optional. Default is ascending.
+	     *
+	     * @return SqlOrder
+	     */
+	    public static function Order($expression, $sqlOrderType = SqlOrderType::Ascending)
+	    {
+	        return new SqlOrder($expression, $sqlOrderType);
+	    }
 	}
 
 ?>

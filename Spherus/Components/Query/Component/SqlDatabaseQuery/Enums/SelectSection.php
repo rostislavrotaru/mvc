@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace pherus\Components\Query\Component\SqlDatabaseQuery\Enums;
+	namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Enums;
 
 	use Spherus\Core\Enums\Enum;
 	

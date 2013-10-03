@@ -16,14 +16,15 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlTable;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlColumn;
     use Spherus\Core\Check;
-					
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlStatement;
+						
 	/**
      * Class that represents a sql select statement
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.query
      */
-	class SqlSelect extends SqlExpression
+	class SqlSelect extends SqlStatement
 	{
 	
 	    /* CONSTRUCTOR */
@@ -85,16 +86,16 @@
 	    private $distinct = false;
 	
 	    /**
-	     * Contains limit sql expression
+	     * Contains take limit sql expression
 	     * @var SqlExpression
 	     */
-	    private $limit = null;
+	    private $take = null;
 	
 	    /**
-	     * Contains offset sql expression.
+	     * Contains elements skip sql expression.
 	     * @var SqlExpression
 	     */
-	    private $offset = null;
+	    private $skip = null;
 	
 	
 	    /* PROPERTIES */
@@ -250,28 +251,28 @@
 	    }
 	
 	    /**
-	     * Adds ofset sql expression.
+	     * Adds skip sql expression.
 	     *
-	     * @param SqlExpression $offset The offset sql expression.
+	     * @param SqlExpression $skip The skip elements.
 	     *
 	     * @return SqlSelect
 	     */
-	    public function Offset($offset)
+	    public function Skip($skip)
 	    {
-	        $this->offset = $offset;
+	        $this->$skip = $skip;
 	        return $this;
 	    }
 	
 	    /**
-	     * Adds limit sql expression.
+	     * Adds take sql expression.
 	     *
-	     * @param SqlExpression $limit The limit sql expression.
+	     * @param SqlExpression $take The take limit sql expression.
 	     *
 	     * @return SqlSelect
 	     */
-	    public function Limit($limit)
+	    public function Take($take)
 	    {
-	        $this->limit = $limit;
+	        $this->take = $take;
 	        return $this;
 	    }
 	
