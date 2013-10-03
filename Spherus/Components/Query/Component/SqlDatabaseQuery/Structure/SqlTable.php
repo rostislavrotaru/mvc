@@ -34,9 +34,9 @@ use Spherus\Core\Check;
 		 * 
 		 * @param string $name The sql table name.
 		 * @param string $alias The sql table alias.
-		 * @param array $columnNames Array of column names.
+		 * @param array $columns Array of column objects.
 		 */
-		public function __construct($name = null, $alias = null,  array $columnNames = null)
+		public function __construct($name = null, $alias = null,  array $columns = null)
 		{
 			parent::__construct(SqlEntityType::Table);
 			
@@ -44,9 +44,9 @@ use Spherus\Core\Check;
 			$this->alias = $alias;
 			if (isset($columnNames))
 			{
-				foreach ($columnNames as $columnName)
+				foreach ($columns as $column)
 				{
-					$this->AddColumn($columnName);
+					$this->AddColumn($column);
 				}
 			}
 		}
