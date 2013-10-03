@@ -14,7 +14,10 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlTable;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlJoin;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlSelect;
-				
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlBinary;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlExpression;
+							
 	/**
      * Class that represents the sql database factory
      *
@@ -85,6 +88,23 @@
 	    public static function Select($table = null)
 	    {
 	        return new SqlSelect($table);
+	    }
+	    
+	    
+	    /* BINARY */
+	    
+	    /**
+	     * Creates a sql binary expression.
+	     *
+	     * @param SqlEntityType $objectType The type of sql object.
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Binary(SqlEntityType $entityType, SqlExpression $leftExpression, SqlExpression $rightExpression)
+	    {
+	        return new SqlBinary($entityType, $leftExpression, $rightExpression);
 	    }
 	
 	}

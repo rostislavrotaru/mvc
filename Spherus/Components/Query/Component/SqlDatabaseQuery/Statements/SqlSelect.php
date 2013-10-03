@@ -33,7 +33,7 @@
 	     *
 	     * @param SqlTable $from The from sql table.
 	     */
-	    public function __construct($from = null)
+	    public function __construct(SqlTable $from = null)
 	    {
 	        parent::__construct(SqlEntityType::Select);
 	        $this->from = $from;
