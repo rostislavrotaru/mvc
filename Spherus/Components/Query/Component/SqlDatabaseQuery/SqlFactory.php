@@ -13,7 +13,8 @@
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlColumn;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlTable;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlJoin;
-			
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlSelect;
+				
 	/**
      * Class that represents the sql database factory
      *
@@ -22,6 +23,7 @@
      */
 	class SqlFactory
 	{
+	    
 	    /* STRUCTURE */
 	    
 	    /**
@@ -43,12 +45,12 @@
 	     *
 	     * @param string $name The table name.
 	     * @param string $alias The table alias.
-	     * @param array $columnNames Array of column tables.
+	     * @param array $columns Array of table column objects.
 	     * @return SqlTable
 	     */
-	    public static function Table($name, $alias = null, array $columnNames = null)
+	    public static function Table($name, $alias = null, array $columns = null)
 	    {
-	        return new SqlTable($name, $alias, $columnNames);
+	        return new SqlTable($name, $alias, $columns);
 	    }
 	    
 	    /* JOIN */
@@ -70,6 +72,20 @@
 	        return $table;
 	    }
 	
+	    
+	    /* STATEMENTS */
+	    
+	    /**
+	     * Creates Select statement.
+	     *
+	     * @param SqlTable $table The from table.
+	     *
+	     * @return SqlSelect
+	     */
+	    public static function Select($table = null)
+	    {
+	        return new SqlSelect($table);
+	    }
 	
 	}
 
