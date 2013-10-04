@@ -223,20 +223,55 @@
 	        return self::Aggregate(SqlEntityType::Max, $expression, $distinct);
 	    }
 	    
+	    
 	    /* BINARY */
 	    
 	    /**
-	     * Creates a sql binary expression.
-	     *
-	     * @param string $objectType The type of sql object.
+	     * Creates And expression
 	     * @param SqlExpression $leftExpression The left expression.
 	     * @param SqlExpression $rightExpression The right expression.
 	     *
 	     * @return SqlBinary
 	     */
-	    public static function Binary($entityType, $leftExpression, $rightExpression)
+	    public static function And_($leftExpression, $rightExpression)
 	    {
-	        return new SqlBinary($entityType, $leftExpression, $rightExpression);
+	        return self::Binary(SqlEntityType::And_, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates Or expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Or_($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::Or_, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates in query.
+	     *
+	     * @param SqlExpression $leftExpression The left sql expression.
+	     * @param array $rightExpression The right expresssion.
+	     * @return SqlBinary
+	     */
+	    public static function In($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::In, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates not in query.
+	     *
+	     * @param SqlExpression $leftExpression The left sql expression.
+	     * @param array $rightExpression The right expresssion.
+	     * @return SqlBinary
+	     */
+	    public static function NotIn($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::NotIn, $leftExpression, $rightExpression);
 	    }
 	
 	    
@@ -381,6 +416,20 @@
 	        return new SqlUnary($entityType, $operand);
 	    }
 	
+	    /**
+	     * Creates a sql binary expression.
+	     *
+	     * @param string $entityType The type of sql object.
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    private static function Binary($entityType, $leftExpression, $rightExpression)
+	    {
+	        return new SqlBinary($entityType, $leftExpression, $rightExpression);
+	    }
+	    
 	}
 
 ?>
