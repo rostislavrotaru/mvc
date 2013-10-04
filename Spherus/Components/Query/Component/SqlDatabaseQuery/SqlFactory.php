@@ -19,7 +19,10 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlExpression;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlOrderType;
-								
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlBetween;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlAggregate;
+											
 	/**
      * Class that represents the sql database factory
      *
@@ -92,6 +95,133 @@
 	        return new SqlSelect($table);
 	    }
 	    
+	    
+	    /* AGGREGATES */
+	    
+	    /**
+	     * Creates a Count Expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function Count($expression)
+	    {
+	        return self::CountDistinct($expression, false);
+	    }
+	    
+	    /**
+	     * Creates a distinct Count expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     * @param boolean $distinct Determine if expression is dictinct or not.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function CountDistinct($expression, $distinct)
+	    {
+	        return self::Aggregate(SqlEntityType::Count, $expression, $distinct);
+	    }
+	    
+	    /**
+	     * Creates a Avg Expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function Avg($expression)
+	    {
+	        return self::AvgDistinct($expression, false);
+	    }
+	    
+	    /**
+	     * Creates a distinct Avg expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     * @param boolean $distinct Determine if expression is dictinct or not.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function AvgDistinct($expression, $distinct)
+	    {
+	        return self::Aggregate(SqlEntityType::Avg, $expression, $distinct);
+	    }
+	    
+	    /**
+	     * Creates a Sum Expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function Sum($expression)
+	    {
+	        return self::SumDistinct($expression, false);
+	    }
+	    
+	    /**
+	     * Creates a distinct Sum expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     * @param boolean $distinct Determine if expression is dictinct or not.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function SumDistinct($expression, $distinct)
+	    {
+	        return self::Aggregate(SqlEntityType::Sum, $expression, $distinct);
+	    }
+	    
+	    /**
+	     * Creates a Min Expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function Min($expression)
+	    {
+	        return self::MinDistinct($expression, false);
+	    }
+	    
+	    /**
+	     * Creates a distinct Min expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     * @param boolean $distinct Determine if expression is dictinct or not.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function MinDistinct($expression, $distinct)
+	    {
+	        return self::Aggregate(SqlEntityType::Min, $expression, $distinct);
+	    }
+	    
+	    /**
+	     * Creates a Max Expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function Max($expression)
+	    {
+	        return self::MaxDistinct($expression, false);
+	    }
+	    
+	    /**
+	     * Creates a distinct Max expression.
+	     *
+	     * @param SqlExpression $expression The aggregate expression.
+	     * @param boolean $distinct Determine if expression is dictinct or not.
+	     *
+	     * @return SqlAggregate
+	     */
+	    public static function MaxDistinct($expression, $distinct)
+	    {
+	        return self::Aggregate(SqlEntityType::Max, $expression, $distinct);
+	    }
 	    
 	    /* BINARY */
 	    
@@ -205,6 +335,52 @@
 	    {
 	        return new SqlOrder($expression, $sqlOrderType);
 	    }
+	
+	
+	    /* PRIVATE METHODS */
+	    
+	    /**
+		 * Creates a aggregate query expression.
+		 * 
+		 * @param SqlEntityType $entityType The aggregate sql object type
+		 * @param SqlExpression $expression The aggregate sql expression.
+		 * @param boolean $distinct Determine wheter aggregate is distinct or not.
+		 * 
+		 * @return SqlAggregate Created aggregate expression.
+		 */
+		private static function Aggregate($entityType, $expression, $distinct)
+		{
+			return new SqlAggregate($entityType, $expression, $distinct);
+		}
+	    
+	    /**
+	     * Creates a between expression.
+	     *
+	     * @param SqlEntityType $objectType The sql object type.
+	     * @param SqlExpression $sqlExpression The between sql expression.
+	     * @param SqlExpression $leftBoundary The left sql expression.
+	     * @param SqlExpression $rightBoundary The right sql expression.
+	     *
+	     * @return SqlBetween Created SqlBetween expression.
+	     */
+	    private static function BetweenInternal($entityType, $sqlExpression, $leftBoundary, $rightBoundary)
+	    {
+	        return new SqlBetween($entityType, $sqlExpression, $leftBoundary, $rightBoundary);
+	    }
+	    
+	    /**
+	     * Creates a unary sql expression.
+	     *
+	     * @param SqlEntityType $entityType The sql object type.
+	     * @param SqlExpression $operand The sql expression operand.
+	     *
+	     * @return SqlUnary
+	     */
+	    private static function UnaryInternal($entityType, $operand)
+	    {
+	        return new SqlUnary($entityType, $operand);
+	    }
+	
 	}
 
 ?>
