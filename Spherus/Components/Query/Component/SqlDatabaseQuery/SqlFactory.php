@@ -86,13 +86,28 @@
 	    /**
 	     * Creates Select statement.
 	     *
-	     * @param SqlTable $table The from table.
+	     * @param array of $table The from table.
+	     * @param mixed SqlColumn|Array A single or an array of SqlColumn objects.
 	     *
 	     * @return SqlSelect
 	     */
-	    public static function Select($table = null)
+	    public static function Select($table = null, $columns = null)
 	    {
-	        return new SqlSelect($table);
+	        $sqlSelect = new SqlSelect($table);
+	        
+	        if (is_array($columns))
+	        {
+	            foreach ($columns as $column)
+	            {
+	                $sqlSelect->AddColumn($column);
+	            }
+	        }
+	        else
+	        {
+	            $sqlSelect->AddColumn($columns);
+	        }
+	        
+	        return $sqlSelect;
 	    }
 	    
 	    
