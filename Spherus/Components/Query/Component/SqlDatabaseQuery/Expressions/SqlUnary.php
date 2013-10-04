@@ -14,7 +14,7 @@
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
 		
 	/**
-     * Class that represents a sql binary expressions
+     * Class that represents a sql unary expressions
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.query
