@@ -2,7 +2,7 @@
 
 //****************************************************
 //Replace here the path that the framework is located
-set_include_path('your path here');
+set_include_path('path_here');
 include 'Spherus/Autoloader.php';
 //****************************************************
 
@@ -27,10 +27,10 @@ $table2->AddColumn($column4);
 
 $tt = $table1->LeftJoin($table2, $column1, $column3);
 
-$select = SqlFactory::Select(SqlFactory::Max($column3))
+$select = SqlFactory::Select($table2, array ($column3, $column4))
     ->Distinct()
     ->From($table2)
-    ->Where(SqlFactory::GreatherThan($column3, 22))
+    ->Where(SqlFactory::In($column3, array(10,11,23)))
     ->GroupBy($column3, $column4)
     ->Having(SqlFactory::Equal($column4, 'ssssss'))
     ->OrderBy(array(
@@ -38,3 +38,7 @@ $select = SqlFactory::Select(SqlFactory::Max($column3))
         SqlFactory::Order($column4, SqlOrderType::Descending)))
     ->Take(10)
     ->Skip(20);
+
+echo('<pre>');
+var_dump($select);
+echo('</pre>');
