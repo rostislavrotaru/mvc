@@ -71,3 +71,4 @@
 	define('EXCEPTION_OBJECT_INVALID_INSTANCE', 'The "%s" is not a valid instance of "%s"');
 	define('EXCEPTION_NOT_OBJECT', 'The "%s" value is not an object');
 	define('EXCEPTION_INVALID_STATEMENT', 'Invalid sql statement parameter');
+	define('EXCEPTION_OPERATION_NOT_SUPPORTED', 'Operation not supported');
