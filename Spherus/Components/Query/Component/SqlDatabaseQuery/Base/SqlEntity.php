@@ -12,6 +12,8 @@
 
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
+use Spherus\Core\Check;
+use Spherus\Core\SpherusException;
 
 /**
 * Represents any object in Sql expression tree.
@@ -65,6 +67,11 @@ class SqlEntity
     */
     public function CheckIsLiteral($expression)
     {
+        if(is_array($expression))
+        {
+        	throw new SpherusException(EXCEPTION_INVALID_ARGUMENT);
+        }
+        
         if(!is_a($expression, 'Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity'))
         {
             return new SqlLiteral($expression);

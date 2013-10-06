@@ -60,9 +60,11 @@
 		const Drop = 'Drop';
 		const DynamicFilter = 'DynamicFilter';
 		const RawConcat = 'RawConcat';
+		const Entry = 'Entry';
 		const Equal = 'Equal';
 		const Except = 'Except';
 		const Exists = 'Exists';
+		const Exit_ = 'Exit';
 		const Extract = 'Extract';
 		const Fetch = 'Fetch';
 		const FunctionCall = 'FunctionCall';

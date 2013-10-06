@@ -98,8 +98,7 @@
 		 */
 		public function getAlias()
 		{
-		    $alias = isset($this->alias) ? $this->alias: $this->name;
-		    return $alias;
+		    return $this->alias;
 		}
 		
 	

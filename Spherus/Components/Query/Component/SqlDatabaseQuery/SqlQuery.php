@@ -12,7 +12,9 @@
 
 	use Spherus\Core\Check;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
-									
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlSelect;
+    use Spherus\Core\SpherusException;
+																	
 	/**
      * Class that represents the sql database engine
      *
@@ -71,10 +73,10 @@
 		*/
     	public function GenerateSql($sqlStatement)
     	{
-//     		if ($sqlStatement instanceof SqlSelect)
-//     		{
-//     			return $this->compiler->VisitSelect($sqlStatement);
-//     		}
+    		if ($sqlStatement instanceof SqlSelect)
+    		{
+    			return $this->compiler->VisitSelect($sqlStatement);
+    		}
 //     		elseif ($sqlStatement instanceof SqlUpdate)
 //     		{
 //     			return $this->compiler->VisitUpdate($sqlStatement);
@@ -88,6 +90,6 @@
 //     			return $this->compiler->VisitDelete($sqlStatement);
 //     		}
     			
-//     		throw new Exception('Invalid SqlStatement given for compilation!');
+     		throw new SpherusException(EXCEPTION_INVALID_STATEMENT);
     	}    	
     }

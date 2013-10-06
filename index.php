@@ -2,7 +2,7 @@
 
 //****************************************************
 //Replace here the path that the framework is located
-set_include_path('path_here');
+set_include_path('path here');
 include 'Spherus/Autoloader.php';
 //****************************************************
 
@@ -10,6 +10,8 @@ include 'Spherus/Autoloader.php';
 //use Spherus\Components\Query\Component;
 use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlFactory;
 use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlOrderType;
+use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlQuery;
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\MySQL\MySQLCompiler;
 
 $column1 = SqlFactory::Column('table1_id');
 $column2 = SqlFactory::Column('table1_name');
@@ -18,7 +20,7 @@ $table1 = SqlFactory::Table('test1');
 $table1->AddColumn($column1);
 $table1->AddColumn($column2);
 
-$column3 = SqlFactory::Column('table2_id');
+$column3 = SqlFactory::Column('table2_id', null, 'some_alias');
 $column4 = SqlFactory::Column('table2_name');
 
 $table2 = SqlFactory::Table('test2');
@@ -26,11 +28,12 @@ $table2->AddColumn($column3);
 $table2->AddColumn($column4);
 
 $tt = $table1->LeftJoin($table2, $column1, $column3);
+$select0 = SqlFactory::Select($table2, array ($column3, $column4));
 
 $select = SqlFactory::Select($table2, array ($column3, $column4))
     ->Distinct()
     ->From($table2)
-    ->Where(SqlFactory::In($column3, array(10,11,23)))
+    ->Where(SqlFactory::Equal($column3, 'fff'))
     ->GroupBy($column3, $column4)
     ->Having(SqlFactory::Equal($column4, 'ssssss'))
     ->OrderBy(array(
@@ -38,7 +41,9 @@ $select = SqlFactory::Select($table2, array ($column3, $column4))
         SqlFactory::Order($column4, SqlOrderType::Descending)))
     ->Take(10)
     ->Skip(20);
+    
+$sqlQuery = new SqlQuery(new MySQLCompiler());
 
-echo('<pre>');
-var_dump($select);
-echo('</pre>');
+//echo('<pre>');
+var_dump($sqlQuery->GenerateSql($select));
+//echo('</pre>');

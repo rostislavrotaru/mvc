@@ -18,7 +18,7 @@
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.query
      */
-    class SelectSection extends Enum
+    class SelectType extends Enum
     {
     	const Entry = 'Entry';
     	const Exit_ = 'Exit';
@@ -27,6 +27,6 @@
     	const GroupBy = 'GroupBy';
     	const Having = 'Having';
     	const OrderBy = 'OrderBy';
-    	const Limit = 'Limit';
-    	const Offset = 'Offset';
+    	const Take = 'Take';
+    	const Skip = 'Skip';
     }

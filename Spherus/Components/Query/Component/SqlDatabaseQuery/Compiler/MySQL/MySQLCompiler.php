@@ -11,7 +11,8 @@
 	namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\MySQL;
 	
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
-    
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompilerContext;
+	    
 	/**
      * Class that represents the mysql database engine compiler
      *
@@ -20,7 +21,10 @@
      */
 	class MySQLCompiler extends SqlCompiler
 	{
-		
+		public function __construct()
+		{
+			parent::__construct(new SqlCompilerContext(), new MySQLTranslator());
+		}
 	}
 
 ?>
