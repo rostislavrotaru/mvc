@@ -12,8 +12,7 @@
 
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
-use Spherus\Core\Check;
-use Spherus\Core\SpherusException;
+    use Spherus\Core\SpherusException;
 
 /**
 * Represents any object in Sql expression tree.
