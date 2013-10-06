@@ -53,6 +53,7 @@
 	define('EXCEPTION_DEFAULT_ROUTE_NOT_FOUND', 'Default route not found');
 	define('EXCEPTION_INVALID_ROUTER_CONFIG', 'Invalid configuration for router definition');
 	define('EXCEPTION_EMPTY', 'Empty value provided');
+	define('EXCEPTION_INVALID_ARGUMENT', 'Invalid function argument');
 	define('EXCEPTION_ACCESS_DENIED', 'Access to this resource is denied');
 	define('EXCEPTION_MODULE_NOT_FOUND', 'The "%s" module not found');
 	define('EXCEPTION_THEME_NOT_FOUND', 'The "%s" theme not found');
