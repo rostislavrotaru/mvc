@@ -362,7 +362,6 @@
 		    	        switch ($sqlEntityType)
 		    	        {
 		    	        	case SqlEntityType::RawConcat:
-		    	        	case SqlEntityType::In:
 		    	        	    return $this->openingParenthesis;
 		    	        	    default:
 		    	        	        {
@@ -377,7 +376,6 @@
 		    	        switch ($sqlEntityType)
 		    	        {
 		    	        	case SqlEntityType::RawConcat:
-		    	        	case SqlEntityType::In:
 		    	        	    return $this->closingParenthesis;
 		    	        	default:
 		    	        	    {
