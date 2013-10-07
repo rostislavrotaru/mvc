@@ -20,7 +20,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlBinary;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
-																												    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
+																																				    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -238,6 +239,24 @@
 		}
 		
 		/**
+		 * Visits joined table object.
+		 *
+		 * @param SqlJoinedTable $sqlEntity The sql table to visit.
+		 */
+		public function VisitJoinedTable(SqlJoinedTable $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateJoinExpression($sqlEntity, SqlEntityType::Entry));
+		    $sqlEntity->getJoin()->getTable()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateJoinExpression($sqlEntity, SqlEntityType::Specification));
+		    $sqlEntity->getJoin()->getForeignTable()->AcceptVisitor($this);
+		    	
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateJoinExpression($sqlEntity, SqlEntityType::Condition));
+		    $sqlEntity->getJoin()->GetExpression()->AcceptVisitor($this);
+		
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateJoinExpression($sqlEntity, SqlEntityType::Exit_));
+		}
+		
+		/**
 		 * Visits column entity
 		 *
 		 * @param SqlColumn $sqlEntity The SqlColumnExpression to visit.
@@ -267,9 +286,7 @@
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateBinary($sqlEntity, SqlEntityType::Entry));
 		    $sqlEntity->getLeftExpression()->AcceptVisitor($this);
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateType($sqlEntity->getSqlEntityType()));
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->getOpeningParenthesis());
 		    $sqlEntity->getRightExpression()->AcceptVisitor($this);
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->getClosingParenthesis());
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateBinary($sqlEntity, SqlEntityType::Exit_));
 		}
     

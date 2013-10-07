@@ -22,7 +22,8 @@
     use Spherus\Core\SpherusException;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlOrderType;
-										
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlJoinType;
+											
 		/**
      * Class that represents the sql database engine compiler
      *
@@ -516,6 +517,67 @@
 		    return null;
 		}
 	
+		/**
+		 * Translates joined table expression.
+		 *
+		 * @param SqlJoinedTable $sqlObject
+		 * @param SqlJoinSectionType $section The SqlJoinSectionType section.
+		 *
+		 * @return string
+		 */
+		public function TranslateJoinExpression($sqlObject, $section)
+		{
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Specification:
+		    	    {
+		    	        return $this->TranslateJoin($sqlObject->getJoin()->getJoinType()).' JOIN';
+		    	    }
+		    	case SqlEntityType::Condition:
+		    	    {
+		    	        return 'ON';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
+		
+		/**
+		 * Translates join according the its type.
+		 *
+		 * @param SqlJoinType $sqlObject The type of sql join.
+		 *
+		 * @return string
+		 */
+		public function TranslateJoin($sqlObject)
+		{
+		    switch ($sqlObject)
+		    {
+		    	case SqlJoinType::InnerJoin:
+		    	    {
+		    	        return 'INNER';
+		    	    }
+		    	case SqlJoinType::LeftJoin:
+		    	    {
+		    	        return 'LEFT';
+		    	    }
+		    	case SqlJoinType::LeftOuterJoin:
+		    	    {
+		    	        return 'LEFT OUTER';
+		    	    }
+		    	case SqlJoinType::RightJoin:
+		    	    {
+		    	        return 'RIGHT';
+		    	    }
+		    	case SqlJoinType::RightOuterJoin:
+		    	    {
+		    	        return 'RIGHT OUTER';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
+		
 	}
 
 ?>

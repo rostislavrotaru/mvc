@@ -22,7 +22,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlBetween;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlAggregate;
-											
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
+												
 	/**
      * Class that represents the sql database factory
      *
@@ -72,12 +73,11 @@
 	     * @param SqlColumn $foreignColumn The join foreign column.
 	     * @param SqlJoinType $joinType The type of sql join.
 	     *
-	     * @return SqlTable
+	     * @return SqlJoinedTable
 	     */
-	    public static function Join($table, $foreignTable, $column, $foreignColumn, $joinType)
+	    public static function Join(SqlTable $table, SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn, $joinType)
 	    {
-	        $table->setJoin(new SqlJoin($table, $foreignTable, $column, $foreignColumn, $joinType));
-	        return $table;
+	        return new SqlJoinedTable(new SqlJoin($table, $foreignTable, $column, $foreignColumn, $joinType));
 	    }
 	
 	    
