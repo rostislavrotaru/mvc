@@ -107,7 +107,7 @@
 		const Return_ = 'Return';
 		const Select = 'Select';
 		const Some = 'Some';
-		const SubSelect = 'SubSelect';
+		const SubQuery = 'SubQuery';
 		const Subtract = 'Subtract';
 		const Sum = 'Sum';
 		const Table = 'Table';

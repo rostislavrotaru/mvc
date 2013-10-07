@@ -23,7 +23,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlOrderType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlJoinType;
-											
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
+												
 		/**
      * Class that represents the sql database engine compiler
      *
@@ -520,18 +521,18 @@
 		/**
 		 * Translates joined table expression.
 		 *
-		 * @param SqlJoinedTable $sqlObject
-		 * @param SqlJoinSectionType $section The SqlJoinSectionType section.
+		 * @param SqlJoinedTable $sqlEntity
+		 * @param SqlEntityType $section The SqlEntityType section.
 		 *
 		 * @return string
 		 */
-		public function TranslateJoinExpression($sqlObject, $section)
+		public function TranslateJoinExpression($sqlEntity, $section)
 		{
 		    switch ($section)
 		    {
 		    	case SqlEntityType::Specification:
 		    	    {
-		    	        return $this->TranslateJoin($sqlObject->getJoin()->getJoinType()).' JOIN';
+		    	        return $this->TranslateJoin($sqlEntity->getJoin()->getJoinType()).' JOIN';
 		    	    }
 		    	case SqlEntityType::Condition:
 		    	    {
@@ -545,13 +546,13 @@
 		/**
 		 * Translates join according the its type.
 		 *
-		 * @param SqlJoinType $sqlObject The type of sql join.
+		 * @param SqlJoinType $sqlEntity The type of sql join.
 		 *
 		 * @return string
 		 */
-		public function TranslateJoin($sqlObject)
+		public function TranslateJoin($sqlEntity)
 		{
-		    switch ($sqlObject)
+		    switch ($sqlEntity)
 		    {
 		    	case SqlJoinType::InnerJoin:
 		    	    {
@@ -578,6 +579,28 @@
 		    return null;
 		}
 		
+		/**
+		 * Translates SqlSubquery expression.
+		 *
+		 * @param SqlSubquery $sqlObject The SqlSubQuery expression to translate.
+		 * @param SqlObjectSectionType $section The SqlObjectSectionType section.
+		 */
+		public function TranslateSubQuery(SqlSubQuery $sqlEntity, $section)
+		{
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Entry:
+		    	    {
+		    	        return '(';
+		    	    }
+		    	case SqlEntityType::Exit_:
+		    	    {
+		    	        return ')';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
 	}
 
 ?>

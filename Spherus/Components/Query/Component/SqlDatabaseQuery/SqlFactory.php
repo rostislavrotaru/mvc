@@ -22,8 +22,10 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlBetween;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlAggregate;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
-												
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlStatement;
+														
 	/**
      * Class that represents the sql database factory
      *
@@ -274,6 +276,11 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable
 	     */
 	    public static function In($leftExpression, $rightExpression)
 	    {
+	        if ($rightExpression instanceof SqlStatement)
+	        {
+	            return self::Binary(SqlEntityType::In, $leftExpression, self::SubQuery($rightExpression));
+	        }
+	        
 	        return self::Binary(SqlEntityType::In, $leftExpression, $rightExpression);
 	    }
 	    
@@ -286,6 +293,11 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable
 	     */
 	    public static function NotIn($leftExpression, $rightExpression)
 	    {
+	        if ($rightExpression instanceof SqlStatement)
+	        {
+	            return self::Binary(SqlEntityType::NotIn, $leftExpression, self::SubQuery($rightExpression));
+	        }
+	        
 	        return self::Binary(SqlEntityType::NotIn, $leftExpression, $rightExpression);
 	    }
 	
@@ -443,6 +455,17 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable
 	    private static function Binary($entityType, $leftExpression, $rightExpression)
 	    {
 	        return new SqlBinary($entityType, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates a new subquery object.
+	     *
+	     * @param SqlStatement $sqlStatement The containing sql expression.
+	     * @return SqlSubQuery
+	     */
+	    public static function SubQuery(SqlStatement $sqlExpression)
+	    {
+	        return new SqlSubQuery($sqlExpression);
 	    }
 	    
 	}

@@ -21,7 +21,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
-																																				    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
+																																								    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -249,10 +250,8 @@
 		    $sqlEntity->getJoin()->getTable()->AcceptVisitor($this);
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateJoinExpression($sqlEntity, SqlEntityType::Specification));
 		    $sqlEntity->getJoin()->getForeignTable()->AcceptVisitor($this);
-		    	
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateJoinExpression($sqlEntity, SqlEntityType::Condition));
 		    $sqlEntity->getJoin()->GetExpression()->AcceptVisitor($this);
-		
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateJoinExpression($sqlEntity, SqlEntityType::Exit_));
 		}
 		
@@ -306,4 +305,16 @@
 		    	
 		}
     
+		/**
+		 * Visits sql subquery expression.
+		 *
+		 * @param SqlSubQuery $sqlObject The subquery to visit.
+		 */
+		public function VisitSubQuery(SqlSubQuery $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSubquery($sqlEntity, SqlEntityType::Entry));
+		    $sqlEntity->getSqlStatement()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSubquery($sqlEntity, SqlEntityType::Exit_));
+		}
+		
     }
