@@ -26,7 +26,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlCase;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
-																																																								    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
+																																																												    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -385,4 +386,27 @@
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateFunction($sqlEntity, SqlFunctionType::Exit_, -1));
 		}
     
+		/**
+		 * Visits RowNumber expression.
+		 *
+		 * @param SqlRowNumber $sqlEntity The SqlRowNumber entity to visit.
+		 */
+		public function VisitRowNumber(SqlRowNumber $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateRowNumber(SqlEntityType::Entry));
+		    	
+		    $orderBy = $sqlEntity->getOrderBy();
+		    $i = 0;
+		    foreach ($orderBy as $item)
+		    {
+		        if ($i > 0)
+		        {
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->columnDelimiter);
+		        }
+		        $i++;
+		        $item->AcceptVisitor($this);
+		    }
+		    	
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateRowNumber(SqlEntityType::Exit_));
+		}
     }

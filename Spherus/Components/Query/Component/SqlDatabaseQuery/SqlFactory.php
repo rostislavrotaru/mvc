@@ -28,9 +28,10 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlCase;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
-																			
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
+																				
 	/**
      * Class that represents the sql database factory
      *
@@ -486,6 +487,15 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
 	        return self::SqlFunctionInternal(SqlFunctionType::User);
 	    }
 	    
+	    /**
+	     * Creates a row number expression.
+	     *
+	     * @param mixed $orderBy Array or a single SqlOrder object expression(s)
+	     */
+	    public static function RowNumber($orderBy = null)
+	    {
+	        return new SqlRowNumber($orderBy);
+	    }
 	    
 	    /* STRING FUNCTIONS */
 	    

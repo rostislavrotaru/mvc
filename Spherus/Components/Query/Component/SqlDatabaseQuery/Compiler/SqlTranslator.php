@@ -906,5 +906,26 @@
 		    }
 		}
 	
+		/**
+		 * Translates SqlRowNumber expression.
+		 *
+		 * @param SqlObjectSectionType $section The SqlObjectSectionType section.
+		 */
+		public function TranslateRowNumber($section)
+		{
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Entry:
+		    	    {
+		    	        return 'ROW_NUMBER() OVER(ORDER BY';
+		    	    }
+		    	case SqlEntityType::Exit_:
+		    	    {
+		    	        return ')';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
 	
 	}
