@@ -27,7 +27,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
-																
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
+																	
 		/**
      * Class that represents the sql database engine compiler
      *
@@ -350,6 +351,56 @@
 		    return null;
 		}
 	
+		/**
+		 * Translates unary expression.
+		 *
+		 * @param SqlUnary $sqlEntity The sql unary expressin to translate.
+		 * @param $section The SqlEntityType.
+		 *
+		 * @return Ambigous <NULL, string>
+		 */
+		public function TranslateUnary(SqlUnary $sqlEntity, $section)
+		{
+		    $entityType = $sqlEntity->getSqlEntityType();
+		    $result = null;
+		    	
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Entry:
+		    	    {
+		    	        if (!(
+		    	            $entityType == SqlEntityType::Exists || $entityType == SqlEntityType::All ||
+		    	            $entityType == SqlEntityType::Some || $entityType == SqlEntityType::Any
+		    	        ))
+		    	        {
+		    	            $result .= '(';
+		    	        }
+		    	        if ($entityType != SqlEntityType::IsNull || $entityType != SqlEntityType::IsNotNull)
+		    	        {
+		    	            $result .= $this->TranslateType($entityType);
+		    	        }
+		    	        break;
+		    	    }
+		    	case SqlEntityType::Exit_:
+		    	    {
+		    	        if ($entityType == SqlEntityType::IsNull || $entityType == SqlEntityType::IsNotNull)
+		    	        {
+		    	            $result .= $this->TranslateType($entityType);
+		    	        }
+		    	        if (!(
+		    	            $entityType == SqlEntityType::Exists || $entityType == SqlEntityType::All ||
+		    	            $entityType == SqlEntityType::Some || $entityType == SqlEntityType::Any
+		    	        ))
+		    	        {
+		    	            $result .= ')';
+		    	        }
+		    	        break;
+		    	    }
+		    }
+		    	
+		    return $result;
+		}
+		
 		/**
 		 * Translates binary object,
 		 *

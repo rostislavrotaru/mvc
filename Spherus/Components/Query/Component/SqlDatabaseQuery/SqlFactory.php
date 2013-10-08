@@ -264,6 +264,24 @@
 	    }
 	    
 	    
+	    /* UNARY */
+	    
+	    /**
+	     * Creates exists unary expression.
+	     *
+	     * @param SqlExpression $operand The operand sql expression.
+	     * @return SqlUnary
+	     */
+	    public static function Exists($operand)
+	    {
+	        if ($operand instanceof SqlStatement)
+	        {
+	            return self::UnaryInternal(SqlEntityType::Exists, self::SubQuery($operand));
+	        }
+	         
+	        return self::UnaryInternal(SqlEntityType::Exists, $operand);
+	    }
+	    
 	    /* BINARY */
 	    
 	    /**
@@ -324,7 +342,43 @@
 	        return self::Binary(SqlEntityType::NotIn, $leftExpression, $rightExpression);
 	    }
 	
+	    /**
+	     * Creates BitAnd expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function BitAnd($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::BitAnd, $leftExpression, $rightExpression);
+	    }
 	    
+	    /**
+	     * Creates BitOr expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function BitOr($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::BitOr, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates BitXor expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function BitXor($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::BitXor, $leftExpression, $rightExpression);
+	    }
+	    
+
 	    /* ARITHMETIC */
 	    
 	    /**
@@ -387,6 +441,7 @@
 	        return self::Binary(SqlEntityType::Mod, $leftExpression, $rightExpression);
 	    }
 	    
+
 	    /* COMPARISON */
 	    
 	    /**
@@ -854,8 +909,6 @@
 	        	
 	    }
 	
-	    /* PRIVATE METHODS */
-	    
 	    /**
 		 * Creates a aggregate query expression.
 		 * 

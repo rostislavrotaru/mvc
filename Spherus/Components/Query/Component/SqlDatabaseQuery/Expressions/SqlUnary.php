@@ -32,7 +32,7 @@
 	    public function __construct($entityType, $operand)
 	    {
 	        parent::__construct($entityType);
-	        $this->operand = $operand;
+	        $this->operand = $this->CheckIsLiteral($operand);
 	    }
 	
 	

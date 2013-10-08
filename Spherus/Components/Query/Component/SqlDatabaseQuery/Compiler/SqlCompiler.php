@@ -27,7 +27,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
-																																																												    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
+																																																																    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -409,4 +410,17 @@
 		    	
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateRowNumber(SqlEntityType::Exit_));
 		}
+        
+		/**
+		 * Visits unary expression.
+		 *
+		 * @param SqlUnary $sqlEntity The SqlUnary to visit.
+		 */
+		public function VisitUnary(SqlUnary $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUnary($sqlEntity, SqlEntityType::Entry));
+		    $sqlEntity->getOperand()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUnary($sqlEntity, SqlEntityType::Exit_));
+		}
+    
     }
