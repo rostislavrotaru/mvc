@@ -102,5 +102,3 @@
 	        $visitor->VisitBetween($this);
 	    }
 	}
-
-?>

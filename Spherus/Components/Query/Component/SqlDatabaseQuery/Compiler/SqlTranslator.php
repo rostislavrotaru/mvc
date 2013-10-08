@@ -25,7 +25,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\CaseType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
-														
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
+																
 		/**
      * Class that represents the sql database engine compiler
      *
@@ -636,6 +638,273 @@
 		    	
 		    return null;
 		}
+	
+		/**
+		 * Translates sql function.
+		 *
+		 * @param SqlFunction $sqlEntity The sql function to translate.
+		 * @param $section The SqlFunctionType enumerator.
+		 * @param int $position The argument position.
+		 *
+		 * @return string|Ambigous <string, NULL>|NULL
+		 */
+		public function TranslateFunction(SqlFunction $sqlEntity, $section, $position)
+		{
+		    $functionType = $sqlEntity->getFunctionType();
+		    switch ($section)
+		    {
+		    	case SqlFunctionType::Entry:
+		    	    {
+		    	        switch ($functionType)
+		    	        {
+		    	        	case SqlFunctionType::CurrentUser:
+		    	        	case SqlFunctionType::SessionUser:
+		    	        	case SqlFunctionType::SystemUser:
+		    	        	case SqlFunctionType::User:
+		    	        	    {
+		    	        	        return $this->TranslateFunctionType($functionType);
+		    	        	    }
+		    	        }
+		    	        if ($functionType == SqlFunctionType::Position)
+		    	        {
+		    	            return '('.$this->TranslateFunctionType($functionType).'(';
+		    	        }
+		    	        return count($sqlEntity->getArguments()) == 0 ? $this->TranslateFunctionType($functionType).'()' : $this->TranslateFunctionType($functionType).'(';
+		    	    }
+		    	case SqlFunctionType::ArgumentEntry:
+		    	    {
+		    	        switch ($functionType)
+		    	        {
+		    	        	case SqlFunctionType::Position:
+		    	        	    {
+		    	        	        return $position == 1 ? 'IN' : null;
+		    	        	    }
+		    	        	case SqlFunctionType::Substring:
+		    	        	    {
+		    	        	        switch ($position)
+		    	        	        {
+		    	        	        	case 1:
+		    	        	        	    {
+		    	        	        	        return 'FROM';
+		    	        	        	    }
+		    	        	        	case 2:
+		    	        	        	    {
+		    	        	        	        return 'FOR';
+		    	        	        	    }
+		    	        	        	default:
+		    	        	        	    {
+		    	        	        	        return null;
+		    	        	        	    }
+		    	        	        }
+		    	        	    }
+		    	        	default:
+		    	        	    {
+		    	        	        return null;
+		    	        	    }
+		    	        }
+		    	    }
+		    	case SqlFunctionType::ArgumentExit:
+		    	    {
+		    	        return null;
+		    	    }
+		    	case SqlFunctionType::ArgumentDelimiter:
+		    	    {
+		    	        switch ($functionType)
+		    	        {
+		    	        	case SqlFunctionType::Position:
+		    	        	case SqlFunctionType::Substring:
+		    	        	    {
+		    	        	        return null;
+		    	        	    }
+		    	        	default:
+		    	        	    {
+		    	        	        return $this->argumentDelimiter;
+		    	        	    }
+		    	        }
+		    	    }
+		    	case SqlFunctionType::Exit_:
+		    	    {
+		    	        return count($sqlEntity->getArguments()) != 0 ? ')' : null;
+		    	    }
+		    }
+		    	
+		    return null;
+		}
+		
+		/**
+		 * Translates function type.
+		 *
+		 * @param $functionType The type of sql function.
+		 *
+		 * @return string
+		 */
+		public function TranslateFunctionType($functionType)
+		{
+		    switch ($functionType)
+		    {
+		    	case SqlFunctionType::CharLength:
+		    	case SqlFunctionType::BinaryLength:
+		    	    {
+		    	        return 'LENGTH';
+		    	    }
+		    	case SqlFunctionType::Concat:
+		    	    {
+		    	        return 'CONCAT';
+		    	    }
+		    	case SqlFunctionType::CurrentDate:
+		    	    {
+		    	        return 'CURRENT_DATE';
+		    	    }
+		    	case SqlFunctionType::CurrentTime:
+		    	    {
+		    	        return 'CURRENT_TIME';
+		    	    }
+		    	case SqlFunctionType::CurrentTimeStamp:
+		    	    {
+		    	        return 'CURRENT_TIMESTAMP';
+		    	    }
+		    	case SqlFunctionType::Lower:
+		    	    {
+		    	        return 'LOWER';
+		    	    }
+		    	case SqlFunctionType::Position:
+		    	    {
+		    	        return 'POSITION';
+		    	    }
+		    	case SqlFunctionType::Substring:
+		    	    {
+		    	        return 'SUBSTRING';
+		    	    }
+		    	case SqlFunctionType::Upper:
+		    	    {
+		    	        return 'UPPER';
+		    	    }
+		    	case SqlFunctionType::Abs:
+		    	    {
+		    	        return 'ABS';
+		    	    }
+		    	case SqlFunctionType::Acos:
+		    	    {
+		    	        return 'ACOS';
+		    	    }
+		    	case SqlFunctionType::Asin:
+		    	    {
+		    	        return 'ASIN';
+		    	    }
+		    	case SqlFunctionType::Atan:
+		    	    {
+		    	        return 'ATAN';
+		    	    }
+		    	case SqlFunctionType::Atan2:
+		    	    {
+		    	        return 'ATAN2';
+		    	    }
+		    	case SqlFunctionType::Ceiling:
+		    	    {
+		    	        return 'CEILING';
+		    	    }
+		    	case SqlFunctionType::Coalesce:
+		    	    {
+		    	        return 'COALESCE';
+		    	    }
+		    	case SqlFunctionType::Cos:
+		    	    {
+		    	        return 'COS';
+		    	    }
+		    	case SqlFunctionType::Cot:
+		    	    {
+		    	        return 'COT';
+		    	    }
+		    	case SqlFunctionType::CurrentUser:
+		    	    {
+		    	        return 'CURRENT_USER';
+		    	    }
+		    	case SqlFunctionType::Degrees:
+		    	    {
+		    	        return 'DEGREES';
+		    	    }
+		    	case SqlFunctionType::Exp:
+		    	    {
+		    	        return 'EXP';
+		    	    }
+		    	case SqlFunctionType::Floor:
+		    	    {
+		    	        return 'FLOOR';
+		    	    }
+		    	case SqlFunctionType::Log:
+		    	    {
+		    	        return 'LOG';
+		    	    }
+		    	case SqlFunctionType::Log10:
+		    	    {
+		    	        return 'LOG10';
+		    	    }
+		    	case SqlFunctionType::NullIf:
+		    	    {
+		    	        return 'NULLIF';
+		    	    }
+		    	case SqlFunctionType::Pi:
+		    	    {
+		    	        return 'PI';
+		    	    }
+		    	case SqlFunctionType::Power:
+		    	    {
+		    	        return 'POWER';
+		    	    }
+		    	case SqlFunctionType::Radians:
+		    	    {
+		    	        return 'RADIANS';
+		    	    }
+		    	case SqlFunctionType::Rand:
+		    	    {
+		    	        return 'RAND';
+		    	    }
+		    	case SqlFunctionType::Replace:
+		    	    {
+		    	        return 'REPLACE';
+		    	    }
+		    	case SqlFunctionType::Round:
+		    	    {
+		    	        return 'ROUND';
+		    	    }
+		    	case SqlFunctionType::Truncate:
+		    	    {
+		    	        return 'TRUNCATE';
+		    	    }
+		    	case SqlFunctionType::SessionUser:
+		    	    {
+		    	        return 'SESSION_USER';
+		    	    }
+		    	case SqlFunctionType::Sign:
+		    	    {
+		    	        return 'SIGN';
+		    	    }
+		    	case SqlFunctionType::Sin:
+		    	    {
+		    	        return 'SIN';
+		    	    }
+		    	case SqlFunctionType::Sqrt:
+		    	    {
+		    	        return 'SQRT';
+		    	    }
+		    	case SqlFunctionType::Square:
+		    	    {
+		    	        return 'SQUARE';
+		    	    }
+		    	case SqlFunctionType::SystemUser:
+		    	    {
+		    	        return 'SYSTEM_USER';
+		    	    }
+		    	case SqlFunctionType::Tan:
+		    	    {
+		    	        return 'TAN';
+		    	    }
+		    	default:
+		    	    {
+		    	    	return null;
+		    	    }
+		    }
+		}
+	
+	
 	}
-
-?>

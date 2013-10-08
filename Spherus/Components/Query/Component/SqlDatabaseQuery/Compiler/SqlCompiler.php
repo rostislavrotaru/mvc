@@ -24,7 +24,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\CaseType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlCase;
-																																																    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
+																																																								    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -355,4 +357,32 @@
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateCase(CaseType::Exit_));
 		    	
 		}
+    
+		/**
+		 * Visits sql function.
+		 *
+		 * @param SqlFunction $sqlEntity The sql function to visit.
+		 */
+		public function VisitFunction(SqlFunction $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateFunction($sqlEntity, SqlFunctionType::Entry, -1));
+		    $arguments = $sqlEntity->getArguments();
+		    if (count($arguments) > 0)
+		    {
+		        $argumentPosition = 0;
+		        foreach ($arguments as $item)
+		        {
+		            if ($argumentPosition > 0)
+		            {
+		                $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateFunction($sqlEntity, SqlFunctionType::ArgumentDelimiter, $argumentPosition));
+		            }
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateFunction($sqlEntity, SqlFunctionType::ArgumentEntry, $argumentPosition));
+		            $item->AcceptVisitor($this);
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateFunction($sqlEntity, SqlFunctionType::ArgumentExit, $argumentPosition));
+		            $argumentPosition++;
+		        }
+		    }
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateFunction($sqlEntity, SqlFunctionType::Exit_, -1));
+		}
+    
     }

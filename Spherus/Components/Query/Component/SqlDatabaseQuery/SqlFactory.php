@@ -25,9 +25,12 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlStatement;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlCase;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
-																
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlCase;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
+																			
 	/**
      * Class that represents the sql database factory
      *
@@ -111,6 +114,11 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
 	    {
 	        $sqlSelect = new SqlSelect($table);
 	        
+	        if(!isset($columns))
+	        {
+	        	return $sqlSelect;
+	        }
+	       
 	        if (is_array($columns))
 	        {
 	            foreach ($columns as $column)
@@ -412,6 +420,367 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
 	        return new SqlOrder($expression, $sqlOrderType);
 	    }
 	
+	    
+	    /* DATETIME FUNCTIONS */
+	    
+	    /**
+	     * Creates a current date function.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function CurrentDate()
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::CurrentDate);
+	    }
+	    
+	    /**
+	     * Creates a current timestamp function.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function CurrentTimeStamp()
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::CurrentTimeStamp);
+	    }
+	    
+	    
+	    /* MISC FUNCTIONS */
+	    
+	    /**
+	     * Creates a session user function.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function SessionUser()
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::SessionUser);
+	    }
+	    
+	    /**
+	     * Creates a current user function.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function CurrentUser()
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::CurrentUser);
+	    }
+	    
+	    /**
+	     * Creates a system user function.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function SystemUser()
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::SystemUser);
+	    }
+	    
+	    /**
+	     * Creates a user function.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function User()
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::User);
+	    }
+	    
+	    
+	    /* STRING FUNCTIONS */
+	    
+	    /**
+	     * Creates a substring function.
+	     *
+	     * @param SqlExpression $operand The operand sql expression.
+	     * @param mixed $start The start argument, Sqlexpression or literal
+	     * @param mixed $length The length argument, SqlExpression or literal, optional.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function Substring($operand, $start, $length = null)
+	    {
+	        $arguments = array();
+	        $arguments[] = $operand;
+	        	
+	        if (!$start instanceof SqlExpression)
+	        {
+	            require_once(SPHQUERY_EXPRESSIONS.'sqlliteral.php');
+	            $arguments[] = new SqlLiteral($start);
+	            if (isset($length))
+	            {
+	                $arguments[] = new SqlLiteral($length);
+	            }
+	        }
+	        else
+	        {
+	            $arguments[] = $start;
+	            if (isset($length))
+	            {
+	                $arguments[] = $length;
+	            }
+	        }
+	        	
+	        return self::SqlFunctionInternal(SqlFunctionType::Substring, $arguments);
+	        	
+	    }
+	    
+	    /**
+	     * Creates replace function.
+	     *
+	     * @param SqlExpression $text The text sql expression.
+	     * @param SqlExpression $from The from sql expression.
+	     * @param SqlExpressin $to The to sql expression.
+	     *
+	     * @return SqlFunction
+	     */
+	    public static function Replace($text, $from, $to)
+	    {
+	        $arguments = array();
+	        	
+	        $arguments[] = $text;
+	        $arguments[] = $from;
+	        $arguments[] = $to;
+	        	
+	        return self::SqlFunctionInternal(SqlFunctionType::Replace, $arguments);
+	    }
+	    
+	    
+	    /* MATH FUNCTIONS */
+	    
+	    /**
+	     * Creates ABS function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Abs($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Abs, $argument);
+	    }
+	    
+	    /**
+	     * Creates ACOS function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function ACos($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Acos, $argument);
+	    }
+	    
+	    /**
+	     * Creates ASIN function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function ASin($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::ASin, $argument);
+	    }
+	    
+	    /**
+	     * Creates ATAN function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function ATan($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::ATan, $argument);
+	    }
+	    
+	    /**
+	     * Creates ATAN2 function
+	     * @param SqlExpression $argument1 The argument1 sql expression.
+	     * @param SqlExpression $argument2 The argument2 sql expression.
+	     */
+	    public static function ATan2($argument1, $argument2)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::ATan2, array($argument1, $argument2));
+	    }
+	    
+	    /**
+	     * Creates CEILING function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Ceiling($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Ceiling, $argument);
+	    }
+	    
+	    /**
+	     * Creates COS function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Cos($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Cos, $argument);
+	    }
+	    
+	    /**
+	     * Creates COT function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Cot($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Cot, $argument);
+	    }
+	    
+	    /**
+	     * Creates DEGREES function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Degrees($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Degrees, $argument);
+	    }
+	    
+	    /**
+	     * Creates EXP function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Exp($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Exp, $argument);
+	    }
+	    
+	    /**
+	     * Creates Floor function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Floor($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Floor, $argument);
+	    }
+	    
+	    /**
+	     * Creates LOG function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Log($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Log, $argument);
+	    }
+	    
+	    /**
+	     * Creates LOG10 function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Log10($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Log10, $argument);
+	    }
+	    
+	    /**
+	     * Creates PI function
+	     */
+	    public static function Pi()
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Pi);
+	    }
+	    
+	    /**
+	     * Creates POWER function
+	     * @param SqlExpression $argument The argument sql expression.
+	     * @param SqlExpressioin $power The power sql expression
+	     */
+	    public static function Power($argument, $power)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Power, array($argument, $power));
+	    }
+	    
+	    /**
+	     * Creates RADIANS function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Radians($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Radians, $argument);
+	    }
+	    
+	    /**
+	     * Creates RAND function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Rand($argument = null)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Rand, $argument);
+	    }
+	    
+	    /**
+	     * Creates ROUND function
+	     * @param SqlExpression $argument The argument sql expression.
+	     * @param SqlExpression $length The length sql expression
+	     */
+	    public static function Round($argument, $length)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Ceiling, array($argument, $length));
+	    }
+	    
+	    /**
+	     * Creates TRUNCATE function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Truncate($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Truncate, $argument);
+	    }
+	    
+	    /**
+	     * Creates SIGN function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Sign($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Sign, $argument);
+	    }
+	    
+	    /**
+	     * Creates SIN function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Sin($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Sin, $argument);
+	    }
+	    
+	    /**
+	     * Creates SQRT function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Sqrt($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Sqrt, $argument);
+	    }
+	    
+	    /**
+	     * Creates SQUARE function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Square($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Square, $argument);
+	    }
+	    
+	    /**
+	     * Creates TAN function
+	     * @param SqlExpression $argument The argument sql expression.
+	     */
+	    public static function Tan($argument)
+	    {
+	        return self::SqlFunctionInternal(SqlFunctionType::Tan, $argument);
+	    }
+	    
+	    
+	    /* PRIVATE METHODS */
+	    
+	    /**
+	     * Creates a sql function.
+	     *
+	     * @param SqlFunctionType $functionType The type of sql function.
+	     * @param mixed $arguments a single object or array of function arguments.
+	     * @return SqlFunction
+	     */
+	    private static function SqlFunctionInternal($functionType, $arguments = null)
+	    {
+	        return new SqlFunction($functionType, $arguments);
+	        	
+	    }
 	
 	    /* PRIVATE METHODS */
 	    
