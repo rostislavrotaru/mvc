@@ -325,6 +325,68 @@
 	    }
 	
 	    
+	    /* ARITHMETIC */
+	    
+	    /**
+	     * Creates Add expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Add($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::Add, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates Substract expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Substract($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::Subtract, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates Multiply expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Multiply($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::Multiply, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates Divide expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Divide($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::Divide, $leftExpression, $rightExpression);
+	    }
+	    
+	    /**
+	     * Creates Mod expression
+	     * @param SqlExpression $leftExpression The left expression.
+	     * @param SqlExpression $rightExpression The right expression.
+	     *
+	     * @return SqlBinary
+	     */
+	    public static function Mod($leftExpression, $rightExpression)
+	    {
+	        return self::Binary(SqlEntityType::Mod, $leftExpression, $rightExpression);
+	    }
+	    
 	    /* COMPARISON */
 	    
 	    /**
