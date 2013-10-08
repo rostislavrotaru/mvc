@@ -13,7 +13,6 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SelectType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlSelect;
-    use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlColumn;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\ColumnType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlTable;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\TableType;
@@ -23,8 +22,10 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlOrderType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlJoinType;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
-												
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\CaseType;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
+														
 		/**
      * Class that represents the sql database engine compiler
      *
@@ -295,10 +296,10 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
 		/**
 		 * Translates column expression.
 		 *
-		 * @param SqlColumn $sqlEntity The sql entity to translate.
+		 * @param SqlEntity $sqlEntity The sql entity to translate.
 		 * @param ColumnSection $section The section type
 		 */
-		public function TranslateColumn(SqlColumn $sqlEntity, $section)
+		public function TranslateColumn(SqlEntity $sqlEntity, $section)
 		{
 		    switch ($section)
 		    {
@@ -596,6 +597,40 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
 		    	case SqlEntityType::Exit_:
 		    	    {
 		    	        return ')';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
+	
+		/**
+		 * Translates CASE types
+		 * @param CaseSectionType $section The CASE sectin type.
+		 * @return string|NULL
+		 */
+		public function TranslateCase($section)
+		{
+		    switch ($section)
+		    {
+		    	case CaseType::Entry:
+		    	    {
+		    	        return '(CASE';
+		    	    }
+		    	case CaseType::Else_:
+		    	    {
+		    	        return 'ELSE';
+		    	    }
+		    	case CaseType::Exit_:
+		    	    {
+		    	        return 'END)';
+		    	    }
+		    	case CaseType::When:
+		    	    {
+		    	        return 'WHEN';
+		    	    }
+		    	case CaseType::Then:
+		    	    {
+		    	        return 'THEN';
 		    	    }
 		    }
 		    	

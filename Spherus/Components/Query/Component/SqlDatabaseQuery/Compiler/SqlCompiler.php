@@ -22,7 +22,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlOrder;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
-																																								    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\CaseType;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlCase;
+																																																    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -125,7 +127,7 @@
 		        }
 		        $i++;
 		
-		        $column->AcceptVisitor($this);
+		        $column->getExpression()->AcceptVisitor($this);
 		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateColumn($column, ColumnType::Alias));
 		    }
 		    
@@ -317,4 +319,40 @@
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSubquery($sqlEntity, SqlEntityType::Exit_));
 		}
 		
+		/**
+		 * Visits case sql expression.
+		 *
+		 * @param SqlCase $sqlEntity The sql CASE expression.
+		 */
+		public function VisitCase(SqlCase $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateCase(CaseType::Entry));
+		    	
+		    $input = $sqlEntity->getInput();
+		    if (isset($input))
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateCase(CaseType::Input));
+		        $input->AcceptVisitor($this);
+		    }
+		    	
+		    $caseExpressions = $sqlEntity->getExpressions();
+		    foreach ($caseExpressions as $caseObject)
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateCase(CaseType::When));
+		        $caseObject->getWhen()->AcceptVisitor($this);
+		
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateCase(CaseType::Then));
+		        $caseObject->getThen()->AcceptVisitor($this);
+		    }
+		    	
+		    $elseExpression = $sqlEntity->getElse();
+		    if (isset($elseExpression))
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateCase(CaseType::Else_));
+		        $elseExpression->AcceptVisitor($this);
+		    }
+		    	
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateCase(CaseType::Exit_));
+		    	
+		}
     }

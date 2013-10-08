@@ -14,10 +14,11 @@
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlTable;
-    use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlColumn;
     use Spherus\Core\Check;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlStatement;
-						
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlColumnExpression;
+								
 	/**
      * Class that represents a sql select statement
      *
@@ -290,15 +291,16 @@
 	    /**
 	     * Adds column to the select statement.
 	     *
-	     * @param SqlColumn $column The sql column to add.
+	     * @param SqlEntity $column The sql column to add.
+	     * @param string $alias The expression alias.
 	     *
 	     * @return SqlSelect
 	     */
-	    public function AddColumn(SqlColumn $column)
+	    public function AddColumn(SqlEntity $column, $alias = null)
 	    {
 	        Check::IsNullOrEmpty($column);
-	        
-	        $this->columns[] = $column;
+	        $this->columns[] = $this->CreateColumnExpression($column, $alias);
+
 	        return $this;
 	    }
 	
@@ -315,5 +317,20 @@
 	        $visitor->VisitSelect($this);
 	    }
 	
+	    /* PRIVATE METHODS */
+	    
+	    /**
+	     * Creates a colum expression
+	     *
+	     * @param SqlExpression $expression The sql Expression.
+	     * @param string $alias The expression alias.
+	     *
+	     * @return SqlColumnExpression
+	     */
+	    private function CreateColumnExpression($expression, $alias = null)
+	    {
+	        return new SqlColumnExpression($expression, $alias);
+	    }
+	    
 	}
 ?>

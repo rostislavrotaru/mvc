@@ -25,7 +25,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlJoinedTable;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlSubQuery;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlStatement;
-														
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlCase;
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlEntity;
+																
 	/**
      * Class that represents the sql database factory
      *
@@ -62,6 +64,18 @@
 	    public static function Table($name, $alias = null, array $columns = null)
 	    {
 	        return new SqlTable($name, $alias, $columns);
+	    }
+	    
+	    /**
+	     * Creates a case expression.
+	     *
+	     * @param SqlEntity $input The input Sql expression.
+	     *
+	     * @return SqlCase
+	     */
+	    public static function Case_(SqlEntity $input = null)
+	    {
+	        return new SqlCase($input);
 	    }
 	    
 	    /* JOIN */

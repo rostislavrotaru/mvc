@@ -2,7 +2,7 @@
 
 //****************************************************
 //Replace here the path that the framework is located
-set_include_path('__');
+set_include_path('_');
 include 'Spherus/Autoloader.php';
 //****************************************************
 
@@ -30,10 +30,16 @@ $table2->AddColumn($column4);
 $tt = $table1->LeftJoin($table2, $column1, $column3);
 $select0 = SqlFactory::Select($table2, array ($column3, $column4));
 
+$case = SqlFactory::Case_($column3);
+$case->Condition('39', 5);
+$case->Condition(SqlFactory::GreatherThan($column3, 20), $column4);
+$case->Else_(32);
+
 $select = SqlFactory::Select($table2, array ($column3, $column4))
-    //->Distinct()
-    //->From($tt)
-    ->Where(SqlFactory::And_(SqlFactory::In($column3, $select0), SqlFactory::LessThan($column3, 2222)))
+    ->Distinct()
+    ->From($tt)
+    ->AddColumn($case)
+    ->Where(SqlFactory::And_(SqlFactory::In($column1, $select0), SqlFactory::LessThan($column3, 2222)))
     ->GroupBy($column3, $column4)
     ->Having(SqlFactory::Equal($column4, 'ssssss'))
     ->OrderBy(array(
