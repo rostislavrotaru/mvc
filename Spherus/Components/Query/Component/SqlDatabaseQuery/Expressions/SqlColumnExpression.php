@@ -72,7 +72,4 @@
 	        return $this->alias;
 	    }
 	
-	
 	}
-
-?>

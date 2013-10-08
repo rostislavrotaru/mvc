@@ -95,22 +95,6 @@ use Spherus\Core\Check;
 			return $this->alias;
 		}
 		
-// 		/**
-// 		 * @return the $join
-// 		 */
-// 		public function getJoin() 
-// 		{
-// 			return $this->join;
-// 		}
-		
-// 		/**
-// 		 * Sets the join object
-// 		 */
-// 		public function setJoin(SqlJoin $join)
-// 		{
-// 		    $this->join = $join;
-// 		}
-		
 		
 		/* PUBLIC METHODS */
 	
@@ -208,5 +192,3 @@ use Spherus\Core\Check;
 		}
 		
 	}
-
-?>

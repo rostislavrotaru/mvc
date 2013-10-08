@@ -852,5 +852,3 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
 	    }
 	    
 	}
-
-?>

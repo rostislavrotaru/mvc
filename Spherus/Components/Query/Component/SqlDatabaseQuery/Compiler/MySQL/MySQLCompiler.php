@@ -26,5 +26,3 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompilerCont
 			parent::__construct(new SqlCompilerContext(), new MySQLTranslator());
 		}
 	}
-
-?>
