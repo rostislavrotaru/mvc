@@ -28,7 +28,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlFunctionType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
-																	
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
+																		
 		/**
      * Class that represents the sql database engine compiler
      *
@@ -636,8 +637,8 @@
 		/**
 		 * Translates SqlSubquery expression.
 		 *
-		 * @param SqlSubquery $sqlObject The SqlSubQuery expression to translate.
-		 * @param SqlObjectSectionType $section The SqlObjectSectionType section.
+		 * @param SqlSubquery $sqlEntity The SqlSubQuery expression to translate.
+		 * @param SqlEntitySectionType $section The SqlEntitySectionType section.
 		 */
 		public function TranslateSubQuery(SqlSubQuery $sqlEntity, $section)
 		{
@@ -979,4 +980,34 @@
 		    return null;
 		}
 	
+		/**
+		 * Translates SqlQueryExpression expression.
+		 *
+		 * @param SqlQueryExpression $sqlEntity The SqlSubQuery expression to translate.
+		 */
+		public function TranslateSqlQueryExpression(SqlQueryExpression $sqlEntity)
+		{
+            $all = ($sqlEntity->getAll() === true) ? ' ALL' : null;
+            switch ($sqlEntity->getSqlEntityType())
+            {
+                case SqlEntityType::Union:
+		   	    {
+		   	    	return 'UNION'.$all;
+		   	    }
+		   	    case SqlEntityType::Intersect:
+	   	        {
+	   	            return 'INTERSECT'.$all;
+	   	        }
+	   	        case SqlEntityType::Except:
+   	            {
+   	                return 'EXCEPT'.$all;
+   	            }
+   	            default:
+                {
+                    return 'INTERSECT'.$all;
+                }
+		   }
+		   
+		}
+		
 	}

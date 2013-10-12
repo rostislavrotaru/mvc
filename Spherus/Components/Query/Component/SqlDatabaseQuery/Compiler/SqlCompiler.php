@@ -28,7 +28,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
-																																																																    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
+																																																																				    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -423,4 +424,19 @@
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUnary($sqlEntity, SqlEntityType::Exit_));
 		}
     
+		/**
+		 * Visits sql query expression like union, intersect and except.
+		 *
+		 * @param SqlQueryExpression $sqlEntity The SqlQueryExpression to visit.
+		 */
+		public function VisitSqlQueryExpression(SqlQueryExpression $sqlEntity)
+		{
+		    $sqlEntity->getLeftExpression()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSqlQueryExpression($sqlEntity));
+		    $sqlEntity->getRightExpression()->AcceptVisitor($this);
+		    
+		    return $this->sqlCompilerContext->getSql();
+		}
+		
+		
     }

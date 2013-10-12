@@ -14,7 +14,8 @@
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlSelect;
     use Spherus\Core\SpherusException;
-																	
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
+																					
 	/**
      * Class that represents the sql database engine
      *
@@ -76,6 +77,10 @@
     		if ($sqlStatement instanceof SqlSelect)
     		{
     			return $this->compiler->VisitSelect($sqlStatement);
+    		}
+    		elseif ($sqlStatement instanceof SqlQueryExpression)
+    		{
+    			return $this->compiler->VisitSqlQueryExpression($sqlStatement);
     		}
 //     		elseif ($sqlStatement instanceof SqlUpdate)
 //     		{

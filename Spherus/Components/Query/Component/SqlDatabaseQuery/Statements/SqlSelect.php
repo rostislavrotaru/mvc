@@ -304,7 +304,7 @@
 	        return $this;
 	    }
 	
-	
+	    
 	    /* PUBLIC METHODS */
 	
 	    /**

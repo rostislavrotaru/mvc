@@ -31,7 +31,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
-																				
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
+																					
 	/**
      * Class that represents the sql database factory
      *
@@ -671,7 +672,7 @@
 	        	
 	        return self::SqlFunctionInternal(SqlFunctionType::Replace, $arguments);
 	    }
-	    
+
 	    
 	    /* MATH FUNCTIONS */
 	    
@@ -894,6 +895,87 @@
 	    }
 	    
 	    
+	    /* SQL QUERY EXPRESSIONS */
+	    
+	    /**
+	     * Creates an except sql query expression.
+	     *
+	     * @param SqlExpression $leftExpression The left sql query expression.
+	     * @param SqlExpression $rightExpression The right sql query expression.
+	     *
+	     * @return SqlQueryExpression
+	     */
+	    public static function Except($leftExpression, $rightExpression)
+	    {
+	        return self::QueryExpression(SqlEntityType::Except, $leftExpression, $rightExpression, false);
+	    }
+	    
+	    /**
+	     * Creates an except all sql query expression.
+	     *
+	     * @param SqlExpression $leftExpression The left sql query expression.
+	     * @param SqlExpression $rightExpression The right sql query expression.
+	     *
+	     * @return SqlQueryExpression
+	     */
+	    public static function ExceptAll($leftExpression, $rightExpression)
+	    {
+	        return self::QueryExpression(SqlEntityType::Except, $leftExpression, $rightExpression, true);
+	    }
+	    
+	    /**
+	     * Creates an intersect sql query expression.
+	     *
+	     * @param SqlExpression $leftExpression The left sql query expression.
+	     * @param SqlExpression $rightExpression The right sql query expression.
+	     *
+	     * @return SqlQueryExpression
+	     */
+	    public static function Intersect($leftExpression, $rightExpression)
+	    {
+	        return self::QueryExpression(SqlEntityType::Intersect, $leftExpression, $rightExpression, false);
+	    }
+	    
+	    /**
+	     * Creates an intersect all sql query expression.
+	     *
+	     * @param SqlExpression $leftExpression The left sql query expression.
+	     * @param SqlExpression $rightExpression The right sql query expression.
+	     *
+	     * @return SqlQueryExpression
+	     */
+	    public static function IntersectAll($leftExpression, $rightExpression)
+	    {
+	        return self::QueryExpression(SqlEntityType::Intersect, $leftExpression, $rightExpression, true);
+	    }
+	    
+	    /**
+	     * Creates an union sql query expression.
+	     *
+	     * @param array $leftSqlQueryExpression The left sql query expression.
+	     * @param array $rightSqlQueryExpression The right sql query expression.
+	     *
+	     * @return SqlQueryExpression
+	     */
+	    public static function Union($leftExpression, $rightExpression)
+	    {
+	        return self::QueryExpression(SqlEntityType::Union, $leftExpression, $rightExpression, false);
+	    }
+	    
+	    /**
+	     * Creates an union all sql query expression.
+	     *
+	     * @param array $leftSqlQueryExpression The left sql query expression.
+	     * @param array $rightSqlQueryExpression The right sql query expression.
+	     *
+	     * @return SqlQueryExpression
+	     */
+	    public static function UnionAll($leftExpression, $rightExpression)
+	    {
+	        return self::QueryExpression(SqlEntityType::Union, $leftExpression, $rightExpression, true);
+	    }
+	    
+	    
 	    /* PRIVATE METHODS */
 	    
 	    /**
@@ -976,4 +1058,19 @@
 	        return new SqlSubQuery($sqlExpression);
 	    }
 	    
+	    /**
+	     * Creates a sql query expression.
+	     *
+	     * @param SqlEntityType $objectType
+	     * @param SqlExpression $leftExpression The left sql query expresion.
+	     * @param SqlExpression $rightExpression The right sql query expression.
+	     * @param boolean $all Determine if all expression or not.
+	     *
+	     * @return SqlQueryExpression Created SqlQueryExpression object.
+	     */
+	    private static function QueryExpression($entityType, $leftExpression, $rightExpression, $all)
+	    {
+	        return new SqlQueryExpression($entityType, $leftExpression, $rightExpression, $all);
+	    }
+	
 	}
