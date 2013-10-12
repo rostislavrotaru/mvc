@@ -29,7 +29,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
-																																																																				    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlBatch;
+																																																																								    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -106,7 +107,7 @@
 		    $this->VisitSelectOrderBy($select);
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSelect($select, SelectType::Exit_));
 		    	
-		    return $this->sqlCompilerContext->getSql();
+		    return $this->sqlCompilerContext;
 		}
 		
 		/**
@@ -231,6 +232,50 @@
 		
 		        $orderByObject->AcceptVisitor($this);
 		    }
+		}
+		
+		/**
+		 * Visits sql query expression like union, intersect and except.
+		 *
+		 * @param SqlQueryExpression $sqlEntity The SqlQueryExpression to visit.
+		 */
+		public function VisitSqlQueryExpression(SqlQueryExpression $sqlEntity)
+		{
+		    $sqlEntity->getLeftExpression()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSqlQueryExpression($sqlEntity));
+		    $sqlEntity->getRightExpression()->AcceptVisitor($this);
+		
+		    return $this->sqlCompilerContext->getSql();
+		}
+		
+		/**
+		 * Visits batch sql statement.
+		 *
+		 * @param SqlBatch $sqlEntity The sql batch to visit.
+		 */
+		public function VisitBatch(SqlBatch $sqlEntity)
+		{
+		    $statements = $sqlEntity->getStatements();
+		    if (count($statements) <= 0)
+		    {
+		        return;
+		    }
+		    if (count($statements) == 1)
+		    {
+		        $statements[0]->AcceptVisitor($this);
+		    }
+		    else
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->getBatchBegin());
+		        foreach($statements as $item)
+		        {
+		            $item->AcceptVisitor($this);
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->getBatchDelimiter());
+		        }
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->getBatchEnd());
+		    }
+		    	
+		    return $this->sqlCompilerContext;
 		}
 		
 		
@@ -424,19 +469,4 @@
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUnary($sqlEntity, SqlEntityType::Exit_));
 		}
     
-		/**
-		 * Visits sql query expression like union, intersect and except.
-		 *
-		 * @param SqlQueryExpression $sqlEntity The SqlQueryExpression to visit.
-		 */
-		public function VisitSqlQueryExpression(SqlQueryExpression $sqlEntity)
-		{
-		    $sqlEntity->getLeftExpression()->AcceptVisitor($this);
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSqlQueryExpression($sqlEntity));
-		    $sqlEntity->getRightExpression()->AcceptVisitor($this);
-		    
-		    return $this->sqlCompilerContext->getSql();
-		}
-		
-		
     }
