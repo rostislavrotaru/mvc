@@ -83,6 +83,7 @@
         public function Add($column, $expression)
         {
             $this->values[] = array($column, $this->CheckIsLiteral($expression));
+            return $this;
         }
     
         /**
