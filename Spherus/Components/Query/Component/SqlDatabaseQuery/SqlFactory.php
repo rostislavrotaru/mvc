@@ -37,7 +37,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlInsert;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlAssignment;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlUpdate;
-																										
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlJoinColumn;
+																											
 	/**
      * Class that represents the sql database factory
      *
@@ -95,15 +96,27 @@
 	     *
 	     * @param SqlTable $table The join table.
 	     * @param SqlTable $foreignTable The foreign join table.
-	     * @param SqlColumn $column The join column.
-	     * @param SqlColumn $foreignColumn The join foreign column.
+	     * @param array|SqlJoinColumn $joinColumns The join columns array or single object.
 	     * @param SqlJoinType $joinType The type of sql join.
 	     *
 	     * @return SqlJoinedTable
 	     */
-	    public static function Join(SqlTable $table, SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn, $joinType)
+	    public static function Join(SqlTable $table, SqlTable $foreignTable, $joinColumns, $joinType)
 	    {
-	        return new SqlJoinedTable(new SqlJoin($table, $foreignTable, $column, $foreignColumn, $joinType));
+	        return new SqlJoinedTable(new SqlJoin($table, $foreignTable, $joinColumns, $joinType));
+	    }
+	    
+	    /**
+	     * Creates a joined column expression.
+	     *
+	     * @param SqlColumn $column The join column.
+	     * @param SqlColumn $foreignColumn The foreign join column.
+	     *
+	     * @return SqlJoinColumn
+	     */
+	    public static function JoinColumn(SqlColumn $column, SqlColumn $foreignColumn)
+	    {
+	    	return new SqlJoinColumn($column, $foreignColumn);
 	    }
 	
 	    

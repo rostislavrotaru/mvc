@@ -125,70 +125,65 @@ use Spherus\Core\Check;
 		* Creates a left join for table.
 		*
 		* @param SqlTable $foreignTable The foreign table or joined table.
-		* @param SqlColumn $column The join column.
-		* @param SqlColumn $foreignColumn The foreign join column.
+		* @param array|SqlJoinColumn $joinColumns The join columns array or single object.
 		*
 		* @return SqlTable
 		*/
-		public function LeftJoin(SqlTable $foreignTable, SqlColumn $column,  SqlColumn $foreignColumn)
+		public function LeftJoin(SqlTable $foreignTable, $joinColumns)
 		{
-		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::LeftJoin);
+		    return SqlFactory::Join($this, $foreignTable, $joinColumns, SqlJoinType::LeftJoin);
 		}
 		
 		/**
 		 * Creates a left outer join for table.
 		 *
 		 * @param SqlTable $foreignTable The foreign table or joined table.
-		 * @param SqlColumn $column The join column.
-		 * @param SqlColumn $foreignColumn The foreign join column.
+		 * @param array|SqlJoinColumn $joinColumns The join columns array or single object.
 		 *
 		 * @return SqlTable
 		 */
-		public function LeftOuterJoin(SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn)
+		public function LeftOuterJoin(SqlTable $foreignTable, $joinColumns)
 		{
-		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::LeftOuterJoin);
+		    return SqlFactory::Join($this, $foreignTable, $joinColumns, SqlJoinType::LeftOuterJoin);
 		}
 		
 		/**
 		 * Creates a right outer join for table.
 		 *
 		 * @param SqlTable $foreignTable The foreign table or joined table.
-		 * @param SqlColumn $column The join column.
-		 * @param SqlColumn $foreignColumn The foreign join column.
+		 * @param array|SqlJoinColumn $joinColumns The join columns array or single object.
 		 *
 		 * @return SqlTable
 		 */
-		public function RightOuterJoin(SqlTable $foreignTable, SqlColumn $column,  SqlColumn$foreignColumn)
+		public function RightOuterJoin(SqlTable $foreignTable, $joinColumns)
 		{
-		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::RightOuterJoin);
+		    return SqlFactory::Join($this, $foreignTable, $joinColumns, SqlJoinType::RightOuterJoin);
 		}
 		
 		/**
 		 * Creates a right join for table.
 		 *
 		 * @param SqlTable $foreignTable The foreign table or joined table.
-		 * @param SqlColumn $column The join column.
-		 * @param SqlColumn $foreignColumn The foreign join column.
+		 * @param array|SqlJoinColumn $joinColumns The join columns array or single object.
 		 *
 		 * @return SqlTable
 		 */
-		public function RightJoin(SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn)
+		public function RightJoin(SqlTable $foreignTable, $joinColumns)
 		{
-		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::RightJoin);
+		    return SqlFactory::Join($this, $foreignTable, $joinColumns, SqlJoinType::RightJoin);
 		}
 		
 		/**
 		 * Creates a inner join for table.
 		 *
 		 * @param SqlTable $foreignTable The foreign table or joined table.
-		 * @param SqlColumn $column The join column.
-		 * @param SqlColumn $foreignColumn The foreign join column.
+		 * @param array|SqlJoinColumn $joinColumns The join columns array or single object.
 		 *
 		 * @return SqlTable
 		 */
-		public function InnerJoin(SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn)
+		public function InnerJoin(SqlTable $foreignTable, $joinedColumns)
 		{
-		    return SqlFactory::Join($this, $foreignTable, $column, $foreignColumn, SqlJoinType::InnerJoin);
+		    return SqlFactory::Join($this, $foreignTable, $joinedColumns, SqlJoinType::InnerJoin);
 		}
 		
 	}

@@ -14,7 +14,6 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlExpression;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlFactory;
-    use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlColumn;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Structure\SqlTable;
 								
 		/**
@@ -34,19 +33,25 @@
 	     *
 	     * @param SqlTable $table The joined table.
 	     * @param SqlTable $foreignTable The foreign joined table.
-	     * @param SqlColumn $column The current join column.
-	     * @param SqlColumn $foreignColumn The foreign join column.
+	     * @param array|SqlJoinColumn $joinColumns The join columns array or single object.
 	     * @param SqlJoinType $joinType The type of join.
 	     */
-	    public function __construct(SqlTable $table, SqlTable $foreignTable, SqlColumn $column, SqlColumn $foreignColumn, $joinType = SqlJoinType::InnerJoin)
+	    public function __construct(SqlTable $table, SqlTable $foreignTable, $joinColumns, $joinType = SqlJoinType::InnerJoin)
 	    {
 	        parent::__construct(SqlEntityType::Join);
 	        	
-	        $this->column = $column;
-	        $this->foreignColumn = $foreignColumn;
 	        $this->joinType = $joinType;
 	        $this->table = $table;
 	        $this->foreignTable = $foreignTable;
+
+	        if(is_array($joinColumns))
+	        {
+                $this->joinColumns = $joinColumns;
+	        }
+	        else
+	        {
+	            $this->joinColumns[] = $joinColumns;
+	        }
 	    }
 	    
 	    
@@ -60,18 +65,11 @@
 	    private $joinType = SqlJoinType::InnerJoin;
 	    
 	    /**
-	     * Represents the join column.
+	     * Represents the joined column expressions.
 	     *
-	     * @var SqlColumn
+	     * @var array
 	     */
-	    private $column = null;
-	    
-	    /**
-	     * Represents the join foreign column.
-	     *
-	     * @var SqlColumn
-	     */
-	    private $foreignColumn = null;
+	    private $joinColumns = null;
 	    
 	    /**
 	     * Represents the foreign joined table
@@ -89,11 +87,12 @@
 	    /* PROPERTIES */
 	    
 	    /**
-	     * @return the $foreignColumn
+	     * @return the $joinColumns
+	     * var SqlJoinColumn
 	     */
-	    public function getForeignColumn()
+	    public function getJoinColumns()
 	    {
-	        return $this->foreignColumn;
+	        return $this->joinColumns;
 	    }
 	    
 	    /**
@@ -130,7 +129,28 @@
 	     */
 	    public function GetExpression()
 	    {
-	        return SqlFactory::Equal($this->column, $this->foreignColumn);
+	        if(count($this->joinColumns) === 1)
+	        {
+	            return SqlFactory::Equal($this->joinColumns[0]->getColumn(), $this->joinColumns[0]->getForeignColumn());
+	        }
+
+	        $i = 0;
+	        $currentExpression = null;
+	        foreach ($this->joinColumns as $joinColumn) 
+	        {
+	            if($i === 0)
+	            {
+	               $currentExpression = SqlFactory::Equal($joinColumn->getColumn(), $joinColumn->getForeignColumn());
+	            }
+	            else
+	            {
+	            	$currentExpression = SqlFactory::And_($currentExpression, SqlFactory::Equal($joinColumn->getColumn(), $joinColumn->getForeignColumn()));
+	            }
+	        	$i++;
+	        }
+	        
+	        unset($i);
+	        return $currentExpression;
 	    }
 		
 	}

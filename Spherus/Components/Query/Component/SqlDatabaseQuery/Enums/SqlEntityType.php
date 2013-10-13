@@ -126,4 +126,5 @@
 		const False_ = 'False';
 		const Set = 'Set';
 		const From = 'From';
+		const JoinedColumns = 'JoinedColumns';
 	}
