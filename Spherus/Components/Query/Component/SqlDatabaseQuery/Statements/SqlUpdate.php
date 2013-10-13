@@ -13,7 +13,7 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlStatement;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlFactory;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlFactory;
 																				
 	/**
      * Class that represents a sql update
