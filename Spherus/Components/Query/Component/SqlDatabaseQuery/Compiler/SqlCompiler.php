@@ -34,7 +34,9 @@
     use Spherus\Core\SpherusException;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\InsertType;
-																																																																																								    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlAssignment;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlUpdate;
+																																																																																																    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -590,5 +592,76 @@
 		    $sqlEntity->getOperand()->AcceptVisitor($this);
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUnary($sqlEntity, SqlEntityType::Exit_));
 		}
+		
+		/**
+		 * Visits Update sql entity.
+		 *
+		 * @param SqlUpdate $sqlEntity The sql update entity to visit
+		 */
+		public function VisitUpdate(SqlUpdate $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUpdate(SqlEntityType::Entry));
+		    $updateTable = $sqlEntity->getTable();
+		    if (!isset($updateTable))
+		    {
+		        throw new SpherusException(EXCEPTION_INVALID_ARGUMENT);
+		    }
+		    	
+		    $updateTable->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUpdate(SqlEntityType::Set));
+		    	
+		    $values = $sqlEntity->getValues();
+		    $i = 0;
+		    foreach ($values as $key=>$value)
+		    {
+		        if ($i > 0 )
+		        {
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->getColumnDelimiter());
+		        }
+		        $i++;
+		
+		        $column = $value->getLeftExpression();
+		
+		        if ($column->getSqlTable() !== $updateTable)
+		        {
+		            throw new SpherusException(EXCEPTION_INVALID_ARGUMENT);
+		        }
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->EncapsulateInBrackets($column->getName()));
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateType(SqlEntityType::Equal));
+		
+		        $value->getRightExpression()->AcceptVisitor($this);
+		    }
+		    	
+		    $from = $sqlEntity->getFrom();
+		    if (isset($from))
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUpdate(SqlEntityType::From));
+		        $from->AcceptVisitor($this);
+		    }
+		    	
+		    $where = $sqlEntity->getWhere();
+		    if (isset($where))
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUpdate(SqlEntityType::Where));
+		        $where->AcceptVisitor($this);
+		    }
+		    	
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateUpdate(SqlEntityType::Exit_));
+		    	
+		    return $this->sqlCompilerContext;
+		}
     
+		/**
+		 * Visits sql assignment entity.
+		 *
+		 * @param SqlAssign $sqlEntity The sql assign object to visit.
+		 */
+		public function VisitAssign(SqlAssignment $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateAssign(SqlEntityType::Entry));
+		    $sqlEntity->getLeftExpression()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateType($sqlEntity->getEntityType()));
+		    $sqlEntity->getRightExpression()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateAssign(SqlEntityType::Exit_));
+		}
     }

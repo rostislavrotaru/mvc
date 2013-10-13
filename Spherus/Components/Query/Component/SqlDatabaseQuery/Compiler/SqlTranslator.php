@@ -1108,4 +1108,58 @@
 		    	
 		    return null;
 		}
+	
+		/**
+		 * Translates assignment statement.
+		 *
+		 * @param SqlEntityType $section The SqlEntityType type.
+		 *
+		 * @return string|NULL
+		 */
+		public function TranslateAssign($section)
+		{
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Entry:
+		    	    {
+		    	        return 'SET';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
+	
+		/**
+		 * Translates Update function.
+		 *
+		 * @param SqlEntityType $section The update section type.
+		 * @return string
+		 */
+		public function TranslateUpdate($section)
+		{
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Entry:
+	    	    {
+	    	        return 'UPDATE';
+	    	    }
+		    	case SqlEntityType::Set:
+	    	    {
+	    	        return 'SET';
+	    	    }
+		    	case SqlEntityType::From:
+	    	    {
+	    	        return 'FROM';
+	    	    }
+		    	case SqlEntityType::Where:
+	    	    {
+	    	        return 'WHERE';
+	    	    }
+	    	    default:
+    	        {
+    	        	return null;
+    	        }
+		    }
+		}
+		
 	}

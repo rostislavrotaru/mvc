@@ -124,4 +124,6 @@
 		const Condition = 'Condition';
 		const True_ = 'True';
 		const False_ = 'False';
+		const Set = 'Set';
+		const From = 'From';
 	}

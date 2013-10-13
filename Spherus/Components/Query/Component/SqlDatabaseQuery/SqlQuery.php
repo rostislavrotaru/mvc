@@ -18,7 +18,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlInsert;
-																																	
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlUpdate;
+																																					
 	/**
      * Class that represents the sql database engine
      *
@@ -93,10 +94,10 @@
     		{
     		    return $this->compiler->VisitIf($sqlStatement);
     		}
-//     		elseif ($sqlStatement instanceof SqlUpdate)
-//     		{
-//     			return $this->compiler->VisitUpdate($sqlStatement);
-//     		}
+    		elseif ($sqlStatement instanceof SqlUpdate)
+    		{
+    			return $this->compiler->VisitUpdate($sqlStatement);
+    		}
     		elseif ($sqlStatement instanceof SqlInsert)
     		{
     			return $this->compiler->VisitInsert($sqlStatement);

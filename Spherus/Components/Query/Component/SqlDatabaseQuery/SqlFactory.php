@@ -35,7 +35,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlInsert;
-																								
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlAssignment;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlUpdate;
+																										
 	/**
      * Class that represents the sql database factory
      *
@@ -174,6 +176,27 @@
 	    public static function Insert(SqlTable $into)
 	    {
 	        return new SqlInsert($into);
+	    }
+	    
+	    /**
+	     * Creates assigment statement.
+	     *
+	     * @param SqlExpression $left The left sql expression.
+	     * @param SqlExpression $right The right sql expression.
+	     */
+	    public static function Assign($left, $right)
+	    {
+	        return new SqlAssignment($left, $right);
+	    }
+	    
+	    /**
+	     * Creates update statement.
+	     *
+	     * @param SqlTable $table The SqlTable to update
+	     */
+	    public static function Update($table = null)
+	    {
+	        return new SqlUpdate($table);
 	    }
 	    
 	    
