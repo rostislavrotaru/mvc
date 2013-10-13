@@ -33,7 +33,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
-																						
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
+																							
 	/**
      * Class that represents the sql database factory
      *
@@ -146,6 +147,21 @@
 	    public static function Delete($from)
 	    {
 	        return new SqlDelete($from);
+	    }
+	    
+	    /**
+	     * Creates if sql statement.
+	     *
+	     * @param unknown_type $condition
+	     * @param SqlExpression $condition The statement condition.
+	     * @param SqlStatement $true The statement that is executed when condition is true.
+	     * @param SqlStatement $false The statement that is executed when condition is false.
+	     *
+	     * @return SqlIf
+	     */
+	    public static function If_($condition, $true, $false)
+	    {
+	        return new SqlIf($condition, $true, $false);
 	    }
 	    
 	    /* AGGREGATES */

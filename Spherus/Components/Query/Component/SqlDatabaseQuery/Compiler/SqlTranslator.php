@@ -1033,4 +1033,37 @@
 		    	
 		    return null;
 		}
+	
+		/**
+		 * Translates IF sql entity.
+		 *
+		 * @param IfSectionType $section The IfSectionType.
+		 *
+		 * @return string|NULL
+		 */
+		public function TranslateIf($section)
+		{
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Entry:
+		    	    {
+		    	        return 'IF';
+		    	    }
+		    	case SqlEntityType::True_:
+		    	    {
+		    	        return 'BEGIN';
+		    	    }
+		    	case SqlEntityType::False_:
+		    	    {
+		    	        return 'END ELSE BEGIN';
+		    	    }
+		    	case SqlEntityType::Exit_:
+		    	    {
+		    	        return 'END';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
+	
 	}

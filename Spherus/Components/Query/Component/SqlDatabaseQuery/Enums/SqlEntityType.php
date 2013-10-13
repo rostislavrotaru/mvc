@@ -122,4 +122,6 @@
 		const Where = 'Where';
 		const Specification = 'Specification';
 		const Condition = 'Condition';
+		const True_ = 'True';
+		const False_ = 'False';
 	}

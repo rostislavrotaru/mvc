@@ -16,7 +16,8 @@
     use Spherus\Core\SpherusException;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
-																									
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
+																													
 	/**
      * Class that represents the sql database engine
      *
@@ -86,6 +87,10 @@
     		elseif ($sqlStatement instanceof SqlDelete)
     		{
     			return $this->compiler->VisitDelete($sqlStatement);
+    		}
+    		elseif ($sqlStatement instanceof SqlIf)
+    		{
+    		    return $this->compiler->VisitIf($sqlStatement);
     		}
 //     		elseif ($sqlStatement instanceof SqlUpdate)
 //     		{

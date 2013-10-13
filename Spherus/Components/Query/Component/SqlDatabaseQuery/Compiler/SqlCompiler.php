@@ -32,7 +32,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlBatch;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
     use Spherus\Core\SpherusException;
-																																																																																    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
+																																																																																				    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -310,6 +311,31 @@
 		    	
 		    return $this->sqlCompilerContext;
 		}
+		
+		/**
+		 * Visits IF sql statement.
+		 *
+		 * @param SqlIf $sqlEntity The SqlIf entity to visit.
+		 */
+		public function VisitIf(SqlIf $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateIf(SqlEntityType::Entry));
+		    	
+		    $sqlEntity->getCondition()->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateIf(SqlEntityType::True_));
+		    $sqlEntity->getTrue()->AcceptVisitor($this);
+		    	
+		    $false = $sqlEntity->getFalse();
+		    if (isset($false))
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateIf(SqlEntityType::False_));
+		        $false->AcceptVisitor($this);
+		    }
+		    	
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateIf(SqlEntityType::Exit_));
+		    return $this->sqlCompilerContext;
+		}
+		
 		
 		/* MISC */
 		
