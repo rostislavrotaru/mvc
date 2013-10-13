@@ -29,7 +29,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
-																		
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlInsert;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\InsertType;
+																				
 		/**
      * Class that represents the sql database engine compiler
      *
@@ -1066,4 +1068,44 @@
 		    return null;
 		}
 	
+		/**
+		 * Translates insert statement.
+		 *
+		 * @param SqlInsert $sqlEntity The sql insert object to translate.
+		 * @param InsertSectionType $section The InsertSectionType.
+		 *
+		 * @return string|Ambigous <string, NULL>|NULL
+		 */
+		public function TranslateInsert(SqlInsert $sqlEntity, $section)
+		{
+		    switch ($section)
+		    {
+		    	case InsertType::Entry:
+		    	    {
+		    	        return 'INSERT INTO';
+		    	    }
+		    	case InsertType::ColumnsEntry:
+		    	    {
+		    	        return count($sqlEntity->getValues()) > 0 ? '(' : null;
+		    	    }
+		    	case InsertType::ColumnsExit:
+		    	    {
+		    	        return (count($sqlEntity->getValues()) > 0) ? ')' : null;
+		    	    }
+		    	case InsertType::ValuesEntry:
+		    	    {
+		    	        return 'VALUES(';
+		    	    }
+		    	case InsertType::ValuesExit:
+		    	    {
+		    	        return ')';
+		    	    }
+		    	case InsertType::DefaultValues:
+		    	    {
+		    	        return 'DEFAULT VALUES';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
 	}

@@ -33,7 +33,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
     use Spherus\Core\SpherusException;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
-																																																																																				    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\InsertType;
+																																																																																								    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -237,6 +238,7 @@
 		    }
 		}
 		
+		
 		/* MISC STATEMENTS */
 		
 		/**
@@ -333,6 +335,68 @@
 		    }
 		    	
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateIf(SqlEntityType::Exit_));
+		    return $this->sqlCompilerContext;
+		}
+		
+		/**
+		 * Visits sql insert statement.
+		 *
+		 * @param SqlInsert $sqlObject The sql insert object to visit.
+		 *
+		 * @throws Exception Missing INTO table object.
+		 * @return SqlCompilationResult
+		 */
+		public function VisitInsert($sqlObject)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::Entry));
+		    	
+		    $into = $sqlObject->getInto();
+		    if (!isset($into))
+		    {
+		        throw new SpherusException(EXCEPTION_INVALID_ARGUMENT);
+		    }
+		    	
+		    $into->AcceptVisitor($this);
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ColumnsEntry));
+		    	
+		    $values = $sqlObject->getValues();
+		    if (count($values) > 0)
+		    {
+		        $i = 0;
+		        foreach ($values as $key=>$value)
+		        {
+		            if ($i > 0)
+		            {
+		                $this->sqlCompilerContext->AppendText($this->sqlTranslator->columnDelimiter);
+		            }
+		            $i++;
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->EncapsulateInBrackets($value[0]->getName()));
+		        }
+		    }
+		    	
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ColumnsExit));
+		    	
+		    if (count($values) == 0)
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::DefaultValues));
+		    }
+		    else
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ValuesEntry));
+		        $i = 0;
+		        foreach ($values as $key=>$value)
+		        {
+		            if ($i > 0)
+		            {
+		                $this->sqlCompilerContext->AppendText($this->sqlTranslator->columnDelimiter);
+		            }
+		            $i++;
+		            $value[1]->AcceptVisitor($this);
+		        }
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ValuesExit));
+		    }
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::Exit_));
+		    	
 		    return $this->sqlCompilerContext;
 		}
 		

@@ -34,7 +34,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlIf;
-																							
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlInsert;
+																								
 	/**
      * Class that represents the sql database factory
      *
@@ -163,6 +164,18 @@
 	    {
 	        return new SqlIf($condition, $true, $false);
 	    }
+	    
+	    /**
+	     * Creates insert sql statement.
+	     *
+	     * @param SqlTable $into The into sql table entity.
+	     * @return SqlInsert
+	     */
+	    public static function Insert(SqlTable $into)
+	    {
+	        return new SqlInsert($into);
+	    }
+	    
 	    
 	    /* AGGREGATES */
 	    
