@@ -31,8 +31,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlLiteral;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlFunction;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlRowNumber;
-use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
-																					
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
+																						
 	/**
      * Class that represents the sql database factory
      *
@@ -136,6 +137,16 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpr
 	        return $sqlSelect;
 	    }
 	    
+	    /**
+	     * Creates delete sql statement.
+	     *
+	     * @param SqlTable $from The FROM sql table entity.
+	     * @return SqlDelete
+	     */
+	    public static function Delete($from)
+	    {
+	        return new SqlDelete($from);
+	    }
 	    
 	    /* AGGREGATES */
 	    
@@ -318,11 +329,6 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpr
 	     */
 	    public static function In($leftExpression, $rightExpression)
 	    {
-	        if ($rightExpression instanceof SqlStatement)
-	        {
-	            return self::Binary(SqlEntityType::In, $leftExpression, self::SubQuery($rightExpression));
-	        }
-	        
 	        return self::Binary(SqlEntityType::In, $leftExpression, $rightExpression);
 	    }
 	    
@@ -335,11 +341,6 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpr
 	     */
 	    public static function NotIn($leftExpression, $rightExpression)
 	    {
-	        if ($rightExpression instanceof SqlStatement)
-	        {
-	            return self::Binary(SqlEntityType::NotIn, $leftExpression, self::SubQuery($rightExpression));
-	        }
-	        
 	        return self::Binary(SqlEntityType::NotIn, $leftExpression, $rightExpression);
 	    }
 	
@@ -1053,7 +1054,7 @@ use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpr
 	     * @param SqlStatement $sqlStatement The containing sql expression.
 	     * @return SqlSubQuery
 	     */
-	    public static function SubQuery(SqlStatement $sqlExpression)
+	    public static function SubQuery($sqlExpression)
 	    {
 	        return new SqlSubQuery($sqlExpression);
 	    }

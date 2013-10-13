@@ -119,6 +119,7 @@
 		const Variant = 'Variant';
 		const DeclareVariable = 'DeclareVariable';
 		const While_ = 'While';
+		const Where = 'Where';
 		const Specification = 'Specification';
 		const Condition = 'Condition';
 	}

@@ -30,7 +30,7 @@
          *
          * @param SqlStatement $sqlStatement The containing sql statement
          */
-        public function __construct(SqlStatement $sqlStatement)
+        public function __construct($sqlStatement)
         {
             parent::__construct(SqlEntityType::SubQuery);
             	

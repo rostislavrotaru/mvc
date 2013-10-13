@@ -12,7 +12,10 @@
 					
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlExpression;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
-		
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Base\SqlStatement;
+use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlFactory;
+use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\SqlEntityType;
+														
 	/**
      * Class that represents a sql binary expressions
      *
@@ -34,9 +37,14 @@
 		public function __construct($entityType, $leftExpression,  $rightExpression)
 		{
 			parent::__construct($entityType);
-			
+
 			$this->leftExpression = $this->CheckIsLiteral($leftExpression);
 			$this->rightExpression = $this->CheckIsLiteral($rightExpression);
+
+			if ($rightExpression instanceof SqlStatement || $entityType === SqlEntityType::In  || $entityType === SqlEntityType::NotIn)
+			{
+			    $this->rightExpression = SqlFactory::SubQuery($this->rightExpression);
+			}
 		} 
 		
 		/* FIELDS */

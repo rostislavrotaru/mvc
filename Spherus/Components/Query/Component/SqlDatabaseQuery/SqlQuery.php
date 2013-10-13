@@ -15,7 +15,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlSelect;
     use Spherus\Core\SpherusException;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
-																					
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
+																									
 	/**
      * Class that represents the sql database engine
      *
@@ -42,7 +43,7 @@
     	
     	/**
     	 * Determine the compiler used for sql generation
-    	 * @var ISqlCompiler
+    	 * @var SqlCompiler
     	 */
     	private $compiler = null;
     	
@@ -82,6 +83,10 @@
     		{
     			return $this->compiler->VisitSqlQueryExpression($sqlStatement);
     		}
+    		elseif ($sqlStatement instanceof SqlDelete)
+    		{
+    			return $this->compiler->VisitDelete($sqlStatement);
+    		}
 //     		elseif ($sqlStatement instanceof SqlUpdate)
 //     		{
 //     			return $this->compiler->VisitUpdate($sqlStatement);
@@ -90,10 +95,7 @@
 //     		{
 //     			return $this->compiler->VisitInsert($sqlStatement);
 //     		}
-//     		elseif ($sqlStatement instanceof SqlDelete)
-//     		{
-//     			return $this->compiler->VisitDelete($sqlStatement);
-//     		}
+//     		
     			
      		throw new SpherusException(EXCEPTION_INVALID_STATEMENT);
     	}    	

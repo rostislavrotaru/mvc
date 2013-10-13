@@ -1010,4 +1010,27 @@
 		   
 		}
 		
+		/**
+		 * Translates delete sql entity.
+		 *
+		 * @param SqlEntityType $section The sql entity section.
+		 *
+		 * @return string|NULL
+		 */
+		public function TranslateDelete($section)
+		{
+		    switch ($section)
+		    {
+		    	case SqlEntityType::Entry:
+		    	    {
+		    	        return 'DELETE FROM';
+		    	    }
+		    	case SqlEntityType::Where:
+		    	    {
+		    	        return 'WHERE';
+		    	    }
+		    }
+		    	
+		    return null;
+		}
 	}

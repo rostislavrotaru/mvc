@@ -30,7 +30,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlUnary;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Expressions\SqlQueryExpression;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlBatch;
-																																																																								    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlDelete;
+    use Spherus\Core\SpherusException;
+																																																																																    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -234,6 +236,8 @@
 		    }
 		}
 		
+		/* MISC STATEMENTS */
+		
 		/**
 		 * Visits sql query expression like union, intersect and except.
 		 *
@@ -245,7 +249,7 @@
 		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateSqlQueryExpression($sqlEntity));
 		    $sqlEntity->getRightExpression()->AcceptVisitor($this);
 		
-		    return $this->sqlCompilerContext->getSql();
+		    return $this->sqlCompilerContext;
 		}
 		
 		/**
@@ -278,6 +282,34 @@
 		    return $this->sqlCompilerContext;
 		}
 		
+		/**
+		 * visits delete sql statement.
+		 *
+		 * @param SqlDelete $sqlObject The sql delete statement to visit.
+		 *
+		 * @throws Exception Missing FROM sql table object.
+		 * @return SqlCompilationResult
+		 */
+		public function VisitDelete(SqlDelete $sqlEntity)
+		{
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateDelete(SqlEntityType::Entry));
+		    
+		    $from = $sqlEntity->getFrom();
+		    if (!isset($from))
+		    {
+		        throw new SpherusException(EXCEPTION_INVALID_ARGUMENT);
+		    }
+		    $from->AcceptVisitor($this);
+		    	
+		    $where = $sqlEntity->getWhere();
+		    if (isset($where))
+		    {
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateDelete(SqlEntityType::Where));
+		        $where->AcceptVisitor($this);
+		    }
+		    	
+		    return $this->sqlCompilerContext;
+		}
 		
 		/* MISC */
 		
