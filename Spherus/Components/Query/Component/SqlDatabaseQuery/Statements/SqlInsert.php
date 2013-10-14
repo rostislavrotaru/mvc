@@ -51,6 +51,12 @@
          * @var array
          */
         private $values = array();
+        
+        /**
+         * Contains SqlSelect statement
+         * @var SqlSelect
+         */
+        private $select = null;
     
     
         /* PROPERTIES */
@@ -70,6 +76,14 @@
         {
             return $this->values;
         }
+        
+        /**
+         * @return the $select statement
+         */
+        public function getSelect()
+        {
+            return $this->select;
+        }
     
     
         /* PUBLIC METHODS */
@@ -80,10 +94,21 @@
          * @param SqlColumn $column
          * @param SqlExpression $expression
          */
-        public function Add($column, $expression)
+        public function Add($column, $expression = null)
         {
             $this->values[] = array($column, $this->CheckIsLiteral($expression));
             return $this;
+        }
+        
+        /**
+         * Adds Select statement
+         * @param SqlSelect $select
+         * @return SqlInsert
+         */
+        public function Select(SqlSelect $select)
+        {
+        	$this->select = $select;
+        	return $this;
         }
     
         /**

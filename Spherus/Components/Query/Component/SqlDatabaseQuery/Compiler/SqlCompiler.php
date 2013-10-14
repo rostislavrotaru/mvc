@@ -36,7 +36,8 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Enums\InsertType;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlAssignment;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlUpdate;
-																																																																																																    
+    use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlInsert;
+																																																																																																				    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -343,61 +344,90 @@
 		/**
 		 * Visits sql insert statement.
 		 *
-		 * @param SqlInsert $sqlObject The sql insert object to visit.
+		 * @param SqlInsert $sqlEntity The sql insert entity to visit.
 		 *
 		 * @throws Exception Missing INTO table object.
 		 * @return SqlCompilationResult
 		 */
-		public function VisitInsert($sqlObject)
+		public function VisitInsert(SqlInsert $sqlEntity)
 		{
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::Entry));
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::Entry));
 		    	
-		    $into = $sqlObject->getInto();
+		    $into = $sqlEntity->getInto();
 		    if (!isset($into))
 		    {
 		        throw new SpherusException(EXCEPTION_INVALID_ARGUMENT);
 		    }
 		    	
 		    $into->AcceptVisitor($this);
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ColumnsEntry));
-		    	
-		    $values = $sqlObject->getValues();
-		    if (count($values) > 0)
+	    	
+		    $select = $sqlEntity->getSelect();
+		    $values = $sqlEntity->getValues();
+		    
+		    if(isset($select))
 		    {
-		        $i = 0;
-		        foreach ($values as $key=>$value)
+		        if (count($values) > 0)
 		        {
-		            if ($i > 0)
-		            {
-		                $this->sqlCompilerContext->AppendText($this->sqlTranslator->columnDelimiter);
-		            }
-		            $i++;
-		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->EncapsulateInBrackets($value[0]->getName()));
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::ColumnsEntry));
+
+	                $i = 0;
+	                foreach ($values as $key=>$value)
+	                {
+	                    if ($i > 0)
+	                    {
+	                        $this->sqlCompilerContext->AppendText($this->sqlTranslator->getColumnDelimiter());
+	                    }
+	                    $i++;
+	                    $this->sqlCompilerContext->AppendText($this->sqlTranslator->EncapsulateInBrackets($value[0]->getName()));
+	                }
+		            	
+		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::ColumnsExit));
 		        }
-		    }
-		    	
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ColumnsExit));
-		    	
-		    if (count($values) == 0)
-		    {
-		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::DefaultValues));
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->getOpeningParenthesis());
+		        $select->AcceptVisitor($this);
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->getClosingParenthesis());
 		    }
 		    else
-		    {
-		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ValuesEntry));
-		        $i = 0;
-		        foreach ($values as $key=>$value)
-		        {
-		            if ($i > 0)
-		            {
-		                $this->sqlCompilerContext->AppendText($this->sqlTranslator->columnDelimiter);
-		            }
-		            $i++;
-		            $value[1]->AcceptVisitor($this);
-		        }
-		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::ValuesExit));
+		    {	
+		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::ColumnsEntry));
+		        
+    		    if (count($values) > 0)
+    		    {
+    		        $i = 0;
+    		        foreach ($values as $key=>$value)
+    		        {
+    		            if ($i > 0)
+    		            {
+    		                $this->sqlCompilerContext->AppendText($this->sqlTranslator->getColumnDelimiter());
+    		            }
+    		            $i++;
+    		            $this->sqlCompilerContext->AppendText($this->sqlTranslator->EncapsulateInBrackets($value[0]->getName()));
+    		        }
+    		    }
+    		    	
+    		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::ColumnsExit));
+		    
+    		    if (count($values) == 0)
+    		    {
+    		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::DefaultValues));
+    		    }
+    		    else
+    		    {
+    		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::ValuesEntry));
+    		        $i = 0;
+    		        foreach ($values as $key=>$value)
+    		        {
+    		            if ($i > 0)
+    		            {
+    		                $this->sqlCompilerContext->AppendText($this->sqlTranslator->getColumnDelimiter());
+    		            }
+    		            $i++;
+    		            $value[1]->AcceptVisitor($this);
+    		        }
+    		        $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::ValuesExit));
+    		    }
 		    }
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlObject, InsertType::Exit_));
+		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateInsert($sqlEntity, InsertType::Exit_));
 		    	
 		    return $this->sqlCompilerContext;
 		}
