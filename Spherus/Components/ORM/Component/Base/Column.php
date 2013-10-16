@@ -13,25 +13,25 @@ namespace Spherus\Components\ORM\Base;
 use Spherus\Components\ORM\Component\Enums\EntityType;
 
 /**
- * Class that represents table entity for SPHERUS Framework
+ * Class that represents column entity for SPHERUS Framework
  * 
  * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
  * @package spherus.components.orm
  */
-class Table extends MappedEntity
+class Column extends MappedEntity
 {
     
     /* CONSTRUCTOR */
     
     /**
-    * Initializes a new instance of Table class.
+    * Initializes a new instance of Column class.
     * 
-    * @param string $name The table name
-    * @param string $storeName The store table name
+    * @param string $name The column name
+    * @param string $storeName The store column name
     */
     public function __construct($name, $storeName)
     {
-        parent::__construct(EntityType::Table, $name, $storeName);
+        parent::__construct(EntityType::Table);
     }
-  
+    
 }
