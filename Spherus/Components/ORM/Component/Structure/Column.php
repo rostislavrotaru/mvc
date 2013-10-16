@@ -35,4 +35,35 @@ class Column extends MappedEntity
         parent::__construct(EntityType::Table, $name, $storeName);
     }
     
+    
+    /* FIELDS */
+    
+    /**
+     * Defines the column type
+     * @var string 
+     */
+    private $columnType = null;
+	
+    
+    /* PROPERTIES */
+	
+	/**
+	 * Gets the column type
+     * @var string
+     */
+    public function getColumnType()
+    {
+        return $this->columnType;
+    }
+
+	/**
+	 * Sets the column type
+     * @param string $columnType The column type to set.
+     */
+    public function setColumnType($columnType)
+    {
+        $this->columnType = $columnType;
+    }
+
+    
 }
