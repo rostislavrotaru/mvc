@@ -18,7 +18,7 @@
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.orm
      */
-    class ORMEntityType extends Enum
+    class EntityType extends Enum
 	{
 		const Database = 'Database';
 		const Table = 'Table';

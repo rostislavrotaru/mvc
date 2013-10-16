@@ -10,7 +10,7 @@
  */
 namespace Spherus\Components\ORM\Base;
 
-use Spherus\Core\Base\SystemComponentBase;
+use Spherus\Components\ORM\Component\Enums\EntityType;
 use Spherus\Core\Check;
 use Spherus\Core\SpherusException;
 
@@ -20,42 +20,45 @@ use Spherus\Core\SpherusException;
  * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
  * @package spherus.components.orm
  */
-class ORMEntity extends SystemComponentBase
+class Table extends Entity
 {
     
     /* CONSTRUCTOR */
     
     /**
-    * Initializes a new instance of ORMEntity class.
-    * @throws SpherusException When $entity type parameter is not set.
+    * Initializes a new instance of Table class.
+    * 
+    * @param string $name The table name
+    * @throws SpherusException When $name parameter is not set.
     */
-    public function __construct($entityType)
+    public function __construct($name)
     {
+        Check::IsNullOrEmpty($name);
         
-        Check::IsNullOrEmpty($entityType);
-        $this->entityType = $entityType;
+        parent::__construct(EntityType::Table);
+        $this->name = $name;
     }
     
     
     /* FIELDS */
 		
 	/**
-	 * Defines the orm entity type.
+	 * Defines the table name
 	 * @var string
 	 */
-	private $entityType = null;
+	private $name = null;
 
 	
 	/* PROPERTIES */
 
 	/**
-	 * @return Gets the orm entity type.
+	 * @return Gets the table name.
 	 * 
 	 * @var string
 	 */
-	public function getEntityType() 
+	public function getName() 
 	{
-		return $this->entityType;
+		return $this->name;
 	}
     
     
