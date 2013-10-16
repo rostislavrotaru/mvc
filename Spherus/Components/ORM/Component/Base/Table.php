@@ -29,14 +29,18 @@ class Table extends Entity
     * Initializes a new instance of Table class.
     * 
     * @param string $name The table name
+    * @param string $storeName The store table name
     * @throws SpherusException When $name parameter is not set.
+    * @throws SpherusException When $storeName parameter is not set.
     */
-    public function __construct($name)
+    public function __construct($name, $storeName)
     {
         Check::IsNullOrEmpty($name);
+        Check::IsNullOrEmpty($storeName);
         
         parent::__construct(EntityType::Table);
         $this->name = $name;
+        $this->storeName = $storeName;
     }
     
     
@@ -47,8 +51,14 @@ class Table extends Entity
 	 * @var string
 	 */
 	private $name = null;
-
 	
+	/**
+	 * Defines the store table name
+	 * @var string
+	 */
+	private $storeName = null;
+	
+
 	/* PROPERTIES */
 
 	/**
@@ -60,6 +70,15 @@ class Table extends Entity
 	{
 		return $this->name;
 	}
-    
-    
+	
+	/**
+	 * @return Gets the store table name.
+	 *
+	 * @var string
+	 */
+	public function getStoreName()
+	{
+	    return $this->storeName;
+	}
+
 }

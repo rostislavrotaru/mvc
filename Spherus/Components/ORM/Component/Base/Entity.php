@@ -33,7 +33,6 @@ class Entity extends SystemComponentBase
     */
     public function __construct($entityType)
     {
-        
         Check::IsNullOrEmpty($entityType);
         $this->entityType = $entityType;
     }
@@ -59,6 +58,5 @@ class Entity extends SystemComponentBase
 	{
 		return $this->entityType;
 	}
-    
-    
+     
 }
