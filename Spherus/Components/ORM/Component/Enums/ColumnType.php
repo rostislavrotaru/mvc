@@ -28,4 +28,5 @@
 		const DateTime = 'DateTime';
 		const Binary = 'Binary';
 		const Boolean = 'Boolean';
+		const Decimal = 'Decimal';
 	}
