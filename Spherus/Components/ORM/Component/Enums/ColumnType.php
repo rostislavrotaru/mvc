@@ -27,4 +27,5 @@
 		const Text = 'Text';
 		const DateTime = 'DateTime';
 		const Binary = 'Binary';
+		const Boolean = 'Boolean';
 	}
