@@ -1,4 +1,4 @@
 components
 ==========
 
-components for spherus suite
+components for spherus php suite
