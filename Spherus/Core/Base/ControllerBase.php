@@ -50,9 +50,18 @@
 		 * @var string
 		 */
 		private $pageTitle = null; 
+
 		
 		
 		/* PROPERTIES */
+		
+		
+		/**
+		 * Defines the controller view data
+		 * @var array
+		 */
+		public $ViewData = [];
+		
 		
 		/**
 		 * Gets whether the controller has no view.
