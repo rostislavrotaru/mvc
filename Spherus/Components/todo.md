@@ -1,0 +1,13 @@
+- Change entire routing mechanism: done
+- Change constants for theme css, scripts and image, add constants for common css, scripts and images: done
+- Add uploads folder: done
+- Think about renaming Context class to avoid confusing with HttpContext class: done
+- Make unit tests
+- Refactor and split Workbench class methods into smaller methods: done
+- Add suplimental functionality on default router class: done
+- Use SPL as much as possible
+- Use PSR0/1/2
+- Review code to work with personal collections (not arrays etc).
+- Change indents to spaces instead of tabulation
+- Make a code style guide
+- Implement Dependency Injection: done
