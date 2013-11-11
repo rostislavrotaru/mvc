@@ -24,4 +24,11 @@
 		 * type array
 		 */
 		public static $viewData = [];
+		
+		/**
+		 * Represents a controller return value
+		 *
+		 * type object
+		 */
+		public static $actionResult = null;
 	}

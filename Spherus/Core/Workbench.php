@@ -237,7 +237,7 @@ class Workbench
 		// Call action in current controller
 		if(method_exists(Workbench::getCurrentController(), $action))
 		{
-			call_user_func_array(array(Workbench::getCurrentController(), $action), HttpContext::getParsedUrl()->getParameters());
+			View::$actionResult = call_user_func_array(array(Workbench::getCurrentController(), $action), HttpContext::getParsedUrl()->getParameters());
 			Workbench::getCurrentController()->AfterLoad();
 		}
 		else

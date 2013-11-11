@@ -3,8 +3,7 @@ use Spherus\Core\Workbench;
 use Spherus\Core\View;
 echo ('Current layout: ' . Workbench::getCurrentController()->getLayout() . '<br />');
 
-//var_dump(Workbench::getCurrentController()->ViewData['query']);
-var_dump(View::$viewData['query']);
+var_dump(View::$actionResult);
 
 ?>
 index view
