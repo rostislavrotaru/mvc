@@ -250,6 +250,8 @@ class Workbench
 		if(self::$currentController->getNoView() === false)
 		{
 			self::$currentController->BeforeAction();
+			View::$viewData = self::$currentController->ViewData;
+			
 			$layoutName = self::$currentController->getLayout(); 
 			if(isset($layoutName))
 			{

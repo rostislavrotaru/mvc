@@ -62,7 +62,6 @@
 		 */
 		public $ViewData = [];
 		
-		
 		/**
 		 * Gets whether the controller has no view.
 		 *

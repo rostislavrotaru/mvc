@@ -7,6 +7,11 @@
 		
 	class HomeController extends ControllerBase
 	{
+		public function __construct()
+		{
+			//$this->setLayout('default');
+		}
+		
 		public function index()
 		{
 			$this->ViewData['query'] = new Component();
