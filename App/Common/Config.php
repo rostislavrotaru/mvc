@@ -37,8 +37,26 @@
 			'Standard' => 'App\Themes\Standard'
 		);
 
+		/**
+		 * Defines the applicatin settings
+		 * @var array
+		 */
+		private static $settings = [];
+		
 		
 		/* PROPERTIES */
+		
+		
+		/**
+		 * Gets the application settings
+		 *
+		 * @return array
+		 */
+		public static function getSettings()
+		{
+			return self::$ettings;
+		}
+		
 		
 		/**
 		 * Gets the list of installed module names
