@@ -21,14 +21,14 @@
 		/**
 		 * Represents a view data elements
 		 *
-		 * type array
+		 * @var array
 		 */
 		public static $viewData = [];
 		
 		/**
 		 * Represents a controller return value
 		 *
-		 * type object
+		 * @var object
 		 */
 		public static $actionResult = null;
 	}
