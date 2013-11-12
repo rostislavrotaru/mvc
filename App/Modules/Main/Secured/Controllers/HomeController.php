@@ -3,7 +3,6 @@
 	namespace App\Modules\Main\Secured\Controllers;
 
 	use Spherus\Core\Base\ControllerBase;
-	use Spherus\Components\Query\Component;
 		
 	class HomeController extends ControllerBase
 	{
@@ -14,8 +13,7 @@
 		
 		public function index()
 		{
-			$this->ViewData['query'] = new Component();
-			return new Component();
+			//return new Component();
 		}
 
 		public function about()

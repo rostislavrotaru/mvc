@@ -11,22 +11,16 @@
 	namespace Spherus\Components\ORM\Component\Enums;
 
 	use Spherus\Core\Enums\Enum;
-	
+					
 	/**
-     * Class that represents an ORM Column type
+     * Class that represents an ORM Entity multiplicity type
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.orm
      */
-    class ColumnType extends Enum
+    class MultiplicityType extends Enum
 	{
-		const Integer = 'Integer';
-		const Char = 'Char';
-		const Varchar = 'Varchar';
-		const UniqueIdentifier = 'UniqueIdentifier';
-		const Text = 'Text';
-		const DateTime = 'DateTime';
-		const Binary = 'Binary';
-		const Boolean = 'Boolean';
-		const Decimal = 'Decimal';
+		const Many = 'Many';
+		const ZeroOrOne = 'ZeroOrOne';
+		const One = 'One';
 	}

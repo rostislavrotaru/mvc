@@ -11,15 +11,22 @@
 	namespace Spherus\Components\ORM\Component\Enums;
 
 	use Spherus\Core\Enums\Enum;
-					
+	
 	/**
-     * Class that represents an ORM Entity enum type
+     * Class that represents an ORM Column type
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.orm
      */
-    class EntityType extends Enum
+    class PropertyType extends Enum
 	{
-		const Property = 'Property';
-		const NavigationProperty = 'NavigationProperty';
+		const Integer = 'Integer';
+		const Char = 'Char';
+		const Varchar = 'Varchar';
+		const UniqueIdentifier = 'UniqueIdentifier';
+		const Text = 'Text';
+		const DateTime = 'DateTime';
+		const Binary = 'Binary';
+		const Boolean = 'Boolean';
+		const Decimal = 'Decimal';
 	}
