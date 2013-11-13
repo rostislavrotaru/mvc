@@ -20,6 +20,7 @@
      */
     class EntityType extends Enum
 	{
+		const Model = 'Model';
 		const Property = 'Property';
 		const NavigationProperty = 'NavigationProperty';
 		const Index = 'Index';
