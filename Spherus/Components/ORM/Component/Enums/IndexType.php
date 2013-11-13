@@ -11,16 +11,17 @@
 	namespace Spherus\Components\ORM\Component\Enums;
 
 	use Spherus\Core\Enums\Enum;
-					
+	
 	/**
-     * Class that represents an ORM Entity type
+     * Class that represents an index type
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.orm
      */
-    class EntityType extends Enum
+    class IndexType extends Enum
 	{
-		const Property = 'Property';
-		const NavigationProperty = 'NavigationProperty';
-		const Index = 'Index';
+		const Primary = 'Primary';
+		const UniqueKey = 'UniqueKey';
+		const UniqueIndex = 'UniqueIndex';
+		const NonUniqueIndex = 'NonUniqueIndex';
 	}
