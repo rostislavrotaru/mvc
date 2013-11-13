@@ -13,6 +13,7 @@
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
 	use Spherus\Components\ORM\Component\Enums\EntityType;
+	use Spherus\Components\ORM\Component\Enums\OnActionType;
 	use Spherus\Components\ORM\Component\Entity;
 	use Spherus\Components\ORM\Component\Enums\MultiplicityType;
 	use Spherus\Components\ORM\Component\Models\Model;
@@ -72,6 +73,18 @@
 		 */
 		private $toModel = null;
 		
+		/**
+		 * Defines the on delete action type
+		 * @var string Uses OnActionType enum.
+		 */
+		private $onDelete = OnActionType::Restrict; 
+		
+		/**
+		 * Defines the on update action type
+		 * @var string Uses OnActionType enum.
+		 */
+		private $onUpdate = OnActionType::Restrict;
+		
 
 		/* PROPERTIES */
 		
@@ -102,7 +115,6 @@
 		{
 			return $this->multiplicity;
 		}
-	
 			
 		/**
 		 * Sets the navigation property multiplicity
@@ -112,8 +124,7 @@
 		{
 			$this->multiplicity = $multiplicity;
 		}
-	
-			
+				
 		/**
 		 * Gets the source model
 		 * @var \Spherus\Components\ORM\Component\Models\Model
@@ -122,8 +133,7 @@
 		{
 			return $this->fromModel;
 		}
-	
-			
+		
 		/**
 		 * Sets the source model
 		 * @param \Spherus\Components\ORM\Component\Models\Model $fromModel The model to set.
@@ -132,7 +142,6 @@
 		{
 			$this->fromModel = $fromModel;
 		}
-	
 			
 		/**
 		 * Gets the target model
@@ -143,7 +152,6 @@
 			return $this->toModel;
 		}
 	
-			
 		/**
 		 * Sets the target model
 		 * @param \Spherus\Components\ORM\Component\Models\Model $fromModel The model to set.
@@ -152,6 +160,41 @@
 		{
 			$this->toModel = $toModel;
 		}
-
+	
+		/**
+		 * Gets On delete action
+		 * @return string
+		 */
+		public function getOnDelete() 
+		{
+			return $this->onDelete;
+		}
+	
+		/**
+		 * Sets on delete action type.
+		 * @param string $onDelete Uses OnActionType enum
+		 */
+		public function setOnDelete($onDelete) 
+		{
+			$this->onDelete = $onDelete;
+		}
 		
+		/**
+		 * Gets On update action
+		 * @return string
+		 */
+		public function getOnUpdate() 
+		{
+			return $this->onUpdate;
+		}
+		
+		/**
+		 * Sets on update action type.
+		 * @param string $onUpdate Uses OnActionType enum
+		 */
+		public function setOnUpdate($onUpdate) 
+		{
+			$this->onUpdate = $onUpdate;
+		}
+
 	}
