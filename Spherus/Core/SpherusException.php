@@ -73,3 +73,4 @@
 	define('EXCEPTION_NOT_OBJECT', 'The "%s" value is not an object');
 	define('EXCEPTION_INVALID_STATEMENT', 'Invalid sql statement parameter');
 	define('EXCEPTION_OPERATION_NOT_SUPPORTED', 'Operation not supported');
+	define('EXCEPTION_DATABASE_PROVIDER_NOT_FOUND', 'The "%s" database provicer not found.');

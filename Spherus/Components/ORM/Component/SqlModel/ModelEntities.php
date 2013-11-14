@@ -8,23 +8,26 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\Models;
+	namespace Spherus\Components\ORM\Component\SqlModel;
 	
 	use Spherus\Components\ORM\Component\Entity;
 	use Spherus\Core\Check;
 	use Spherus\Components\ORM\Component\Enums\EntityType;
 	use Spherus\Components\ORM\Component\SqlModel\Index;
-	use Spherus\Components\Data\Component\Base\SqlDatabase;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
 	use Spherus\Components\Data\Component\DatabaseConfig;
-							
+	use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlQuery;
+	use Spherus\Components\DATA\Component\Enums\DatabaseProviderType;
+	use Spherus\Components\Data\Component\Providers\MySqlDatabase;
+	use Spherus\Core\SpherusException;
+											
 	/**
 	 * Class that represents the model entities collection
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.core.base
 	 */
-	abstract class ModelEntities extends Entity
+	class ModelEntities extends Entity
 	{
 		
 		/* CONSTRUCTOR */
@@ -33,21 +36,25 @@
 		 * Initializes a new instance of ModelEntities class.
 		 *
 		 * @param string $name The model name.
-		 * @param SqlDatabase $database The model database object.
+		 * @param string $databaseProvider The database provider. Uses DatabaseProviderType enum.
 		 * @param SqlCompiler $compiler The model sql compiler object.
 		 * @param DatabaseConfig $databaseConfig The model database config object.
 		 *
 		 * @throws SpherusException When $name parameter is not set.
+		 * @throws SpherusException When $databaseProvider parameter is not set.
+		 * @throws SpherusException When $compiler parameter is not set.
+		 * @throws SpherusException When $databaseConfig parameter is not set.
 		 */
-		public function __construct($name, SqlDatabase $database = null, SqlCompiler $compiler = null, DatabaseConfig $databaseConfig = null)
+		public function __construct($name, $databaseProvider, SqlCompiler $compiler, DatabaseConfig $databaseConfig)
 		{
 			Check::IsNullOrEmpty($name);
+			Check::IsNullOrEmpty($databaseProvider);
+			Check::IsNullOrEmpty($compiler);
+			Check::IsNullOrEmpty($databaseConfig);
 			 
 			parent::__construct(EntityType::ModelEntities);
 			$this->name = $name;
-			$this->database = $database;
-			$this->compiler = $compiler;
-			$this->databaseConfig = $databaseConfig;
+			$this->InitializeModelEntities($compiler, $databaseProvider, $databaseConfig);
 		}
 		
 		
@@ -78,16 +85,10 @@
 		private $database = null;
 		
 		/**
-		 * Defines the model entities compiler.
-		 * @var SqlCompiler
+		 * Defines the model entites database query
+		 * @var SqlQuery
 		 */
-		private $compiler = null;
-		
-		/**
-		 * Defines the database config
-		 * @var DatabaseConfig
-		 */
-		private $databaseConfig = null;
+		private $query = null;
 		
 		
 		/* PROPERTIES */
@@ -155,51 +156,34 @@
 			return $this->database;
 		}
 		
-		/**
-		 * Sets Model entities database
-		 * @param Database $database The database to set
-		 */
-		public function setDatabase($database)
-		{
-			$this->database = $database;
-		}
-
-		/**
-		 * Gets the model entities compiler 
-		 * @return SqlCompiler
-		 */
-		public function getCompiler()
-		{
-			return $this->Compiler;
-		}
+		
+		/* PRIVATE METHODS */
 		
 		/**
-		 * Sets the model entities compiler
-		 * @param SqlCompiler $compiler
+		 * Initializes additional properties for ModelEntities.
+		 * 
+		 * @param SqlCompiler $compiler The SqlCompiler as object.
+		 * @param string $databaseProvider Uses DatabaseProviderType as enum.
+		 * @param DatabaseConfig $databaseConfig The database configuration object.
+		 * 
+		 * @throws SpherusException When $databaseProvider is not found.
 		 */
-		public function setCompiler(SqlCompiler $compiler)
+		private function InitializeModelEntities(SqlCompiler $compiler, $databaseProvider, DatabaseConfig $databaseConfig)
 		{
-			$this->$compiler = $compiler;
-		}
-		
-		/**
-		 * Gets the model entites database config object.
-		 * @return DatabaseConfig
-		 */
-		public function getDatabaseConfig()
-		{
-			return $this->databaseConfig;
-		}
-		
-		/**
-		 * Sets the model entites database config object.
-		 * @param DatabaseConfig $databaseConfig The DatabaseConfig object to set.
-		 */
-		public function setDatabaseConfig(DatabaseConfig $databaseConfig)
-		{
-			$this->databaseConfig = $databaseConfig;
-		}
-		
+			$this->query = new SqlQuery($compiler);
+			switch ($databaseProvider)
+			{
+				case DatabaseProviderType::MySql:
+				{
+					$this->database = new MySqlDatabase($databaseConfig);
+					break;	
+				}
+				default:
+				{
+					throw new SpherusException(sprintf(EXCEPTION_DATABASE_PROVIDER_NOT_FOUND),$databaseProvider);	
+				}
+			}
+		} 
 		
 		/* PUBLIC METHODS */
 		

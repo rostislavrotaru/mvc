@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\Models;
+	namespace Spherus\Components\ORM\Component\SqlModel;
 	
 	use Spherus\Components\ORM\Component\Entity;
 	use Spherus\Core\Check;
