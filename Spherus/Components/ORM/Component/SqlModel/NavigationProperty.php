@@ -16,7 +16,7 @@
 	use Spherus\Components\ORM\Component\Enums\OnActionType;
 	use Spherus\Components\ORM\Component\Entity;
 	use Spherus\Components\ORM\Component\Enums\MultiplicityType;
-	use Spherus\Components\ORM\Component\Models\Model;
+	use Spherus\Components\ORM\Component\SqlModel\Model;
 				
 	/**
 	 * Class that represents a mapped entity for SPHERUS Framework
@@ -136,7 +136,7 @@
 		
 		/**
 		 * Sets the source model
-		 * @param \Spherus\Components\ORM\Component\Models\Model $fromModel The model to set.
+		 * @param Model $fromModel The model to set.
 		 */
 		public function setFromModel(Model $fromModel) 
 		{
