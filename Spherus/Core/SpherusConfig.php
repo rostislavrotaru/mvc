@@ -115,7 +115,7 @@
 		 * Initializes base functionality of Application configuration.
 		 * Can be overwritten in Application Configuration file.
 		 */
-		public static function Initialize()
+		static function Initialize()
 		{
 			
 		}

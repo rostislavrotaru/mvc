@@ -14,13 +14,14 @@
 	use Spherus\Core\Check;
 	use Spherus\Components\ORM\Component\Enums\EntityType;
 	use Spherus\Components\ORM\Component\SqlModel\Index;
-	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\SqlCompiler;
 	use Spherus\Components\Data\Component\DatabaseConfig;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlQuery;
 	use Spherus\Components\DATA\Component\Enums\DatabaseProviderType;
 	use Spherus\Components\Data\Component\Providers\MySqlDatabase;
 	use Spherus\Core\SpherusException;
-											
+	use Spherus\Components\Data\Component\Base\SqlDatabase;
+	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\MySQL\MySQLCompiler;
+													
 	/**
 	 * Class that represents the model entities collection
 	 *
@@ -37,24 +38,21 @@
 		 *
 		 * @param string $name The model name.
 		 * @param string $databaseProvider The database provider. Uses DatabaseProviderType enum.
-		 * @param SqlCompiler $compiler The model sql compiler object.
 		 * @param DatabaseConfig $databaseConfig The model database config object.
 		 *
 		 * @throws SpherusException When $name parameter is not set.
 		 * @throws SpherusException When $databaseProvider parameter is not set.
-		 * @throws SpherusException When $compiler parameter is not set.
 		 * @throws SpherusException When $databaseConfig parameter is not set.
 		 */
-		public function __construct($name, $databaseProvider, SqlCompiler $compiler, DatabaseConfig $databaseConfig)
+		public function __construct($name, $databaseProvider, DatabaseConfig $databaseConfig)
 		{
 			Check::IsNullOrEmpty($name);
 			Check::IsNullOrEmpty($databaseProvider);
-			Check::IsNullOrEmpty($compiler);
 			Check::IsNullOrEmpty($databaseConfig);
 			 
 			parent::__construct(EntityType::ModelEntities);
 			$this->name = $name;
-			$this->InitializeModelEntities($compiler, $databaseProvider, $databaseConfig);
+			$this->InitializeModelEntities($databaseProvider, $databaseConfig);
 		}
 		
 		
@@ -80,7 +78,7 @@
 		
 		/**
 		 * Defines the model entites database
-		 * @var Database
+		 * @var SqlDatabase
 		 */
 		private $database = null;
 		
@@ -149,11 +147,20 @@
 
 		/**
 		 * Gets Model entities database
-		 * @return Database
+		 * @return SqlDatabase
 		 */
 		public function getDatabase()
 		{
 			return $this->database;
+		}
+		
+		/**
+		 * Gets Model entities query
+		 * @return SqlQuery
+		 */
+		public function getQuery()
+		{
+			return $this->query;
 		}
 		
 		
@@ -162,20 +169,19 @@
 		/**
 		 * Initializes additional properties for ModelEntities.
 		 * 
-		 * @param SqlCompiler $compiler The SqlCompiler as object.
 		 * @param string $databaseProvider Uses DatabaseProviderType as enum.
 		 * @param DatabaseConfig $databaseConfig The database configuration object.
 		 * 
 		 * @throws SpherusException When $databaseProvider is not found.
 		 */
-		private function InitializeModelEntities(SqlCompiler $compiler, $databaseProvider, DatabaseConfig $databaseConfig)
+		private function InitializeModelEntities($databaseProvider, DatabaseConfig $databaseConfig)
 		{
-			$this->query = new SqlQuery($compiler);
 			switch ($databaseProvider)
 			{
 				case DatabaseProviderType::MySql:
 				{
 					$this->database = new MySqlDatabase($databaseConfig);
+					$this->query = new SqlQuery(new MySQLCompiler());
 					break;	
 				}
 				default:

@@ -14,7 +14,8 @@
 	use Spherus\Core\SpherusException;
 	use Spherus\Components\ORM\Component\Enums\EntityType;
 	use Spherus\Components\ORM\Component\Entity;
-		
+	use Spherus\Components\ORM\Component\Enums\PropertyType;
+			
 	/**
 	 * Class that represents a mapped entity for SPHERUS Framework
 	 * 
@@ -29,20 +30,26 @@
 	    /**
 	    * Initializes a new instance of Property class.
 	    * 
-	    * @param string $name The entity name.
-	    * @param string $columnName The entity column name.
+	    * @param string $name The Property name.
+	    * @param string $columnName The Property column name.
+	    * @param string $type The Property type. Nullable. Default is PropertyType::Varchar.
 	    * 
 	    * @throws SpherusException When $name parameter is not set.
 	    * @throws SpherusException When $columnName parameter is not set.
+	    * 
+	    * @return Property Initialized instance
+	    * 
 	    */
-	    public function __construct($name, $columnName)
+	    public function __construct($name, $columnName, $type = null)
 	    {
 	        Check::IsNullOrEmpty($name);
 	        Check::IsNullOrEmpty($columnName);
 	        
 	        parent::__construct(EntityType::Property);
 	        $this->name = $name;
-	        $this->storeName = $columnName;
+	        $this->columnName = $columnName;
+	        $this->type = isset($type) ? $type : PropertyType::Varchar;
+	        return $this;
 	    }
 	    
 	    
@@ -79,6 +86,12 @@
 		 */
 		private $defaultValue = null;
 		
+		/**
+		 * Defines the Property value lenght
+		 * @var integer
+		 */
+		private $length = 0;
+		
 
 		/* PROPERTIES */
 		
@@ -95,10 +108,13 @@
 		/**
 		 * Sets the property name.
 		 * @param string $name
+		 * 
+		 * @return Property Initialized instance
 		 */
 		public function setName($name)
 		{
 			$this->name = $name;
+			return $this;
 		}
 		
 		/**
@@ -114,11 +130,13 @@
 		/**
 		 * Sets the property type.
 		 *
-		 * @var string. Use PropertyType enum as parameter.
+		 * @param string. Use PropertyType enum as parameter.
+		 * @return Property Current instance
 		 */
 		public function setType($type)
 		{
 			$this->type = $type;
+			return $this;
 		}
 		
 		/**
@@ -134,10 +152,13 @@
 		/**
 		 * Sets the column name.
 		 * @param string $columnName
+		 * 
+		 * @return Property Initialized instance
 		 */
 		public function setColumnName($columnName)
 		{
 			$this->columnName = $columnName;
+			return $this;
 		}
 		
 		/**
@@ -152,10 +173,13 @@
 		/**
 		 * Sets if the property is entity key
 		 * @param boolean $isEntityKey
+		 * 
+		 * @return Property Initialized instance
 		 */
 		public function setIsEntityKey($isEntityKey) 
 		{
 			$this->isEntityKey = $isEntityKey;
+			return $this;
 		}
 		
 		/**
@@ -168,12 +192,32 @@
 		}
 		
 		/**
-		 * Sets the property default value
+		 * Sets the property default value.
+		 * 
 		 * @param string $defaultValue
+		 * @return Property Initialized instance
 		 */
 		public function setDefaultValue($defaultValue) 
 		{
 			$this->defaultValue = $defaultValue;
+			return $this;
 		}
+	
+	/**
+	 * @return the $length
+	 */
+	public function getLength()
+	{
+		return $this->length;
+	}
+
+	/**
+	 * @param number $length
+	 */
+	public function setLength($length)
+	{
+		$this->length = $length;
+	}
+
 		
 	}

@@ -3,6 +3,7 @@
 	namespace App\Common;
 
 	use Spherus\Core\SpherusConfig;
+	use Spherus\Components\DATA\Component\Enums\DatabaseProviderType;
 	
 	/**
 	 * Application configuration
@@ -46,6 +47,15 @@
 		
 		/* PROPERTIES */
 		
+		public static $domainModelConfig = array
+		(
+			'provider'=>DatabaseProviderType::MySql,
+			'host'=>'0.0.0.0',
+			'port'=>'3306',
+			'user'=>'root',
+			'password'=>'password',
+			'database'=>'database'
+		);
 		
 		/**
 		 * Gets the application settings
@@ -56,7 +66,6 @@
 		{
 			return self::$ettings;
 		}
-		
 		
 		/**
 		 * Gets the list of installed module names

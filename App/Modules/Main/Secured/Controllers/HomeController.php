@@ -3,7 +3,8 @@
 	namespace App\Modules\Main\Secured\Controllers;
 
 	use Spherus\Core\Base\ControllerBase;
-		
+use App\Modules\Main\Secured\Models\DomainModel;
+									
 	class HomeController extends ControllerBase
 	{
 		public function __construct()
@@ -13,7 +14,7 @@
 		
 		public function index()
 		{
-			//return new Component();
+			$domainModel = new DomainModel();
 		}
 
 		public function about()
