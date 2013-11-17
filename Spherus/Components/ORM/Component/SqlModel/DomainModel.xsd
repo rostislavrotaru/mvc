@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="DomainModel">
+  		<xs:complexType>
+    		<xs:sequence>
+      			<xs:element ref="Models"/>
+    		</xs:sequence>
+    		<xs:attribute name="Name" type="xs:string" use="required"/>
+    		<xs:attribute name="Description" type="xs:string" use="required"/>
+  		</xs:complexType>
+	</xs:element>
+	<xs:element name="Models">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Model"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Model">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Properties"/>
+			</xs:sequence>
+			<xs:attribute name="Name" type="xs:string" use="required"/>
+			<xs:attribute name="EntitySetName" type="xs:string" use="required"/>
+			<xs:attribute name="TableName" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Properties">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Property"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Property">
+		<xs:complexType>
+			<xs:attribute name="Name" type="xs:string" use="required"/>
+			<xs:attribute name="ColumnName" type="xs:string" use="required"/>
+			<xs:attribute name="IsEntityKey" type="xs:boolean" use="optional"/>
+			<xs:attribute name="DefaultValue" type="xs:string" use="optional"/>
+			<xs:attribute name="Required" type="xs:boolean" use="required" />
+			<xs:attribute name="Type" type="PropertyType" />				
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="PropertyType">
+  		<xs:restriction base="xs:string">
+				<xs:enumeration value="Integer" />
+				<xs:enumeration value="Char" />
+				<xs:enumeration value="Varchar" />
+				<xs:enumeration value="UniqueIdentifier" />
+				<xs:enumeration value="Text" />
+				<xs:enumeration value="DateTime" />
+				<xs:enumeration value="Binary" />
+				<xs:enumeration value="Boolean" />
+				<xs:enumeration value="Decimal" />
+  		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
