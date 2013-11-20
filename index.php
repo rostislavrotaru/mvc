@@ -16,4 +16,3 @@
  * @package spherus
  */
 require(__DIR__.'/App/index.php');
-//test
