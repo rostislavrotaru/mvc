@@ -5,7 +5,7 @@ website:
 http://spherus.net
 
 license:
-http://spherus.net
+http://license.spherus.net
 
 ======================
 
