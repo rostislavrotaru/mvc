@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\Enums;
+	namespace Spherus\Components\ORM\Component\SqlModel\Enums;
 
 	use Spherus\Core\Enums\Enum;
 					

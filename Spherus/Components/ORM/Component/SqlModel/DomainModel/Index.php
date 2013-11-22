@@ -8,13 +8,13 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\SqlModel;
+	namespace Spherus\Components\ORM\Component\SqlModel\DomainModel;
 	
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
-	use Spherus\Components\ORM\Component\Enums\EntityType;
 	use Spherus\Components\ORM\Component\Entity;
-		
+	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
+			
 	/**
 	 * Class that represents a mapped entity for SPHERUS Framework
 	 * 
@@ -101,7 +101,7 @@
 		/**
 		 * Sets the property type.
 		 *
-		 * @var string. Use PropertyType enum as parameter.
+		 * @var string. Use IndexType enum as parameter.
 		 */
 		public function setType($type)
 		{

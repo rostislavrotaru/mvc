@@ -8,12 +8,11 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\SqlModel;
+	namespace Spherus\Components\ORM\Component\SqlModel\DomainModel;
 	
 	use Spherus\Components\ORM\Component\Entity;
 	use Spherus\Core\Check;
-	use Spherus\Components\ORM\Component\Enums\EntityType;
-	use Spherus\Components\ORM\Component\SqlModel\Index;
+	use Spherus\Components\ORM\Component\SqlModel\DomainModel\Index;
 	use Spherus\Components\Data\Component\DatabaseConfig;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlQuery;
 	use Spherus\Components\DATA\Component\Enums\DatabaseProviderType;
@@ -21,7 +20,8 @@
 	use Spherus\Core\SpherusException;
 	use Spherus\Components\Data\Component\Base\SqlDatabase;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\MySQL\MySQLCompiler;
-													
+	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
+														
 	/**
 	 * Class that represents the model entities collection
 	 *

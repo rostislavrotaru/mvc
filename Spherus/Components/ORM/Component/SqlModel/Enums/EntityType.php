@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\Enums;
+	namespace Spherus\Components\ORM\Component\SqlModel\Enums;
 
 	use Spherus\Core\Enums\Enum;
 					
@@ -20,9 +20,13 @@
      */
     class EntityType extends Enum
 	{
+		const Literal = 'Literal';
+		const Select = 'Select';
+		
 		const Model = 'Model';
 		const ModelEntities = 'ModelEntities';
 		const Property = 'Property';
 		const NavigationProperty = 'NavigationProperty';
 		const Index = 'Index';
+		const Relationship = 'Relationship';
 	}

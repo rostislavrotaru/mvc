@@ -8,20 +8,18 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\Enums;
+	namespace Spherus\Components\ORM\Component\SqlModel\Enums;
 
 	use Spherus\Core\Enums\Enum;
 	
 	/**
-     * Class that represents an index type
+     * Class that represents an ORM Column type
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.orm
      */
-    class IndexType extends Enum
+    class OnActionType extends Enum
 	{
-		const Primary = 'Primary';
-		const UniqueKey = 'UniqueKey';
-		const UniqueIndex = 'UniqueIndex';
-		const NonUniqueIndex = 'NonUniqueIndex';
+		const Restrict = 'Restrict';
+		const Cascade = 'Cascade';
 	}

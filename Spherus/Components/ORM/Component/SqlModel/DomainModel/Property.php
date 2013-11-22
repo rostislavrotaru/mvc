@@ -8,14 +8,14 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\SqlModel;
+	namespace Spherus\Components\ORM\Component\SqlModel\DomainModel;
 	
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
-	use Spherus\Components\ORM\Component\Enums\EntityType;
 	use Spherus\Components\ORM\Component\Entity;
-	use Spherus\Components\ORM\Component\Enums\PropertyType;
-			
+	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
+	use Spherus\Components\ORM\Component\SqlModel\Enums\PropertyType;
+					
 	/**
 	 * Class that represents a mapped entity for SPHERUS Framework
 	 * 
@@ -92,6 +92,12 @@
 		 */
 		private $length = 0;
 		
+		/**
+		 * Defines if the property is autoincrement
+		 * @var boolean
+		 */
+		private $autoincrement = false;
+		
 
 		/* PROPERTIES */
 		
@@ -109,7 +115,7 @@
 		 * Sets the property name.
 		 * @param string $name
 		 * 
-		 * @return Property Initialized instance
+		 * @return Property Current instance
 		 */
 		public function setName($name)
 		{
@@ -153,7 +159,7 @@
 		 * Sets the column name.
 		 * @param string $columnName
 		 * 
-		 * @return Property Initialized instance
+		 * @return Property Current instance
 		 */
 		public function setColumnName($columnName)
 		{
@@ -174,7 +180,7 @@
 		 * Sets if the property is entity key
 		 * @param boolean $isEntityKey
 		 * 
-		 * @return Property Initialized instance
+		 * @return Property Current instance
 		 */
 		public function setIsEntityKey($isEntityKey) 
 		{
@@ -195,7 +201,7 @@
 		 * Sets the property default value.
 		 * 
 		 * @param string $defaultValue
-		 * @return Property Initialized instance
+		 * @return Property Current instance
 		 */
 		public function setDefaultValue($defaultValue) 
 		{
@@ -203,21 +209,46 @@
 			return $this;
 		}
 	
-	/**
-	 * @return the $length
-	 */
-	public function getLength()
-	{
-		return $this->length;
-	}
+		/**
+		 * Gets the property value length
+		 * @return number
+		 */
+		public function getLength()
+		{
+			return $this->length;
+		}
+	
+		/**
+		 * Sets the property value length
+		 * @param number $length The property value length
+		 * 
+		 * @return Property Current instance
+		 */
+		public function setLength($length)
+		{
+			$this->length = $length;
+			return $this;
+		}
 
-	/**
-	 * @param number $length
-	 */
-	public function setLength($length)
-	{
-		$this->length = $length;
-	}
-
+		/**
+		 * Gets if the property is autoincrement
+		 * @return boolean
+		 */
+		public function getAutoincrement()
+		{
+			return $this->autoincrement;
+		}
+		
+		/**
+		 * Sets if the property is entity key
+		 * @param boolean $autoincrement. Default is true
+		 * 
+		 * @return Property Current instance
+		 */
+		public function setAutoincrement($autoincrement = true)
+		{
+			$this->autoincrement = $autoincrement;
+			return $this;
+		}
 		
 	}

@@ -8,7 +8,7 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\Enums;
+	namespace Spherus\Components\ORM\Component\SqlModel\Enums;
 
 	use Spherus\Core\Enums\Enum;
 	
@@ -18,8 +18,16 @@
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.orm
      */
-    class OnActionType extends Enum
+    class PropertyType extends Enum
 	{
-		const Restrict = 'Restrict';
-		const Cascade = 'Cascade';
+		const Integer = 'Integer';
+		const BigInteger = 'BigInteger';
+		const Char = 'Char';
+		const Varchar = 'Varchar';
+		const UniqueIdentifier = 'UniqueIdentifier';
+		const Text = 'Text';
+		const DateTime = 'DateTime';
+		const Binary = 'Binary';
+		const Boolean = 'Boolean';
+		const Decimal = 'Decimal';
 	}

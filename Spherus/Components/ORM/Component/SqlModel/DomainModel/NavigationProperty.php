@@ -8,16 +8,16 @@
 	 * @link http://spherus.net
 	 * @since 3.0
 	 */
-	namespace Spherus\Components\ORM\Component\SqlModel;
+	namespace Spherus\Components\ORM\Component\SqlModel\DomainModel;
 	
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
-	use Spherus\Components\ORM\Component\Enums\EntityType;
-	use Spherus\Components\ORM\Component\Enums\OnActionType;
 	use Spherus\Components\ORM\Component\Entity;
-	use Spherus\Components\ORM\Component\Enums\MultiplicityType;
-	use Spherus\Components\ORM\Component\SqlModel\Model;
-				
+	use Spherus\Components\ORM\Component\SqlModel\DomainModel\Model;
+	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
+	use Spherus\Components\ORM\Component\SqlModel\Enums\MultiplicityType;
+	use Spherus\Components\ORM\Component\SqlModel\Enums\OnActionType;
+					
 	/**
 	 * Class that represents a mapped entity for SPHERUS Framework
 	 * 
@@ -33,7 +33,6 @@
 	    * Initializes a new instance of Property class.
 	    * 
 	    * @param string $name The entity name.
-	    * @param string $columnName The entity column name.
 	    * 
 	    * @throws SpherusException When $name parameter is not set.
 	    * @throws SpherusException When $columnName parameter is not set.
