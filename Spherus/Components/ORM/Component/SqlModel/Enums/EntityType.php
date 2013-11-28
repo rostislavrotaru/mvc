@@ -22,6 +22,13 @@
 	{
 		const Literal = 'Literal';
 		const Select = 'Select';
+		const And_ = 'And';
+		const Equal = 'Equal';
+		const NotEqual = 'NotEqual';
+		const GreaterThan = 'GreaterThan';
+		const GreaterThanOrEqual = 'GreaterThanOrEqual';
+		const LessThan = 'LessThan';
+		const LessThanOrEqual = 'LessThanOrEqual';
 		
 		const Model = 'Model';
 		const ModelEntities = 'ModelEntities';

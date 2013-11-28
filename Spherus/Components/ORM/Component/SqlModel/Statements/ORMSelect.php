@@ -13,7 +13,8 @@
 	use Spherus\Components\ORM\Component\SqlModel\Base\ORMStatement;
 	use Spherus\Components\ORM\Component\SqlModel\DomainModel\Model;
 	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
-													
+use Spherus\Core\Check;
+														
 	/**
      * Class that represents an ORM select statement
      *
@@ -26,12 +27,14 @@
 	    /* CONSTRUCTOR */
 	
 	    /**
-	     * Initializes a new instance of SqlSelect class.
+	     * Initializes a new instance of ORMSelect class.
 	     *
-	     * @param SqlTable $from The from sql table.
+	     * @param Model $model The ORM model.
 	     */
 	    public function __construct(Model $model)
 	    {
+	    	Check::IsNullOrEmpty($model);
+	    	
 	        parent::__construct(EntityType::Select);
 	        $this->from = $model;
 	    }
@@ -92,6 +95,8 @@
 	     * @var SqlExpression
 	     */
 	    private $skip = null;
+	    
+	    public $includes = []; 
 	
 	
 	    /* PROPERTIES */
@@ -270,7 +275,11 @@
 	        return $this;
 	    }
 	    
-	    
+	    public function Include_($expression)
+	    {
+	    	$this->includes[] = $expression;
+	    	return $this;
+	    }
 	    
 	    
 	    /* PUBLIC METHODS */

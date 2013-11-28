@@ -15,11 +15,8 @@
 	use Spherus\Components\ORM\Component\SqlModel\DomainModel\Index;
 	use Spherus\Components\Data\Component\DatabaseConfig;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlQuery;
-	use Spherus\Components\DATA\Component\Enums\DatabaseProviderType;
-	use Spherus\Components\Data\Component\Providers\MySqlDatabase;
 	use Spherus\Core\SpherusException;
 	use Spherus\Components\Data\Component\Base\SqlDatabase;
-	use Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\MySQL\MySQLCompiler;
 	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
 														
 	/**
@@ -176,19 +173,20 @@
 		 */
 		private function InitializeModelEntities($databaseProvider, DatabaseConfig $databaseConfig)
 		{
-			switch ($databaseProvider)
+			$database = 'Spherus\Components\Data\Component\Providers\\'.$databaseProvider.'Database';
+			$compiler = 'Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\\'.$databaseProvider.'\\'.$databaseProvider.'Compiler';
+			
+			if(!class_exists($compiler))
 			{
-				case DatabaseProviderType::MySql:
-				{
-					$this->database = new MySqlDatabase($databaseConfig);
-					$this->query = new SqlQuery(new MySQLCompiler());
-					break;	
-				}
-				default:
-				{
-					throw new SpherusException(sprintf(EXCEPTION_DATABASE_PROVIDER_NOT_FOUND),$databaseProvider);	
-				}
+				throw new SpherusException(sprintf(EXCEPTION_DATABASE_COMPILER_NOT_FOUND, $compiler));
 			}
+			if(!class_exists($database))
+			{
+				throw new SpherusException(sprintf(EXCEPTION_DATABASE_PROVIDER_NOT_FOUND, $database));
+			}
+			
+			$this->database = new $database($databaseConfig);
+			$this->query = new SqlQuery(new $compiler);
 		} 
 		
 		/* PUBLIC METHODS */
