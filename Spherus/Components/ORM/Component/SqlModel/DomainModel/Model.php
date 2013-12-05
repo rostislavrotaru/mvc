@@ -32,16 +32,21 @@
 		 *
 		 * @param string $name The model name.
 		 * @param string $tableName The model table name.
+		 * @param string $entitySetName The model entity set name.
 		 *
 		 * @throws SpherusException When $name parameter is not set.
 		 * @throws SpherusException When $tableName parameter is not set.
+		 * @throws SpherusException When $entitySetName parameter is not set.
 		 */
-		public function __construct($name, $tableName)
+		public function __construct($name, $tableName, $entitySetName)
 		{
 			Check::IsNullOrEmpty($name);
+			Check::IsNullOrEmpty($tableName);
+			Check::IsNullOrEmpty($entitySetName);
 			 
 			parent::__construct(EntityType::Model);
 			$this->name = $name;
+			$this->tableName = $tableName;
 		}
 		
 		
