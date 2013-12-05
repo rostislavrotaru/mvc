@@ -72,13 +72,7 @@
 		 * @var string
 		 */
 		private $columnName = null;
-		
-		/**
-		 * Defines if the property is entity key or not
-		 * @var boolean
-		 */
-		private $isEntityKey = false;
-		
+				
 		/**
 		 * Defines the property default value
 		 * 
@@ -97,6 +91,12 @@
 		 * @var boolean
 		 */
 		private $autoincrement = false;
+		
+		/**
+		 * Defines if the property is required
+		 * @var boolean
+		 */
+		private $required = false;
 		
 
 		/* PROPERTIES */
@@ -168,27 +168,6 @@
 		}
 		
 		/**
-		 * Gets if the property is entity key
-		 * @return boolean
-		 */
-		public function getIsEntityKey() 
-		{
-			return $this->isEntityKey;
-		}
-		
-		/**
-		 * Sets if the property is entity key
-		 * @param boolean $isEntityKey
-		 * 
-		 * @return Property Current instance
-		 */
-		public function setIsEntityKey($isEntityKey) 
-		{
-			$this->isEntityKey = $isEntityKey;
-			return $this;
-		}
-		
-		/**
 		 * Gets the property default value
 		 * @return string
 		 */
@@ -251,4 +230,21 @@
 			return $this;
 		}
 		
+		/**
+		 * Gets if the property is required
+		 * @var boolean
+		 */
+		public function getRequired()
+		{
+			return $this->required;
+		}
+		
+		/**
+		 * Sets if the property is required
+		 * @param boolean $required The required value. Default is true.
+		 */
+		public function setRequired($required = true)
+		{
+			$this->required = $required;
+		}
 	}
