@@ -16,7 +16,7 @@
 	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
 			
 	/**
-	 * Class that represents a mapped entity for SPHERUS Framework
+	 * Class that represents an index entity
 	 * 
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.components.orm
