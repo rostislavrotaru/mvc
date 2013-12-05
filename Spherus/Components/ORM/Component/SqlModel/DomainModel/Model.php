@@ -14,7 +14,7 @@
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
 	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
-					
+						
 	/**
 	 * Class that represents the base for all models
 	 *
@@ -54,6 +54,12 @@
 		private $name = null;
 		
 		/**
+		 * Defines the model entity set name
+		 * @var string
+		 */
+		private $entitySetName = null;
+		
+		/**
 		 * Defines the model table name
 		 * @var string
 		 */
@@ -64,6 +70,18 @@
 		 * @var array
 		 */
 		private $properties = [];
+		
+		/**
+		 * Defines array of model Indexes
+		 * @var array
+		 */
+		private $indexes = [];
+		
+		/**
+		 * Defines array of model Relationships
+		 * @var array
+		 */
+		private $relationships = [];
 			
 		/**
 		 * Defines array of model NavigationProperties
@@ -71,7 +89,7 @@
 		 */
 		private $navigationProperties = [];
 		
-		
+
 		/* PROPERTIES */
 		
 		/**
@@ -91,7 +109,25 @@
 		{
 			$this->name = $name;
 		}
-
+		
+		/**
+		 * Gets the model entity set name
+		 * @return string
+		 */
+		public function getEntitySetName()
+		{
+			return $this->entitySetName;
+		}
+		
+		/**
+		 * Sets the model entity set name
+		 * @param string $entitySetName The entitySetName to set.
+		 */
+		public function setEntitySetName($entitySetName)
+		{
+			$this->entitySetName = $entitySetName;
+		}
+		
 
 		/**
 		 * Gets model properties
@@ -110,7 +146,25 @@
 		{
 			return $this->navigationProperties;
 		}
-	
+
+		/**
+		 * Gets model Indexes
+		 * @return array
+		 */
+		public function getIndexes()
+		{
+			return $this->indexes;
+		}
+		
+		/**
+		 * Gets model relationships
+		 * @return array
+		 */
+		public function getRelationships()
+		{
+			return $this->relationships;
+		}
+		
 	
 		/* PUBLIC METHODS */
 		
@@ -129,9 +183,12 @@
 		/**
 		 * Removes Property from the collection
 		 * @param Property $property The Property entitity to remove
+		 * 
+		 * @throws SpherusException When $property parameter is null or empty.
 		 */
 		public function RemoveProperty(Property $property)
 		{
+			Check::IsNullOrEmpty($property);
 			unset($this->properties[$property->getName()]);
 		}
 		
@@ -150,10 +207,61 @@
 		/**
 		 * Removes NavigationProperty from the collection
 		 * @param NavigationProperty $navigationProperty The NavigationProperty entitity to remove
+		 * 
+		 * @throws SpherusException When $navigationProperty parameter is null or empty.
 		 */
 		public function RemoveNavigationProperty(NavigationProperty $navigationProperty)
 		{
+			Check::IsNullOrEmpty($navigationProperty);
 			unset($this->navigationProperties[$navigationProperty->getName()]);
 		}
 	
+		/**
+		 * Adds Index to the indexes collection
+		 *
+		 * @param Index $index The Index to add.
+		 * @throws SpherusException When $index parameter is null or empty.
+		 */
+		public function AddIndex(Index $index)
+		{
+			Check::IsNullOrEmpty($index);
+			$this->indexes[$index->getName()] = $index;
+		}
+		
+		/**
+		 * Removes Index from the collection
+		 * @param Index $index The Index entitity to remove.
+		 *
+		 * @throws SpherusException When $index parameter is null or empty.
+		 */
+		public function RemoveIndex(Index $index)
+		{
+			Check::IsNullOrEmpty($index);
+			unset($this->properties[$property->getName()]);
+		}
+		
+		/**
+		 * Adds Relationship to the relationships collection
+		 *
+		 * @param Relationship $index The Index to add.
+		 * @throws SpherusException When $index parameter is null or empty.
+		 */
+		public function AddRelationship(Relationship $relationship)
+		{
+			Check::IsNullOrEmpty($relationship);
+			$this->relationships[$relationship->getName()] = $relationship;
+		}
+		
+		/**
+		 * Removes Relationship from the collection
+		 * @param Relationship $relationship The Relationship entitity to remove.
+		 *
+		 * @throws SpherusException When $relationship parameter is null or empty.
+		 */
+		public function RemoveRelationship(Relationship $relationship)
+		{
+			Check::IsNullOrEmpty($relationship);
+			unset($this->relationships[$relationship->getName()]);
+		}
+		
 	}
