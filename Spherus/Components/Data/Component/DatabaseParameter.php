@@ -40,7 +40,6 @@
 		public function __construct($name, $value, $type = DatabaseParameterType::Varchar, $isOut = false)
 		{
 			Check::IsNullOrEmpty($name);
-			Check::IsNullOrEmpty($isOut);
 			Check::IsNullOrEmpty($type);
 			if($isOut === false)
 			{
