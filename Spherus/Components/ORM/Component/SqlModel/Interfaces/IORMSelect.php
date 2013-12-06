@@ -29,15 +29,6 @@
 	    function GroupBy($groupBy);
 	
 	    /**
-	     * Adds having expression.
-	     *
-	     * @param SqlExpression $having The having sql expression.
-	     *
-	     * @return IORMSelect
-	     */
-	    function Having($having);
-	
-	    /**
 	     * Adds where sql expression.
 	     *
 	     * @param SqlExpression $where The where sql expression.

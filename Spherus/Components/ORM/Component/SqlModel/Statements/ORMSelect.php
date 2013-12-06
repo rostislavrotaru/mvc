@@ -1,5 +1,5 @@
 <?php
-
+	
 	/**
 	 * Redistributions of files must retain the above copyright notice.
 	 *
@@ -11,17 +11,19 @@
 	namespace Spherus\Components\ORM\Component\SqlModel\Statements;
 					
 	use Spherus\Components\ORM\Component\SqlModel\Base\ORMStatement;
+	use Spherus\Components\ORM\Component\SqlModel\Interfaces\IORMSelect;
 	use Spherus\Components\ORM\Component\SqlModel\DomainModel\Model;
 	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
-use Spherus\Core\Check;
-														
+	use Spherus\Core\Check;
+	use Spherus\Components\ORM\Component\SqlModel\Base\ORMExpression;
+																
 	/**
      * Class that represents an ORM select statement
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
      * @package spherus.components.orm
      */
-	class ORMSelect extends ORMStatement
+	class ORMSelect extends ORMStatement implements IORMSelect
 	{
 	
 	    /* CONSTRUCTOR */
@@ -29,9 +31,9 @@ use Spherus\Core\Check;
 	    /**
 	     * Initializes a new instance of ORMSelect class.
 	     *
-	     * @param Model $model The ORM model.
+	     * @param string $model The ORM model.
 	     */
-	    public function __construct(Model $model)
+	    public function __construct($model)
 	    {
 	    	Check::IsNullOrEmpty($model);
 	    	
@@ -43,34 +45,28 @@ use Spherus\Core\Check;
 	    /* FIELDS */
 	
 	    /**
-	     * Represents a from orm entiry
+	     * Represents an orm model entiry
 	     * @var Model
 	     */
 	    private $model = null;
 	
 	    /**
-	     * Contains a collection of sql select columns.
+	     * Contains a collection of orm select properties.
 	     * @var array
 	     */
 	    private $properties = array();
 	
 	    /**
-	     * Represents a sql select where expression
-	     * @var SqlExpression
+	     * Represents a orm select where expression
+	     * @var OrmExpression
 	    */
 	    private $where = null;
 	
 	    /**
-	     * Contains a collection of sql select group by.
+	     * Contains a collection of orm select group by.
 	     * @var array
 	     */
 	    private $groupBy = array();
-	
-	    /**
-	     * Contain sql select having expression.
-	     * @var SqlExpression
-	    */
-	    private $having = null;
 	
 	    /**
 	     * Contains an ordered collection of expressions
@@ -79,30 +75,34 @@ use Spherus\Core\Check;
 	    private $orderBy = array();
 	
 	    /**
-	     * Determine if sql select is distinct or not. Default is false.
+	     * Determine if orm select is distinct or not. Default is false.
 	     * @var boolean
 	    */
 	    private $distinct = false;
 	
 	    /**
-	     * Contains take limit sql expression
-	     * @var SqlExpression
+	     * Contains take limit orm expression
+	     * @var ORMExpression
 	     */
 	    private $take = null;
 	
 	    /**
-	     * Contains elements skip sql expression.
-	     * @var SqlExpression
+	     * Contains elements skip orm expression.
+	     * @var ORMExpression
 	     */
 	    private $skip = null;
 	    
-	    public $includes = []; 
+	    /**
+	     * Contain ORM select includes.
+	     * @var array
+	     */
+	    private $includes = []; 
 	
 	
 	    /* PROPERTIES */
 	
 	    /**
-	     * Determine if current sql select expression is distinct or not.
+	     * Determine if current orm select expression is distinct or not.
 	     *
 	     * @return the $distinct
 	     */
@@ -112,7 +112,7 @@ use Spherus\Core\Check;
 	    }
 	
 	    /**
-	     * Gets current sql select expression columns collection.
+	     * Gets current orm select expression columns collection.
 	     *
 	     * @return Array $columns
 	     */
@@ -122,7 +122,8 @@ use Spherus\Core\Check;
 	    }
 	
 	    /**
-	     * @return the $model expression
+	     * Gets the orm model entity
+	     * @var Model
 	     */
 	    public function getModel()
 	    {
@@ -130,7 +131,8 @@ use Spherus\Core\Check;
 	    }
 	
 	    /**
-	     * @return the $where
+	     * Gets the orm entity where expression
+	     * @var ORMExpression
 	     */
 	    public function getWhere()
 	    {
@@ -138,19 +140,12 @@ use Spherus\Core\Check;
 	    }
 	
 	    /**
-	     * @return the $groupBy
+	     * Gets the orm entity GroupBy expression
+	     * @var ORMExpression
 	     */
 	    public function getGroupBy()
 	    {
 	        return $this->groupBy;
-	    }
-	
-	    /**
-	     * @return the $having
-	     */
-	    public function getHaving()
-	    {
-	        return $this->having;
 	    }
 	
 	    /**
@@ -159,6 +154,14 @@ use Spherus\Core\Check;
 	    public function getOrderBy()
 	    {
 	        return $this->orderBy;
+	    }
+	    
+	    /**
+	     * @return the $includes
+	     */
+	    public function getIncludes()
+	    {
+	    	return $this->includes;
 	    }
 	
 	
@@ -189,24 +192,11 @@ use Spherus\Core\Check;
 	    }
 	
 	    /**
-	     * Adds having expression.
-	     *
-	     * @param SqlExpression $having The having sql expression.
-	     *
-	     * @return SqlSelect
-	     */
-	    public function Having($having)
-	    {
-	        $this->having = $having;
-	        return $this;
-	    }
-	
-	    /**
 	     * Adds where sql expression.
 	     *
 	     * @param SqlExpression $where The where sql expression.
 	     *
-	     * @return SqlSelect
+	     * @return IORMSelect
 	     */
 	    public function Where($where)
 	    {
@@ -219,7 +209,7 @@ use Spherus\Core\Check;
 	     *
 	     * @param mixed $order Array or single object of sql orders.
 	     *
-	     * @return SqlSelect
+	     * @return IORMSelect
 	     */
 	    public function OrderBy($order)
 	    {
@@ -243,7 +233,7 @@ use Spherus\Core\Check;
 	     *
 	     * @param SqlExpression $skip The skip elements.
 	     *
-	     * @return SqlSelect
+	     * @return IORMSelect
 	     */
 	    public function Skip($skip)
 	    {
@@ -256,7 +246,7 @@ use Spherus\Core\Check;
 	     *
 	     * @param SqlExpression $take The take limit sql expression.
 	     *
-	     * @return SqlSelect
+	     * @return IORMSelect
 	     */
 	    public function Take($take)
 	    {
@@ -267,7 +257,7 @@ use Spherus\Core\Check;
 	    /**
 	     * Determine if current select is distinct or not.
 	     *
-	     * @return ORMSelect
+	     * @return IORMSelect
 	     */
 	    public function Distinct()
 	    {
@@ -275,15 +265,34 @@ use Spherus\Core\Check;
 	        return $this;
 	    }
 	    
+	    /**
+	     * Includes an ORM expression
+	     * @param ORMExpression $expression The ORM expression to include
+	     * 
+	     * @return IORMSelect
+	     */
 	    public function Include_($expression)
 	    {
 	    	$this->includes[] = $expression;
 	    	return $this;
 	    }
-	    
-	    
-	    /* PUBLIC METHODS */
 	
+	    /**
+	     * Gets first element or null if not found
+	     */
+	    public function First()
+	    {
+	    	
+	    }
+	     
+	    /**
+	     * Gets a list of elements
+	    */
+	    public function ToList()
+	    {
+	    	
+	    }
+	    
 	    /**
 	     * Accepts visitor for the current sql object.
 	     *

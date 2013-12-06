@@ -14,11 +14,11 @@
 	use Spherus\Components\ORM\Component\SqlModel\Expressions\ORMBinary;
 	use Spherus\Components\ORM\Component\SqlModel\Expressions\ORMUnary;
 					
-					/**
+	/**
      * Class that represents the ORM compiler
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-     * @package spherus.components.query
+     * @package spherus.components.orm
      */
     class ORMCompiler
     {		
