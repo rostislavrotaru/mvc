@@ -37,7 +37,9 @@
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlAssignment;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlUpdate;
     use Spherus\Components\Query\Component\SqlDatabaseQuery\Statements\SqlInsert;
-																																																																																																				    
+use Spherus\Components\Data\Component\DatabaseParameter;
+use Spherus\Components\Data\Component\DatabaseParameterType;
+																																																																																																												    
 												/**
      * Class that represents the sql database engine compiler
      *
@@ -478,7 +480,11 @@
 		 */
 		public function VisitLiteral(SqlLiteral $sqlEntity)
 		{
-		    $this->sqlCompilerContext->AppendText($this->sqlTranslator->TranslateLiteral($sqlEntity));
+			$databaseParametersCount = count($this->sqlCompilerContext->getDatabaseParameters());
+			$databaseParameterName = $this->sqlTranslator->getParameterPrefix().'p'.($databaseParametersCount + 1);
+			$databaseParameter = new DatabaseParameter($databaseParameterName, $this->sqlTranslator->TranslateLiteral($sqlEntity), is_numeric($sqlEntity) ? DatabaseParameterType::Integer: DatabaseParameterType::Varchar);
+		    $this->sqlCompilerContext->AppendText($databaseParameter->getName());
+		    $this->sqlCompilerContext->AddDatabaseParameter($databaseParameter);
 		}
     
 		/**

@@ -10,7 +10,8 @@
 	 */
 	namespace Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler;
 
-    /**
+    use Spherus\Components\Data\Component\DatabaseParameter;
+	/**
      * Class that represents the sql database engine compiler context
      *
      * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
@@ -27,6 +28,12 @@
     	 */
     	private $sql = null;
     	
+    	/**
+    	 * Contains an array of database parameters
+    	 * @var array
+    	 */
+    	private $databaseParameters = []; 
+    	
     	
     	/* PROPERTIES */
     	
@@ -38,6 +45,17 @@
     		return $this->sql;
     	}
     	
+    	/**
+    	 * Gets list of database parameters
+    	 * 
+    	 * @return array
+    	 */
+    	public function getDatabaseParameters()
+    	{
+    		return $this->databaseParameters;
+    	}
+    	
+    	
     	/* PUBLIC METHODS */
     	
     	/**
@@ -47,5 +65,15 @@
     	public function AppendText($text)
     	{
     		$this->sql .= isset($text) ? ' '.$text : null;
+    	}
+
+		/**
+    	 * Adds database parameter.
+    	 * 
+    	 * @param DatabaseParameter $databasePatameter The parameter to add.
+    	 */
+    	public function AddDatabaseParameter(DatabaseParameter $databasePatameter)
+    	{
+    		$this->databaseParameters[$databasePatameter->getName()] = $databasePatameter;
     	}
     }

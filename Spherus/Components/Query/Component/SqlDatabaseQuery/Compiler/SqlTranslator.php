@@ -48,14 +48,14 @@
 		 * 
 		 * @var string
 		 */
-		private $openBracket = '[';
+		private $openBracket = '`';
 		
 		/**
 		 * Defines the close bracket symbol.
 		 * 
 		 * @var string
 		 */
-		private $closeBracket = ']';
+		private $closeBracket = '`';
 		
 		/**
 		 * Defines the quote symbol.
@@ -111,7 +111,13 @@
 		 */
 		private $batchDelimiter = ';';
 		
+		/**
+		 * Defines the parameter prefix
+		 * @var string
+		 */
+		private $parameterPrefix = ':'; 
 		
+
 		/* PROPERTIES */
 		
 		/* (non-PHPdoc)
@@ -200,6 +206,15 @@
 		public function getBatchDelimiter() 
 		{
 			return $this->batchDelimiter;
+		}
+		
+		/**
+		 * Gets the parameter prefix
+		 * @return string
+		 */
+		public function getParameterPrefix()
+		{
+			return $this->parameterPrefix;
 		}
 		
 		
