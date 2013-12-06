@@ -12,7 +12,6 @@
 	
 	use Spherus\Components\ORM\Component\Entity;
 	use Spherus\Core\Check;
-	use Spherus\Components\ORM\Component\SqlModel\DomainModel\Index;
 	use Spherus\Components\Data\Component\DatabaseConfig;
 	use Spherus\Components\Query\Component\SqlDatabaseQuery\SqlQuery;
 	use Spherus\Core\SpherusException;
@@ -23,9 +22,9 @@
 	 * Class that represents the model entities collection
 	 *
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
-	 * @package spherus.core.base
+	 * @package spherus.components.orm
 	 */
-	class ModelEntities extends Entity
+	class ModelEntites extends Entity
 	{
 		
 		/* CONSTRUCTOR */
@@ -49,7 +48,7 @@
 			 
 			parent::__construct(EntityType::ModelEntities);
 			$this->name = $name;
-			$this->InitializeModelEntities($databaseProvider, $databaseConfig);
+			$this->Initialize($databaseProvider, $databaseConfig);
 		}
 		
 		
@@ -68,12 +67,6 @@
 		private $models = []; 
 		
 		/**
-		 * Defines the list of indexes
-		 * @var array
-		 */
-		private $indexes = [];
-		
-		/**
 		 * Defines the model entites database
 		 * @var SqlDatabase
 		 */
@@ -84,6 +77,12 @@
 		 * @var SqlQuery
 		 */
 		private $query = null;
+		
+		/**
+		 * Enable Lazy loading for included models
+		 * @var boolean
+		 */
+		private $lazyLoading = false; 
 		
 		
 		/* PROPERTIES */
@@ -125,24 +124,6 @@
 		}
 		
 		/**
-		 * Gets the models indexes
-		 * @return array
-		 */
-		public function getIndexes()
-		{
-			return $this->indexes;
-		}
-			
-		/**
-		 * Sets the indexes
-		 * @param array $indexes the collection of Index objects
-		 */
-		public function setIndexes($indexes)
-		{
-			$this->indexes = $indexes;
-		}
-
-		/**
 		 * Gets Model entities database
 		 * @return SqlDatabase
 		 */
@@ -160,6 +141,27 @@
 			return $this->query;
 		}
 		
+		/**
+		 * Gets whether Lazy Loading for included models is enabled.
+		 * @return boolean
+		 */
+		public function getLazyLoading()
+		{
+			return $this->lazyLoading;
+		}
+		
+		/**
+		 * Sets whether Lazy Loading for included models is enabled.
+		 * @param boolean $lazyLoading The boolean value for lazy loading
+		 * 
+		 * @throws SpherusException When $lazyLoading parameter is null or empty.
+		 */
+		public function setLazyLoading($lazyLoading)
+		{
+			Check::IsNullOrEmpty($lazyLoading);
+			$this->lazyLoading = $lazyLoading;
+		}
+		
 		
 		/* PRIVATE METHODS */
 		
@@ -171,7 +173,7 @@
 		 * 
 		 * @throws SpherusException When $databaseProvider is not found.
 		 */
-		private function InitializeModelEntities($databaseProvider, DatabaseConfig $databaseConfig)
+		private function Initialize($databaseProvider, DatabaseConfig $databaseConfig)
 		{
 			$database = 'Spherus\Components\Data\Component\Providers\\'.$databaseProvider.'Database';
 			$compiler = 'Spherus\Components\Query\Component\SqlDatabaseQuery\Compiler\\'.$databaseProvider.'\\'.$databaseProvider.'Compiler';
@@ -209,26 +211,6 @@
 		{
 			Check::IsNullOrEmpty($model);
 			unset($this->models[$model->getName()]);
-		}
-		
-		/**
-		 * Adds Model object to entities collection
-		 * @param Index $index The index object to add.
-		 */
-		public function AddIndex(Index $index)
-		{
-			Check::IsNullOrEmpty($index);
-			$this->indexes[$index->getName()] = $index;
-		}
-		
-		/**
-		 * Removes Index object from entities collection
-		 * @param Index $index The index object to remove.
-		 */
-		public function RemoveIndex(Index $index)
-		{
-			Check::IsNullOrEmpty($index);
-			unset($this->indexes[$index->getName()]);
 		}
 
 	}
