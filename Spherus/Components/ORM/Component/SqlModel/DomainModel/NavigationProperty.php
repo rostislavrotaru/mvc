@@ -13,10 +13,7 @@
 	use Spherus\Core\Check;
 	use Spherus\Core\SpherusException;
 	use Spherus\Components\ORM\Component\Entity;
-	use Spherus\Components\ORM\Component\SqlModel\DomainModel\Model;
 	use Spherus\Components\ORM\Component\SqlModel\Enums\EntityType;
-	use Spherus\Components\ORM\Component\SqlModel\Enums\MultiplicityType;
-	use Spherus\Components\ORM\Component\SqlModel\Enums\OnActionType;
 					
 	/**
 	 * Class that represents a mapped entity for SPHERUS Framework
@@ -30,19 +27,21 @@
 	    /* CONSTRUCTOR */
 	    
 	    /**
-	    * Initializes a new instance of Property class.
+	    * Initializes a new instance of NavigationProperty class.
 	    * 
-	    * @param string $name The entity name.
+	    * @param string $name The NavigationProperty name.
 	    * 
 	    * @throws SpherusException When $name parameter is not set.
-	    * @throws SpherusException When $columnName parameter is not set.
+	    * @throws SpherusException When $relationship parameter is not set.
 	    */
-	    public function __construct($name)
+	    public function __construct($name, Relationship $relationship)
 	    {
 	        Check::IsNullOrEmpty($name);
+	        Check::IsNullOrEmpty($relationship);
 	        
 	        parent::__construct(EntityType::NavigationProperty);
 	        $this->name = $name;
+	        $this->relationship = $relationship;
 	    }
 	    
 	    
@@ -55,35 +54,12 @@
 		private $name = null;
 		
 		/**
-		 * Defines the navigation property multiplicity 
-		 * @var string Uses MultiplicityType enum.
+		 * Defines the navigation property relationship
+		 * @var Relationship
 		 */
-		private $multiplicity = MultiplicityType::Many;
+		private $relationship = null;
 		
-		/**
-		 * Defines the source model
-		 * @var Model
-		 */
-		private $fromModel = null;
-			
-		/**
-		 * Defines the target model
-		 * @var Model
-		 */
-		private $toModel = null;
-		
-		/**
-		 * Defines the on delete action type
-		 * @var string Uses OnActionType enum.
-		 */
-		private $onDelete = OnActionType::Restrict; 
-		
-		/**
-		 * Defines the on update action type
-		 * @var string Uses OnActionType enum.
-		 */
-		private $onUpdate = OnActionType::Restrict;
-		
+
 
 		/* PROPERTIES */
 		
@@ -107,93 +83,23 @@
 		}
 	
 		/**
-		 * Gets the navigation property multiplicity
-		 * @return string
-		 */
-		public function getMultiplicity() 
+		 * Gets the Relationship entity.
+		 * 
+		 * @var Relationship
+		 */ 
+		function getRelationship()
 		{
-			return $this->multiplicity;
-		}
-			
-		/**
-		 * Sets the navigation property multiplicity
-		 * @param string $multiplicity Uses MultiplicityType enum.
-		 */
-		public function setMultiplicity($multiplicity) 
-		{
-			$this->multiplicity = $multiplicity;
-		}
-				
-		/**
-		 * Gets the source model
-		 * @var \Spherus\Components\ORM\Component\Models\Model
-		 */
-		public function getFromModel() 
-		{
-			return $this->fromModel;
-		}
-		
-		/**
-		 * Sets the source model
-		 * @param Model $fromModel The model to set.
-		 */
-		public function setFromModel(Model $fromModel) 
-		{
-			$this->fromModel = $fromModel;
-		}
-			
-		/**
-		 * Gets the target model
-		 * @var \Spherus\Components\ORM\Component\Models\Model
-		 */
-		public function getToModel() 
-		{
-			return $this->toModel;
+			return $this->relationship;
 		}
 	
-		/**
-		 * Sets the target model
-		 * @param \Spherus\Components\ORM\Component\Models\Model $fromModel The model to set.
-		 */
-		public function setToModel($toModel) 
-		{
-			$this->toModel = $toModel;
-		}
-	
-		/**
-		 * Gets On delete action
-		 * @return string
-		 */
-		public function getOnDelete() 
-		{
-			return $this->onDelete;
-		}
-	
-		/**
-		 * Sets on delete action type.
-		 * @param string $onDelete Uses OnActionType enum
-		 */
-		public function setOnDelete($onDelete) 
-		{
-			$this->onDelete = $onDelete;
-		}
 		
 		/**
-		 * Gets On update action
-		 * @return string
+		 * Sets the Relationship entity.
+		 * @param Relationship $relationship The relationship entity to set.
 		 */
-		public function getOnUpdate() 
+		public function setRelationship($relationship)
 		{
-			return $this->onUpdate;
-		}
-		
-		/**
-		 * Sets on update action type.
-		 * @param string $onUpdate Uses OnActionType enum
-		 */
-		public function setOnUpdate($onUpdate) 
-		{
-			$this->onUpdate = $onUpdate;
+			$this->relationship = $relationship;
 		}
 
 	}
