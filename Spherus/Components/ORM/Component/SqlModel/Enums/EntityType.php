@@ -23,12 +23,16 @@
 		const Literal = 'Literal';
 		const Select = 'Select';
 		const And_ = 'And';
+		const Or_ = 'Or';
+		const In = 'In';
+		const NotIn = 'NotIn';
 		const Equal = 'Equal';
 		const NotEqual = 'NotEqual';
 		const GreaterThan = 'GreaterThan';
 		const GreaterThanOrEqual = 'GreaterThanOrEqual';
 		const LessThan = 'LessThan';
 		const LessThanOrEqual = 'LessThanOrEqual';
+		const Order = 'Order';
 		
 		const Model = 'Model';
 		const ModelEntities = 'ModelEntities';
@@ -36,4 +40,5 @@
 		const NavigationProperty = 'NavigationProperty';
 		const Index = 'Index';
 		const Relationship = 'Relationship';
+		const ActiveRecordEntity = 'ActiveRecordEntity';
 	}
