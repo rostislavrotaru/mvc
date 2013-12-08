@@ -24,7 +24,7 @@
 	 * @author Rostislav Rotaru (rostislav.rotaru@spherus.net)
 	 * @package spherus.components.orm
 	 */
-	class ModelEntites extends Entity
+	class ModelEntities extends Entity
 	{
 		
 		/* CONSTRUCTOR */
