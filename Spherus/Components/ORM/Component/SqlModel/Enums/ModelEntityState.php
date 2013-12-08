@@ -24,4 +24,5 @@
 		const Unattached = 'Unattached';
 		const Changed = 'Changed';
 		const Deleted = 'Deleted';
+		const New_ = 'New';
 	}
