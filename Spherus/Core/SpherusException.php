@@ -75,3 +75,4 @@
 	define('EXCEPTION_OPERATION_NOT_SUPPORTED', 'Operation not supported');
 	define('EXCEPTION_DATABASE_PROVIDER_NOT_FOUND', 'The "%s" database provider not found.');
 	define('EXCEPTION_DATABASE_COMPILER_NOT_FOUND', 'The "%s" database compiler not found.');
+	define('EXCEPTION_MODEL_NOT_FOUND', 'The "%s" model not found');
