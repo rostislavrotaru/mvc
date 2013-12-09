@@ -76,3 +76,4 @@
 	define('EXCEPTION_DATABASE_PROVIDER_NOT_FOUND', 'The "%s" database provider not found.');
 	define('EXCEPTION_DATABASE_COMPILER_NOT_FOUND', 'The "%s" database compiler not found.');
 	define('EXCEPTION_MODEL_NOT_FOUND', 'The "%s" model not found');
+	define('EXCEPTION_RELATIONSHIP_NOT_FOUND', 'The relationship for "%s" model not found');
