@@ -326,7 +326,9 @@
 		    {
 		    	case ColumnType::Entry:
 		    	    {
-		    	        return $this->EncapsulateInBrackets($sqlEntity->getSqlTable()->getName()).'.'.$this->EncapsulateInBrackets($sqlEntity->getName());
+		    	    	$sqlTableAlias = $sqlEntity->getSqlTable()->getAlias();
+		    	    	$sqlTableAlias = isset($sqlTableAlias) ? $sqlTableAlias : $sqlEntity->getSqlTable()->getName();
+		    	        return $this->EncapsulateInBrackets($sqlTableAlias).'.'.$this->EncapsulateInBrackets($sqlEntity->getName());
 		    	    }
 		    	case ColumnType::Alias:
 		    	    {
@@ -361,7 +363,7 @@
 		    	        $alias = $sqlEntity->getAlias();
 		    	        if (isset($alias))
 		    	        {
-		    	            return $this->EncapsulateInBrackets($alias);
+		    	            return isset($alias) ? ('AS '.$this->EncapsulateInBrackets($alias)) : null;
 		    	        }
 		    	    }
 		    }
