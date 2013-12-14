@@ -55,6 +55,12 @@
 		/* FIELDS */
 		
 		/**
+		 * Defines the DomainModel schema
+		 * @var array
+		 */
+		public $schema =[];
+		
+		/**
 		 * Defines the model entities name
 		 * @var string
 		 */
@@ -77,12 +83,6 @@
 		 * @var SqlQuery
 		 */
 		private $query = null;
-		
-		/**
-		 * Enable Lazy loading for included models
-		 * @var boolean
-		 */
-		private $lazyLoading = false; 
 		
 		
 		/* PROPERTIES */
@@ -141,27 +141,6 @@
 			return $this->query;
 		}
 		
-		/**
-		 * Gets whether Lazy Loading for included models is enabled.
-		 * @return boolean
-		 */
-		public function getLazyLoading()
-		{
-			return $this->lazyLoading;
-		}
-		
-		/**
-		 * Sets whether Lazy Loading for included models is enabled.
-		 * @param boolean $lazyLoading The boolean value for lazy loading
-		 * 
-		 * @throws SpherusException When $lazyLoading parameter is null or empty.
-		 */
-		public function setLazyLoading($lazyLoading)
-		{
-			Check::IsNullOrEmpty($lazyLoading);
-			$this->lazyLoading = $lazyLoading;
-		}
-		
 		
 		/* PRIVATE METHODS */
 		
@@ -213,4 +192,121 @@
 			unset($this->models[$model->getName()]);
 		}
 
+		
+		/* SCHEMA METHODS */
+		
+		/**
+		 * Gets model by Entity Set Name
+		 * 
+		 * @param unknown $entitySetName The entity set name to search
+		 * 
+		 * @throws SpherusException When $entitySetName parameter is not set.
+		 * @return array|NULL
+		 */
+		public function GetModelByEntitySetName($entitySetName)
+		{
+			Check::IsNullOrEmpty($entitySetName);
+			
+			foreach ($this->schema as $modelName=>$model)
+			{
+				if($model['EntitySetName'] === $entitySetName)
+				{
+					$model['Model'] = $modelName;
+					return $model;
+				}
+			}
+			
+			return null;
+		} 
+		
+		/**
+		 * Gets model by navigation property
+		 * 
+		 * @param string $currentModelName The current model name
+		 * @param string $navigationPropertyName The navigation property name
+		 * @throws SpherusException When $currentModelName parameter is not set
+		 * @throws SpherusException When $navigationPropertyName parameter is not set
+		 * @throws SpherusException When current model name is not found
+		 * @throws SpherusException When navigation property is not found in the current model
+		 * 
+		 * @return array Found model array
+		 */
+		public function GetModelByNavigationProperty($currentModelName, $navigationPropertyName)
+		{
+			Check::IsNullOrEmpty($currentModelName);
+			Check::IsNullOrEmpty($navigationPropertyName);
+		
+			if(!isset($this->schema[$currentModelName]))
+			{
+				throw new SpherusException(sprintf(EXCEPTION_MODEL_NOT_FOUND, $currentModelName));
+			}
+				
+			$modelSchema = $this->schema[$currentModelName];
+				
+			if(!isset($modelSchema['NavigationProperties'][$navigationPropertyName]))
+			{
+				throw new SpherusException(sprintf(EXCEPTION_NAVIGATION_PROPERTY_FOR_MODEL_NOT_FOUND, $navigationPropertyName, $currentModelName));
+			}
+				
+			$navigationProperty = $modelSchema['NavigationProperties'][$navigationPropertyName];
+				
+			$model = $this->schema[$navigationProperty['Model']];
+			$model['Model'] = $navigationProperty['Model'];
+			return $model;
+		}
+		
+		/**
+		 * Gets relationship by name
+		 * 
+		 * @param string $relationshipName The name of relationship
+		 * 
+		 * @throws SpherusException When the relationship is not found
+		 * @return array Found relationship
+		 */
+		public function GetRelationshipByName($relationshipName)
+		{
+			Check::IsNullOrEmpty($relationshipName);
+			foreach ($this->schema as $modelName=>$model)
+			{
+				if(isset($model['Relationships'][$relationshipName]))
+				{
+					$relationship = $model['Relationships'][$relationshipName];
+					$relationship['Model'] = $modelName;
+					$relationship['Name'] = $relationshipName;
+					return $relationship;
+				}
+			}
+			
+			throw new SpherusException(sprintf(EXCEPTION_RELATIONSHIP_NOT_FOUND, $relationshipName));
+		}
+		
+		/**
+		 * Gets Relationship by navigation property name.
+		 * 
+ 		 * @param string $currentModelName The current model name
+		 * @param string $navigationPropertyName The navigation property name
+		 * @throws SpherusException When $currentModelName parameter is not set
+		 * @throws SpherusException When $navigationPropertyName parameter is not set
+		 * @throws SpherusException When current model name is not found
+		 * @throws SpherusException When navigation property is not found in the current model
+		 */
+		public function GetRelationshipByNavigationProperty($currentModelName, $navigationPropertyName)
+		{
+			Check::IsNullOrEmpty($currentModelName);
+			Check::IsNullOrEmpty($navigationPropertyName);
+			
+			if(!isset($this->schema[$modelName]))
+			{
+				throw new SpherusException(sprintf(EXCEPTION_MODEL_NOT_FOUND, $currentModelName));
+			}
+			
+			$modelSchema = $this->schema[$currentModelName];
+			
+			if(!isset($modelSchema['NavigationProperties'][$navigationPropertyName]))
+			{
+				throw new SpherusException(sprintf(EXCEPTION_NAVIGATION_PROPERTY_FOR_MODEL_NOT_FOUND, $navigationPropertyName, $currentModelName));
+			}
+
+			return $this->GetRelationshipByName($modelSchema['NavigationProperties'][$navigationPropertyName]['Relationship']);			
+		}
 	}
