@@ -55,6 +55,12 @@
 		private $name = null;
 		
 		/**
+		 * Defines the relationship Model entity
+		 * @var Model
+		 */
+		private $model = null;
+		
+		/**
 		 * Defines the foreign Model entity
 		 * @var Model
 		 */
@@ -121,7 +127,6 @@
 			return $this->foreignModel;
 		}
 	
-		
 		/**
 		 * Sets the foreign Model
 		 * @param Model $foreignModel The foreign model to set.
@@ -131,7 +136,24 @@
 			$this->foreignModel = $foreignModel;
 		}
 		
-
+		/**
+		 * Gets the relationship Model
+		 * @var Model
+		 */
+		public function getModel()
+		{
+			return $this->model;
+		}
+		
+		/**
+		 * Sets the relationship Model
+		 * @param Model $model The relationship model to set.
+		 */
+		public function setModel(Model $model)
+		{
+			$this->model = $model;
+		}
+		
 		/**
 		 * Gets the relationship property
 		 * @var Property

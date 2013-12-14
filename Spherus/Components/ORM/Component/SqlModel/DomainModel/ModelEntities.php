@@ -295,7 +295,7 @@
 			Check::IsNullOrEmpty($currentModelName);
 			Check::IsNullOrEmpty($navigationPropertyName);
 			
-			if(!isset($this->schema[$modelName]))
+			if(!isset($this->schema[$currentModelName]))
 			{
 				throw new SpherusException(sprintf(EXCEPTION_MODEL_NOT_FOUND, $currentModelName));
 			}

@@ -480,11 +480,18 @@ use Spherus\Components\Data\Component\DatabaseParameterType;
 		 */
 		public function VisitLiteral(SqlLiteral $sqlEntity)
 		{
-			$databaseParametersCount = count($this->sqlCompilerContext->getDatabaseParameters());
-			$databaseParameterName = $this->sqlTranslator->getParameterPrefix().'p'.($databaseParametersCount + 1);
-			$databaseParameter = new DatabaseParameter($databaseParameterName, $this->sqlTranslator->TranslateLiteral($sqlEntity), is_numeric($sqlEntity) ? DatabaseParameterType::Integer: DatabaseParameterType::Varchar);
-		    $this->sqlCompilerContext->AppendText($databaseParameter->getName());
-		    $this->sqlCompilerContext->AddDatabaseParameter($databaseParameter);
+			if(is_array($sqlEntity->getValue()))
+			{
+				$this->sqlCompilerContext->AppendText(implode(',', $sqlEntity->getValue()));
+			}
+			else 
+			{
+				$databaseParametersCount = count($this->sqlCompilerContext->getDatabaseParameters());
+				$databaseParameterName = $this->sqlTranslator->getParameterPrefix().'p'.($databaseParametersCount + 1);
+				$databaseParameter = new DatabaseParameter($databaseParameterName, $this->sqlTranslator->TranslateLiteral($sqlEntity), is_numeric($sqlEntity) ? DatabaseParameterType::Integer: DatabaseParameterType::Varchar);
+			    $this->sqlCompilerContext->AppendText($databaseParameter->getName());
+			    $this->sqlCompilerContext->AddDatabaseParameter($databaseParameter);
+			}
 		}
     
 		/**

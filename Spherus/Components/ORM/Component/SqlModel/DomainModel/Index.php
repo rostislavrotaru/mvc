@@ -125,4 +125,19 @@
 		{
 			$this->properties = $properties;
 		}
+	
+		
+		/* PUBLIC METHODS*/
+		
+		/**
+		 * Adds Property to index.
+		 * 
+		 * @param Property $property The Property object to add.
+		 */
+		public function AddProperty(Property $property)
+		{
+			Check::IsNull($property);
+			$this->properties[$property->getName()] = $property;	
+		} 
+		
 	}
