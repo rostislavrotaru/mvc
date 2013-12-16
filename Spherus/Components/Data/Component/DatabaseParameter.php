@@ -35,7 +35,7 @@
 		 * @throws SpherusException When $name parameter is null or empty.
 		 * @throws SpherusException When $isOut parameter is null or empty.
 		 * @throws SpherusException When $type parameter is null or empty.
-		 * @throws SpherusException When $value parameter is null or empty having $isOut parameter false.
+		 * @throws SpherusException When $value parameter is null having $isOut parameter false.
 		 */
 		public function __construct($name, $value, $type = DatabaseParameterType::Varchar, $isOut = false)
 		{
@@ -43,7 +43,7 @@
 			Check::IsNullOrEmpty($type);
 			if($isOut === false)
 			{
-				Check::IsNullOrEmpty($value);
+				Check::IsNull($value);
 			}
 			
 			$this->name = $name;
