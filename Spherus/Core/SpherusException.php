@@ -78,3 +78,4 @@
 	define('EXCEPTION_MODEL_NOT_FOUND', 'The "%s" model not found');
 	define('EXCEPTION_RELATIONSHIP_NOT_FOUND', 'The relationship for "%s" model not found');
 	define('EXCEPTION_NAVIGATION_PROPERTY_FOR_MODEL_NOT_FOUND', 'The navigation property "%s" for the "%s" model not found');
+	define('EXCEPTION_MODEL_NOT_INCLUDED', 'The model "%s" not found in includes expression');
